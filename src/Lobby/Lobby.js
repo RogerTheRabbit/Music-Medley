@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 class Lobby extends Component {
-  // state = {  }
+  state = {};
   render() {
     return <h1>Lobby</h1>;
   }
