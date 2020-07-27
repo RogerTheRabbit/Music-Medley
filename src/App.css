@@ -3,33 +3,49 @@
   width: 100vw;
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
+  justify-items: stretch;
   grid-auto-rows: minmax(100px, auto);
+  gap: 10px;
 }
 
 .room-info{
+  grid-column: 1;
+  grid-row: 1;
   background-color: burlywood;
 }
 
 .search-bar{
+  grid-column: 2;
+  grid-row: 1 / 1.5;
   background-color: cadetblue;
 }
 
 .chatbox{
+  grid-column: 3;
+  grid-row: 1 / 6;
   background-color: cornflowerblue;
 }
 
 .participants{
+  grid-column: 1;
+  grid-row: 2 / 6;
   background-color: crimson;
 }
 
 .current-song{
+  grid-column: 2;
+  grid-row: 2;
   background-color: lightseagreen;
 }
 
 .queue{
+  grid-column: 2;
+  grid-row: 3 / 6;
   background-color: deepskyblue;
 }
 
 .music-player{
   background-color: indianred;
+  grid-column: 1 / -1;
+  grid-row: 6;
 }
