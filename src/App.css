@@ -16,7 +16,7 @@
 
 .search-bar{
   grid-column: 2;
-  grid-row: 1 / 1.5;
+  grid-row: 1;
   background-color: cadetblue;
 }
 
