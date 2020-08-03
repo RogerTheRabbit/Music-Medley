@@ -1,16 +1,37 @@
 import React, { Component } from "react";
+import Button from "@material-ui/core/Button";
+
+import Icon from "@material-ui/core/Icon";
+import "./HomeScreen.css";
 
 class HomeScreen extends Component {
   state = {};
+
   render() {
+    const whaleIcon = (
+      <Icon>
+        <img alt="sign in" src={require("../resource/Whale_Vector.svg")} />
+      </Icon>
+    );
     return (
-      
+      <div className="flex-container">
+        <p className="title">Music Medley</p>
+        <p className="user-text">What would you like to do?</p>
+        <Button
+          variant="contained"
+          className="choice-button"
+          startIcon={whaleIcon}
+        >
+          <p className="button-text">Join A Room</p>
+        </Button>
+        <Button variant="contained" className="second-choice-button">
+          <p className="button-text">Create A Room</p>
+        </Button>
+      </div>
 
-
-
-
-
-
+      // put in the first button tag
+      // <input />
+      // <img src="../resource/Whale_Vector.svg" />
 
       // <div>
       //   <title
