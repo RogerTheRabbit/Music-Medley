@@ -1,5 +1,4 @@
-// Apparently we can't use ES6 imports
-because;
+// Apparently we can't use ES6 imports so we got the old imports.
 const express = require("express");
 const socket = require("socket.io");
 const dotenv = require("dotenv");
