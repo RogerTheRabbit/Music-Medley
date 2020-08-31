@@ -6,8 +6,13 @@ dotenv.config();
 const IP = process.env.REACT_APP_IP;
 const PORT = process.env.REACT_APP_PORT;
 
+// Added some messages we might send.
+// The values aren't that important but they should be
+// consistent between the client and the server
 const PROTOCOL = {
 	TEST: "test",
+	NEW_USER: "newuser",
+	JOIN_ROOM: "joinroom",
 };
 
 // Initialize listeners here
