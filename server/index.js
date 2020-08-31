@@ -14,14 +14,14 @@ const PROTOCOL = {
 let clients = {};
 
 // App setup
-var app = express();
+let app = express();
 
-var server = app.listen(PORT, IP, function () {
+let server = app.listen(PORT, IP, function () {
 	console.log("Listening on " + IP + ":" + PORT);
 });
 
 // Socket setup
-var io = socket(server);
+let io = socket(server);
 
 io.on("connect", function (client) {
 	console.log("Client connected with id:", client.id);

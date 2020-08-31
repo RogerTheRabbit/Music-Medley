@@ -12,7 +12,7 @@ const PROTOCOL = {
 
 // Initialize listeners here
 function initialize() {
-	var io = socket.connect("http://" + IP + ":" + PORT);
+	let io = socket.connect("http://" + IP + ":" + PORT);
 	console.log("Trying to connect to:", "http://" + IP + ":" + PORT);
 
 	io.on("connect", (io) => {
