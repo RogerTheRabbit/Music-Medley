@@ -14,11 +14,10 @@ import {
 
 class choiceHomeScreen extends Component {
   //state = {};
-
+  state = { currentFormComponent: "Main Page" };
   //Make the state handlers for buttons
   constructor(props) {
     super(props);
-    this.state = { currentFormComponent: "Main Page" };
 
     this.handleJoinPage = this.handleJoinPage.bind(this);
     this.handleMainPage = this.handleMainPage.bind(this);
@@ -51,14 +50,10 @@ class choiceHomeScreen extends Component {
             <p className="h4 text-center py-4">MUSIC MEDLEY</p>
             <div className="grey-text"></div>
             <div className="text-center py-4 mt-3">
-              <MDBBtn color="cyan" type="submit" onClick={this.handleJoinPage}>
+              <MDBBtn color="cyan" onClick={this.handleJoinPage}>
                 JOIN ROOM
               </MDBBtn>
-              <MDBBtn
-                color="cyan"
-                type="submit"
-                onClick={this.handleCreatePage}
-              >
+              <MDBBtn color="cyan" onClick={this.handleCreatePage}>
                 CREATE ROOM
               </MDBBtn>
             </div>
@@ -66,39 +61,6 @@ class choiceHomeScreen extends Component {
         );
 
       case "Join Page":
-        return (
-          <form>
-            <p className="h4 text-center py-4">Join Room</p>
-            <div className="grey-text">
-              <MDBInput
-                label="Username"
-                icon="user"
-                group
-                type="text"
-                validate
-                error="wrong"
-                success="right"
-              />
-              <MDBInput
-                label="Password (optional)"
-                icon="lock"
-                group
-                type="password"
-                validate
-              />
-            </div>
-            <div className="text-center py-4 mt-3">
-              <MDBBtn color="cyan" type="submit" onClick={this.handleMainPage}>
-                Go Back
-              </MDBBtn>
-              <MDBBtn color="cyan" type="submit">
-                Enter
-              </MDBBtn>
-            </div>
-          </form>
-        );
-
-      case "Create Page":
         return (
           <form>
             <p className="h4 text-center py-4">Join Room</p>
@@ -130,12 +92,41 @@ class choiceHomeScreen extends Component {
               />
             </div>
             <div className="text-center py-4 mt-3">
-              <MDBBtn color="cyan" type="submit" onClick={this.handleMainPage}>
+              <MDBBtn color="cyan" onClick={this.handleMainPage}>
                 Go Back
               </MDBBtn>
-              <MDBBtn color="cyan" type="submit">
-                Enter
+              <MDBBtn color="cyan">Enter</MDBBtn>
+            </div>
+          </form>
+        );
+
+      case "Create Page":
+        return (
+          <form>
+            <p className="h4 text-center py-4">Join Room</p>
+            <div className="grey-text">
+              <MDBInput
+                label="Username"
+                icon="user"
+                group
+                type="text"
+                validate
+                error="wrong"
+                success="right"
+              />
+              <MDBInput
+                label="Password (optional)"
+                icon="lock"
+                group
+                type="password"
+                validate
+              />
+            </div>
+            <div className="text-center py-4 mt-3">
+              <MDBBtn color="cyan" onClick={this.handleMainPage}>
+                Go Back
               </MDBBtn>
+              <MDBBtn color="cyan">Enter</MDBBtn>
             </div>
           </form>
         );
