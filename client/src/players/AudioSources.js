@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import ReactPlayer from "react-player";
 import { connect } from "react-redux";
-import { togglePlaying, setAudioLevel, setProgress } from '../redux/player/playerActions';
+import { togglePlaying, setAudioLevel, setProgress, setSong, setReady } from '../redux/player/playerActions';
 
 function Player(props) {
 
@@ -15,20 +15,9 @@ function Player(props) {
 		loop,
 		// played,
 		// loaded,
-		progress,
 		playbackRate,
 		pip,
 	} = props;
-
-	useEffect(() => {
-		let timeout = setTimeout(() => {
-			// props.togglePlaying(playing);
-			props.setAudioLevel(Math.random() / 2);
-		}, 3000);
-		return () => {
-			clearTimeout(timeout)
-		}
-	}, [])
 
 	let player;
 
@@ -36,25 +25,12 @@ function Player(props) {
 		player = playerRef;
 	}
 
-	const handlePause = (e) => {
-		// console.log(e);
-	}
-	const handleEnded = (e) => {
-		// console.log(e);
-	}
-	const handleProgress = (e) => {
-		props.setProgress(e.played)
-	}
-	const handleDuration = (e) => {
-		// console.log(e);
-	}
-
 	return (
 		<>
 			<ReactPlayer
 				ref={playerRef}
-				width="0px"
-				height="0px"
+				width="500px"
+				height="300px"
 				url={url}
 				pip={pip}
 				playing={playing}
@@ -64,23 +40,26 @@ function Player(props) {
 				playbackRate={playbackRate}
 				volume={volume}
 				muted={muted}
-				onReady={() => console.log("onReady")}
+				onReady={() => props.setReady(true)}
 				onStart={() => console.log("onStart")}
-				// onPlay={this.handlePlay}
+				onPlay={() => console.log("onPlay")}
 				// onEnablePIP={this.handleEnablePIP}
 				// onDisablePIP={this.handleDisablePIP}
-				onPause={handlePause}
+				onPause={() => console.log("onPause")}
 				onBuffer={() => console.log("onBuffer")}
-				onSeek={(e) => console.log("onSeek", e)}
-				onEnded={handleEnded}
-				onError={(e) => console.log("onError", e)}
-				onProgress={handleProgress}
-				onDuration={handleDuration}
-				style={{ display: "hidden" }}
+				onSeek={e => console.log("onSeek", e)}
+				onEnded={() => console.log("onEnded")}
+				onError={e => console.log("onError", e)}
+				onProgress={e => props.setProgress(e.played)}
+				onDuration={e => console.log("onDuration", e)}
 			/>
-			TESTING STATS:
-			<p>PROGRES {(progress * 100).toFixed(2)}%</p>
-			<button onClick={props.togglePlaying}>TOGGLE PLAYING</button>
+			<h1>TESTING STATS:</h1>
+			<p>PROGRES: {props.progress}</p>
+			<p>READY: {props.ready ? "Ready" : "Not ready"}</p>
+			<p>VOLUME: {props.volume}</p>
+			<button onClick={props.togglePlaying}>{props.playing ? "PAUSE" : "PLAY"}</button>
+			<input onChange={e => props.setSong(e.target.value)} defaultValue={props.url} />
+			<input max={1} min={0} type="range" step=".01" onChange={e => props.setAudioLevel(e.target.value)} defaultValue={props.volume} />
 		</>
 	);
 }
@@ -94,6 +73,8 @@ const mapDispatchToProps = dispatch => {
 		togglePlaying: () => dispatch(togglePlaying()),
 		setAudioLevel: (newLevel) => dispatch(setAudioLevel(newLevel)),
 		setProgress: (progress) => dispatch(setProgress(progress)),
+		setSong: (url) => dispatch(setSong(url)),
+		setReady: (ready) => dispatch(setReady(ready)),
 	}
 }
 
