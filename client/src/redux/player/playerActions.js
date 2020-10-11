@@ -1,18 +1,26 @@
-import { PAUSE, PLAY, SET_AUDIO_LEVEL } from "./playerTypes"
+import TYPES from "./playerTypes";
 
-export const togglePlaying = (currentPlayState) => {
-    const type = currentPlayState ? PAUSE : PLAY;
-    console.log("TOGGLEPLAYING Recieved", currentPlayState);
+export const togglePlaying = () => {
+    console.log("TOGGLEPLAYING Recieved");
     return {
-        type: type,
+        type: TYPES.TOGGLE_PLAYING,
     }
 }
 
 export const setAudioLevel = (newLevel) => {
     return {
-        type: SET_AUDIO_LEVEL,
+        type: TYPES.SET_AUDIO_LEVEL,
         data: {
             newLevel
+        }
+    }
+}
+
+export const setProgress = (progress) => {
+    return {
+        type: TYPES.SET_PROGRESS,
+        data: {
+            progress
         }
     }
 }

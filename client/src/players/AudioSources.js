@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import ReactPlayer from "react-player";
 import { connect } from "react-redux";
-import { togglePlaying, setAudioLevel } from '../redux/player/playerActions';
+import { togglePlaying, setAudioLevel, setProgress } from '../redux/player/playerActions';
 
 function Player(props) {
 
@@ -15,27 +15,38 @@ function Player(props) {
 		loop,
 		// played,
 		// loaded,
-		// duration,
+		progress,
 		playbackRate,
 		pip,
 	} = props;
 
 	useEffect(() => {
-		console.log("USEEFFECT");
 		let timeout = setTimeout(() => {
-			console.log("TESTTT", player);
-			props.togglePlaying(playing);
+			// props.togglePlaying(playing);
 			props.setAudioLevel(Math.random() / 2);
 		}, 3000);
 		return () => {
 			clearTimeout(timeout)
 		}
-	})
+	}, [])
 
 	let player;
 
 	const playerRef = playerRef => {
 		player = playerRef;
+	}
+
+	const handlePause = (e) => {
+		// console.log(e);
+	}
+	const handleEnded = (e) => {
+		// console.log(e);
+	}
+	const handleProgress = (e) => {
+		props.setProgress(e.played)
+	}
+	const handleDuration = (e) => {
+		// console.log(e);
 	}
 
 	return (
@@ -67,21 +78,11 @@ function Player(props) {
 				onDuration={handleDuration}
 				style={{ display: "hidden" }}
 			/>
+			TESTING STATS:
+			<p>PROGRES {(progress * 100).toFixed(2)}%</p>
+			<button onClick={props.togglePlaying}>TOGGLE PLAYING</button>
 		</>
 	);
-}
-
-const handlePause = (e) => {
-	// console.log(e);
-}
-const handleEnded = (e) => {
-	// console.log(e);
-}
-const handleProgress = (e) => {
-	// console.log(e);
-}
-const handleDuration = (e) => {
-	// console.log(e);
 }
 
 const mapStateToProps = (state) => {
@@ -90,8 +91,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		togglePlaying: (currentPlayingState) => dispatch(togglePlaying(currentPlayingState)),
+		togglePlaying: () => dispatch(togglePlaying()),
 		setAudioLevel: (newLevel) => dispatch(setAudioLevel(newLevel)),
+		setProgress: (progress) => dispatch(setProgress(progress)),
 	}
 }
 

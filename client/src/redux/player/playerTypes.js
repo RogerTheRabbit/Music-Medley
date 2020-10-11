@@ -1,3 +1,7 @@
-export const PLAY = 'PLAY';
-export const PAUSE = 'PAUSE';
-export const SET_AUDIO_LEVEL = 'SET_AUDIO_LEVEL';
+export default {
+    PLAY: 'PLAY',
+    PAUSE: 'PAUSE',
+    TOGGLE_PLAYING: 'TOGGLE_PLAYING',
+    SET_AUDIO_LEVEL: 'SET_AUDIO_LEVEL',
+    SET_PROGRESS: 'SET_PROGRESS',
+}
