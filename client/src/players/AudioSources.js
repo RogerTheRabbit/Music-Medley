@@ -42,8 +42,8 @@ function Player(props) {
 		<>
 			<ReactPlayer
 				ref={playerRef}
-				width="500px"
-				height="500px"
+				width="0px"
+				height="0px"
 				url={url}
 				pip={pip}
 				playing={playing}
@@ -65,6 +65,7 @@ function Player(props) {
 				onError={(e) => console.log("onError", e)}
 				onProgress={handleProgress}
 				onDuration={handleDuration}
+				style={{ display: "hidden" }}
 			/>
 		</>
 	);
