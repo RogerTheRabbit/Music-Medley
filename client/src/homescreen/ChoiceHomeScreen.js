@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./HomeScreen.css";
-//import joinRoomScreen from "./JoinRoomScreen.js";
 
 import {
   MDBContainer,
@@ -13,7 +12,6 @@ import {
 } from "mdbreact";
 
 class choiceHomeScreen extends Component {
-  //state = {};
   state = { currentFormComponent: "Main Page" };
   //Make the state handlers for buttons
   constructor(props) {
