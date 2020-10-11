@@ -1,37 +1,52 @@
 .flex-container {
-  background-color: #ffc0cb;
-  height: 100vh;
+  background-color: #65c8d0;
+  min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 
-.flex-container > div {
+/* .flex-container > div {
   flex: 1 1 auto;
   margin: 5px;
-}
+} */
 
-.title {
+/* .title {
   background-color: #ffc0cb;
   font-size: 75px;
   text-align: center;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-}
+} */
 
-.user-text {
+/* .user-text {
   background-color: #ffc0cb;
   font-size: 30px;
   text-align: center;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-}
+} */
 
-.choice-button {
+/* .choice-button {
   background-color: #e6e6fa !important;
   height: 100px;
   width: 300px;
   margin-top: 75px !important;
+} */
+
+.form {
+  background-color: #ffffff;
+  margin-top: 250px !important;
+}
+
+.login-card {
+  width: fit-content;
+}
+.content-in-card {
+  flex-direction: row;
+  align-self: center;
+  justify-content: center;
+  width: 500px;
 }
 
 /* .whale {
@@ -44,17 +59,17 @@
   background-size: 60px;
   margin: 10px;
 } */
-
+/* 
 .button-text {
   font-size: 25px;
   font-style: Lucida;
   text-align: right;
-}
+} */
 
-.second-choice-button {
+/* .second-choice-button {
   background-color: #e6e6fa !important;
   order: 2;
   height: 100px;
   width: 300px;
   margin-top: 75px !important;
-}
+} */
