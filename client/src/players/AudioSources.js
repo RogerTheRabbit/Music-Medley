@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ReactPlayer from "react-player";
 import { connect } from "react-redux";
 import { togglePlaying, setAudioLevel, setProgress, setSong, setReady } from '../redux/player/playerActions';
+import withNetworking from './withTestNetworking';
 
 function Player(props) {
 
@@ -40,15 +41,15 @@ function Player(props) {
 				playbackRate={playbackRate}
 				volume={volume}
 				muted={muted}
-				onReady={() => props.setReady(true)}
-				onStart={() => console.log("onStart")}
-				onPlay={() => console.log("onPlay")}
+				onReady={props.onReady}
+				onStart={props.onStart}
+				onPlay={props.onPlay}
 				// onEnablePIP={this.handleEnablePIP}
 				// onDisablePIP={this.handleDisablePIP}
-				onPause={() => console.log("onPause")}
-				onBuffer={() => console.log("onBuffer")}
+				onPause={props.onPause}
+				onBuffer={props.onBuffer}	// Note to self: Called when player runs out of buffer
 				onSeek={e => console.log("onSeek", e)}
-				onEnded={() => console.log("onEnded")}
+				onEnded={props.onEnded}
 				onError={e => console.log("onError", e)}
 				onProgress={e => props.setProgress(e.played)}
 				onDuration={e => console.log("onDuration", e)}
@@ -78,4 +79,5 @@ const mapDispatchToProps = dispatch => {
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Player)
+const playerWithNetworking = withNetworking(Player);
+export default connect(mapStateToProps, mapDispatchToProps)(playerWithNetworking);
