@@ -58,9 +58,11 @@ function Player(props) {
 			<p>PROGRES: {props.progress}</p>
 			<p>READY: {props.ready ? "Ready" : "Not ready"}</p>
 			<p>VOLUME: {props.volume}</p>
+			<input id="newSong" defaultValue={'https://www.youtube.com/watch?v=dQw4w9WgXcQ'} />
+			<button onClick={props.addSong}>Add Song</button>
+			<br />
 			<button onClick={props.togglePlaying}>{props.playing ? "PAUSE" : "PLAY"}</button>
-			<input onChange={e => props.setSong(e.target.value)} defaultValue={props.url} />
-			<input max={1} min={0} type="range" step=".01" onChange={e => props.setAudioLevel(e.target.value)} defaultValue={props.volume} />
+			Volume: <input max={1} min={0} type="range" step=".01" onChange={e => props.setAudioLevel(e.target.value)} defaultValue={props.volume} />
 		</>
 	);
 }
