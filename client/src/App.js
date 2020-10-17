@@ -8,7 +8,7 @@ import "mdbreact/dist/css/mdb.css";
 
 function App() {
 	return (
-		<div className="container">
+		<div className="main-container">
 			<div className="room-info">Room Info</div>
 			<div className="search-bar">Search Bar</div>
 			<div className="chatbox">Chatbox</div>
