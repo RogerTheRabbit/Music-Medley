@@ -50,9 +50,9 @@ function Player(props) {
 				onBuffer={props.onBuffer}	// Note to self: Called when player runs out of buffer
 				onSeek={e => console.log("onSeek", e)}
 				onEnded={props.onEnded}
-				onError={e => console.log("onError", e)}
+				onError={e => { }}
 				onProgress={e => props.setProgress(e.played)}
-				onDuration={e => console.log("onDuration", e)}
+				onDuration={e => { }}
 			/>
 			<h1>TESTING STATS:</h1>
 			<p>PROGRES: {props.progress}</p>

@@ -14,12 +14,10 @@ export default (WrappedComponent) => ({ ...props }) => {
     ])
 
     const onReady = () => {
-        console.log("onReady")
         props.setReady(true)
     }
 
     const onEnded = () => {
-        console.log("onEnded");
         const newPos = (pos + 1) % songs.length
         props.setSong(songs[newPos]);
         setpos(newPos);
@@ -35,17 +33,17 @@ export default (WrappedComponent) => ({ ...props }) => {
     return <WrappedComponent
         {...props}
         onReady={() => onReady()}
-        onStart={() => console.log("onStart")}
-        onPlay={() => console.log("onPlay")}
+        onStart={() => { }}
+        onPlay={() => { }}
         // onEnablePIP={this.handleEnablePIP}
         // onDisablePIP={this.handleDisablePIP}
-        onPause={() => console.log("onPause")}
-        onBuffer={() => console.log("onBuffer")}
-        onSeek={e => console.log("onSeek", e)}
+        onPause={() => { }}
+        onBuffer={() => { }}
+        onSeek={e => { }}
         onEnded={() => onEnded()}
-        onError={e => console.log("onError", e)}
+        onError={e => { }}
         onProgress={e => props.setProgress(e.played)}
-        onDuration={e => console.log("onDuration", e)}
+        onDuration={e => { }}
         addSong={() => addSong()}
     />
 };
