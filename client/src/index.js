@@ -14,5 +14,6 @@ ReactDOM.render(
 			<App />
 			{/* <ChoiceHomeScreen /> */}
 		</Provider>
-	</React.StrictMode>
+	</React.StrictMode>,
+	document.getElementById('root')
 );
