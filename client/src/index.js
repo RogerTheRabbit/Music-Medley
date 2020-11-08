@@ -12,7 +12,6 @@ ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store}>
 			<App />
-			{/* <ChoiceHomeScreen /> */}
 		</Provider>
 	</React.StrictMode>,
 	document.getElementById('root')

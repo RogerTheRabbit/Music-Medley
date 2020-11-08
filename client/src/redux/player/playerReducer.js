@@ -3,7 +3,7 @@ import TYPES from "./playerTypes";
 const initalState = {
     ready: false,
     url: 'https://www.youtube.com/watch?v=dyRsYk0LyA8',
-    playing: true,
+    playing: false,
     controls: true,
     light: null,
     volume: 0.05,

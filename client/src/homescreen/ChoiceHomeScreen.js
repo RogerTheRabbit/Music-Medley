@@ -1,5 +1,8 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { setPage } from "../redux/appActions"
 import "./HomeScreen.css";
+import Constants from "../Constants";
 
 import {
   MDBContainer,
@@ -41,6 +44,11 @@ class choiceHomeScreen extends Component {
   }
 
   renderForm() {
+    // This function should send a network call to the server to join a room 
+    // and something else should run this setPage command.
+    const enterRoom = () => {
+      this.props.setPage(Constants.LOBBY_SCREEN)
+    }
     switch (this.state.currentFormComponent) {
       case "Main Page":
         return (
@@ -93,7 +101,7 @@ class choiceHomeScreen extends Component {
               <MDBBtn color="cyan" onClick={this.handleMainPage}>
                 Go Back
               </MDBBtn>
-              <MDBBtn color="cyan">Enter</MDBBtn>
+              <MDBBtn color="cyan" onClick={() => enterRoom()}>Enter</MDBBtn>
             </div>
           </form>
         );
@@ -124,7 +132,7 @@ class choiceHomeScreen extends Component {
               <MDBBtn color="cyan" onClick={this.handleMainPage}>
                 Go Back
               </MDBBtn>
-              <MDBBtn color="cyan">Enter</MDBBtn>
+              <MDBBtn color="cyan" onClick={() => enterRoom()}>Enter</MDBBtn>
             </div>
           </form>
         );
@@ -135,6 +143,7 @@ class choiceHomeScreen extends Component {
   }
 
   render() {
+    console.log(this.props);
     console.log(this.state.currentFormComponent);
     return (
       <div className="flex-container">
@@ -152,4 +161,10 @@ class choiceHomeScreen extends Component {
   }
 }
 
-export default choiceHomeScreen;
+const mapDispatchToProps = dispatch => {
+  return {
+    setPage: (newPage) => dispatch(setPage(newPage)),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(choiceHomeScreen);
