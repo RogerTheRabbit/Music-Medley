@@ -1,0 +1,4 @@
+export default {
+    CHOICE_HOME_SCREEN: 'CHOICE_HOME_SCREEN',
+    LOBBY_SCREEN: 'LOBBY_SCREEN',
+}

@@ -1,22 +1,45 @@
 import React from "react";
-import "./App.css";
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import "bootstrap-css-only/css/bootstrap.min.css";
-import "mdbreact/dist/css/mdb.css";
+import AudioSources from "./players/AudioSources";
+import Lobby from './Lobby/Lobby'
+import { connect } from "react-redux";
+import { setPage } from "./redux/appActions";
+import Constants from './Constants';
 import ChoiceHomeScreen from "./homescreen/ChoiceHomeScreen";
 
-function App() {
-  return (
-    <div className="container">
-      <div className="room-info">Room Info</div>
-      <div className="search-bar">Search Bar</div>
-      <div className="chatbox">Chatbox</div>
-      <div className="participants">Participants</div>
-      <div className="current-song">Current Song</div>
-      <div className="queue">Queue</div>
-      <div className="music-player">Music Player</div>
-    </div>
-  );
+function App(props) {
+
+	console.log(props);
+
+	let Page;
+
+	switch (props.page) {
+		case Constants.CHOICE_HOME_SCREEN:
+			Page = <ChoiceHomeScreen />
+			break;
+		case Constants.LOBBY_SCREEN:
+			Page = <Lobby />
+			break;
+		default:
+			Page = "404"
+			break;
+	}
+
+	return (
+		<>
+			{Page}
+			<AudioSources />
+		</>
+	);
 }
 
-export default App;
+const mapStateToProps = (state) => {
+	return state.app;
+}
+
+const mapDispatchToProps = dispatch => {
+	return {
+		setPage: (newPage) => dispatch(setPage(newPage)),
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
