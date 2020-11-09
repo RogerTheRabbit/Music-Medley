@@ -143,8 +143,6 @@ class choiceHomeScreen extends Component {
   }
 
   render() {
-    console.log(this.props);
-    console.log(this.state.currentFormComponent);
     return (
       <div className="flex-container">
         <MDBRow>
