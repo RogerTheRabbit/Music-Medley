@@ -8,8 +8,6 @@ import ChoiceHomeScreen from "./homescreen/ChoiceHomeScreen";
 
 function App(props) {
 
-	console.log(props);
-
 	let Page;
 
 	switch (props.page) {
