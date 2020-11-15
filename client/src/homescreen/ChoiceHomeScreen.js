@@ -10,31 +10,6 @@ import { MDBCardBody, MDBAnimation, MDBCard } from "mdbreact";
 class choiceHomeScreen extends Component {
   state = { currentFormComponent: "Main Page" };
   //Make the state handlers for buttons
-  constructor(props) {
-    super(props);
-
-    this.handleJoinPage = this.handleJoinPage.bind(this);
-    this.handleMainPage = this.handleMainPage.bind(this);
-    this.handleCreatePage = this.handleCreatePage.bind(this);
-  }
-
-  handleJoinPage() {
-    this.setState((state) => ({
-      currentFormComponent: "Join Page",
-    }));
-  }
-
-  handleCreatePage() {
-    this.setState((state) => ({
-      currentFormComponent: "Create Page",
-    }));
-  }
-
-  handleMainPage() {
-    this.setState((state) => ({
-      currentFormComponent: "Main Page",
-    }));
-  }
 
   renderForm() {
     // This function should send a network call to the server to join a room
@@ -42,6 +17,25 @@ class choiceHomeScreen extends Component {
     const enterRoom = () => {
       this.props.setPage(Constants.LOBBY_SCREEN);
     };
+
+    const handleJoinPage = () => {
+      this.setState((state) => ({
+        currentFormComponent: "Join Page",
+      }));
+    };
+
+    const handleCreatePage = () => {
+      this.setState((state) => ({
+        currentFormComponent: "Create Page",
+      }));
+    };
+
+    const handleMainPage = () => {
+      this.setState((state) => ({
+        currentFormComponent: "Main Page",
+      }));
+    };
+
     switch (this.state.currentFormComponent) {
       case "Main Page":
         return (
@@ -50,13 +44,13 @@ class choiceHomeScreen extends Component {
               <p className="h1 text-center py-4 login-header">MUSIC MEDLEY</p>
             </MDBAnimation>
             <div className="main-login-options">
-              <button className="outlined-button btn-fill-horz-open btn-rounded" onClick={this.handleJoinPage}>
+              <button className="outlined-button btn-fill-horz-open btn-rounded" onClick={() => handleJoinPage()}>
                 JOIN ROOM
               </button>
               <br />
               <h4 className="no-margins">OR</h4>
               <br />
-              <button className="outlined-button btn-fill-horz-open btn-rounded" onClick={this.handleCreatePage}>
+              <button className="outlined-button btn-fill-horz-open btn-rounded" onClick={() => handleCreatePage()}>
                 CREATE ROOM
               </button>
             </div>
@@ -78,7 +72,7 @@ class choiceHomeScreen extends Component {
               />
             </div>
             <div className="login-button-group py-4 mt-3">
-              <button className="outlined-button btn-fill-horz-open btn-rounded" onClick={this.handleMainPage}>
+              <button className="outlined-button btn-fill-horz-open btn-rounded" onClick={() => handleMainPage()}>
                 Go Back
               </button>
               <button className="outlined-button btn-fill-horz-open btn-rounded" onClick={() => enterRoom()}>
@@ -102,7 +96,7 @@ class choiceHomeScreen extends Component {
               />
             </div>
             <div className="login-button-group py-4 mt-3">
-              <button className="outlined-button btn-fill-horz-open btn-rounded" onClick={this.handleMainPage}>
+              <button className="outlined-button btn-fill-horz-open btn-rounded" onClick={() => handleMainPage()}>
                 Go Back
               </button>
               <br />
