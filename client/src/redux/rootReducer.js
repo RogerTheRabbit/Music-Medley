@@ -1,10 +1,8 @@
-import { combineReducers } from 'redux';
-import playerReducer from './player/playerReducer';
-import appReducer from './appReducer';
+import { combineReducers } from "redux";
+import playerReducer from "./player/playerReducer";
 
 const rootReducer = combineReducers({
-    player: playerReducer,
-    app: appReducer,
+  player: playerReducer,
 });
 
 export default rootReducer;

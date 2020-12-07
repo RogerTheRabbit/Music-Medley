@@ -1,23 +1,14 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { setPage } from "../redux/appActions";
 import "./HomeScreen.css";
-import Constants from "../Constants";
 import logo from "../resource/Whale_Vector.svg";
 
 import { MDBCardBody, MDBAnimation, MDBCard } from "mdbreact";
+import { Link } from "react-router-dom";
 
-class choiceHomeScreen extends Component {
-  state = { currentFormComponent: "Main Page" };
-  //Make the state handlers for buttons
+export default class choiceHomeScreen extends Component {
+  state = { currentFormComponent: "Main Page", userName: "", roomCode: this.props.roomCode || "", roomPassword: "" };
 
   renderForm() {
-    // This function should send a network call to the server to join a room
-    // and something else should run this setPage command.
-    const enterRoom = () => {
-      this.props.setPage(Constants.LOBBY_SCREEN);
-    };
-
     const handleJoinPage = () => {
       this.setState((state) => ({
         currentFormComponent: "Join Page",
@@ -62,22 +53,37 @@ class choiceHomeScreen extends Component {
           <form>
             <p className="h1 text-center py-4 login-header">JOIN ROOM</p>
             <div className="d-flex justify-content-around flex-column align-content-center align-items-center flex-grow-1">
-              <input type="text" label="Username" placeholder="Username" className="z-depth-1-half" />
-              <input type="text" label="Room Code" placeholder="Room Code" className="z-depth-1-half" />
+              <input
+                type="text"
+                label="Username"
+                placeholder="Username"
+                className="z-depth-1-half"
+                value={this.state.userName}
+                onChange={(e) => this.setState({ userName: e.target.value })}
+              />
+              <input
+                type="text"
+                label="Room Code"
+                placeholder="Room Code"
+                className="z-depth-1-half"
+                value={this.state.roomCode}
+                onChange={(e) => this.setState({ roomCode: e.target.value })}
+              />
               <input
                 type="password"
                 label="Room Password"
                 placeholder="Room Password (optional)"
                 className="z-depth-1-half"
+                onChange={(e) => this.setState({ roomPassword: e.target.value })}
               />
             </div>
             <div className="login-button-group py-4 mt-3">
               <button className="outlined-button btn-fill-horz-open btn-rounded" onClick={() => handleMainPage()}>
                 Go Back
               </button>
-              <button className="outlined-button btn-fill-horz-open btn-rounded" onClick={() => enterRoom()}>
-                Enter
-              </button>
+              <Link to="/room">
+                <button className="outlined-button btn-fill-horz-open btn-rounded">Enter</button>
+              </Link>
             </div>
           </form>
         );
@@ -87,12 +93,20 @@ class choiceHomeScreen extends Component {
           <form>
             <p className="h1 text-center py-4 login-header">CREATE ROOM</p>
             <div className="d-flex justify-content-around flex-column align-content-center align-items-center flex-grow-1">
-              <input type="text" label="Username" placeholder="Username" className="z-depth-1-half" />
+              <input
+                type="text"
+                label="Username"
+                placeholder="Username"
+                className="z-depth-1-half"
+                value={this.state.userName}
+                onChange={(e) => this.setState({ userName: e.target.value })}
+              />
               <input
                 type="password"
                 label="Room Password"
                 placeholder="Room Password (optional)"
                 className="z-depth-1-half"
+                onChange={(e) => this.setState({ roomPassword: e.target.value })}
               />
             </div>
             <div className="login-button-group py-4 mt-3">
@@ -100,9 +114,9 @@ class choiceHomeScreen extends Component {
                 Go Back
               </button>
               <br />
-              <button className="outlined-button btn-fill-horz-open btn-rounded" onClick={() => enterRoom()}>
-                Enter
-              </button>
+              <Link to="/room">
+                <button className="outlined-button btn-fill-horz-open btn-rounded">Enter</button>
+              </Link>
             </div>
           </form>
         );
@@ -114,7 +128,6 @@ class choiceHomeScreen extends Component {
 
   render() {
     return (
-      // heavy-rain-gradient
       <div className="heavy-rain-gradient d-flex justify-content-center flex-container">
         <MDBCard className="login-card align-self-center">
           <MDBCardBody className="aqua-gradient login-card-body">
@@ -126,11 +139,3 @@ class choiceHomeScreen extends Component {
     );
   }
 }
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setPage: (newPage) => dispatch(setPage(newPage)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(choiceHomeScreen);
