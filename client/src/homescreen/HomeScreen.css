@@ -1,75 +1,55 @@
 .flex-container {
-  background-color: #65c8d0;
-  min-height: 100vh;
+  height: 100vh;
+}
+
+.login-card {
+  width: 80%;
+  max-width: 800px;
+  min-height: 450px;
+  height: 40%;
+  max-height: 600px;
+  background-color: transparent;
+  border-radius: 16px;
+  color: white;
+}
+
+.login-header {
+  text-shadow: 2px 2px 6px #00000055;
+}
+
+.login-image {
+  background-color: white;
+  width: 25%;
+  border-radius: 15px 0px 0px 15px;
+  padding: 0px 20px 0px 20px;
+}
+
+.login-card-body {
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0px;
+  padding-right: 15px;
+  border-radius: 15px;
+}
+
+.login-card-body form {
+  width: 100%;
+  padding-left: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-login-options {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-/* .flex-container > div {
-  flex: 1 1 auto;
-  margin: 5px;
-} */
-
-/* .title {
-  background-color: #ffc0cb;
-  font-size: 75px;
-  text-align: center;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-} */
-
-/* .user-text {
-  background-color: #ffc0cb;
-  font-size: 30px;
-  text-align: center;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-} */
-
-/* .choice-button {
-  background-color: #e6e6fa !important;
-  height: 100px;
-  width: 300px;
-  margin-top: 75px !important;
-} */
-
-.form {
-  background-color: #ffffff;
-  margin-top: 250px !important;
+.login-button-group {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10% 0 10%;
 }
-
-.login-card {
-  width: fit-content;
-}
-.content-in-card {
-  flex-direction: row;
-  align-self: center;
-  justify-content: center;
-  width: 500px;
-}
-
-/* .whale {
-  background: url("../resource/Whale_Vector.svg");
-  background-position: left;
-  background-color: transparent;
-  padding-left: 20px;
-  padding-right: 10px;
-  background-repeat: no-repeat;
-  background-size: 60px;
-  margin: 10px;
-} */
-/* 
-.button-text {
-  font-size: 25px;
-  font-style: Lucida;
-  text-align: right;
-} */
-
-/* .second-choice-button {
-  background-color: #e6e6fa !important;
-  order: 2;
-  height: 100px;
-  width: 300px;
-  margin-top: 75px !important;
-} */
