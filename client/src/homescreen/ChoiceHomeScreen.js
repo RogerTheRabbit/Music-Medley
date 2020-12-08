@@ -5,30 +5,45 @@ import logo from "../resource/Whale_Vector.svg";
 import { MDBCardBody, MDBAnimation, MDBCard } from "mdbreact";
 import { Link } from "react-router-dom";
 
+const formComponents = {
+  MAIN_PAGE: "Main Page",
+  JOIN_PAGE: "Join Page",
+  CREATE_PAGE: "Create Page",
+};
+
 export default class choiceHomeScreen extends Component {
-  state = { currentFormComponent: "Main Page", userName: "", roomCode: this.props.roomCode || "", roomPassword: "" };
+  urlParams = new URLSearchParams(this.props.location?.search);
+
+  state = {
+    currentFormComponent: this.urlParams.get("roomCode") ? formComponents.JOIN_PAGE : formComponents.MAIN_PAGE,
+    userName: "",
+    roomCode: this.urlParams.get("roomCode") || "",
+    roomPassword: "",
+  };
 
   renderForm() {
     const handleJoinPage = () => {
       this.setState((state) => ({
-        currentFormComponent: "Join Page",
+        currentFormComponent: formComponents.JOIN_PAGE,
       }));
     };
 
     const handleCreatePage = () => {
       this.setState((state) => ({
-        currentFormComponent: "Create Page",
+        currentFormComponent: formComponents.CREATE_PAGE,
       }));
     };
 
     const handleMainPage = () => {
       this.setState((state) => ({
-        currentFormComponent: "Main Page",
+        currentFormComponent: formComponents.MAIN_PAGE,
       }));
     };
 
+    const roomURL = `/room/?roomCode=${this.state.roomCode}`;
+
     switch (this.state.currentFormComponent) {
-      case "Main Page":
+      case formComponents.MAIN_PAGE:
         return (
           <form>
             <MDBAnimation type="zoomIn" reveal>
@@ -48,7 +63,7 @@ export default class choiceHomeScreen extends Component {
           </form>
         );
 
-      case "Join Page":
+      case formComponents.JOIN_PAGE:
         return (
           <form>
             <p className="h1 text-center py-4 login-header">JOIN ROOM</p>
@@ -81,14 +96,14 @@ export default class choiceHomeScreen extends Component {
               <button className="outlined-button btn-fill-horz-open btn-rounded" onClick={() => handleMainPage()}>
                 Go Back
               </button>
-              <Link to="/room">
+              <Link to={roomURL}>
                 <button className="outlined-button btn-fill-horz-open btn-rounded">Enter</button>
               </Link>
             </div>
           </form>
         );
 
-      case "Create Page":
+      case formComponents.CREATE_PAGE:
         return (
           <form>
             <p className="h1 text-center py-4 login-header">CREATE ROOM</p>
@@ -114,7 +129,7 @@ export default class choiceHomeScreen extends Component {
                 Go Back
               </button>
               <br />
-              <Link to="/room">
+              <Link to={roomURL}>
                 <button className="outlined-button btn-fill-horz-open btn-rounded">Enter</button>
               </Link>
             </div>
