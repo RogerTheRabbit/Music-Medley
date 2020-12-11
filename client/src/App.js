@@ -1,7 +1,7 @@
 import React from "react";
 import AudioSources from "./players/AudioSources";
 import Lobby from "./Lobby/Lobby";
-import ChoiceHomeScreen from "./homescreen/ChoiceHomeScreen";
+import HomeScreen from "./homescreen/HomeScreen";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import ConnectedRoute from "./utils/ConnectedRoute";
 
@@ -9,7 +9,7 @@ export default function App(props) {
   return (
     <Router>
       <Switch>
-        <Route path="/join" component={ChoiceHomeScreen} />
+        <Route path="/join" component={HomeScreen} />
 
         <ConnectedRoute path="/room/">
           <Lobby />

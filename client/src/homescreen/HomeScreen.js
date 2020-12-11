@@ -11,7 +11,7 @@ const formComponents = {
   CREATE_PAGE: "Create Page",
 };
 
-export default class choiceHomeScreen extends Component {
+export default class HomeScreen extends Component {
   urlParams = new URLSearchParams(this.props.location?.search);
 
   state = {
