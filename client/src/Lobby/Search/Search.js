@@ -11,7 +11,7 @@ export default function Search() {
                 type="text"
                 label="Search"
                 placeholder="Search"
-                className="z-depth-1-half"
+                className="search-input z-depth-1-half"
                 onChange={(e) => search(e.target.value)}
             />
         </div>
