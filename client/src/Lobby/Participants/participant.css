@@ -1,0 +1,27 @@
+.participant-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.participant {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+}
+
+.participant:hover {
+    background-color: #eceff1;
+}
+
+.participant img {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin: 0.3em 0.3em 0.3em 0.3em;
+}
+
+.participant p {
+    margin: auto auto auto 0.3em;
+}

@@ -1,0 +1,38 @@
+.controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.controls button {
+    width: auto;
+    margin: 0 auto;
+    padding: 10px 10px 10px 10px;
+}
+
+/* Note: progress-bar is defined by Material Design Bootstrap */
+.custom-progress-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-progress-bar .song-progress {
+    width: 100px;
+    text-align: right;
+    margin-right: 10px;
+}
+
+.custom-progress-bar .song-length {
+    width: 100px;
+    text-align: left;
+    margin-left: 10px;
+}
+
+.volume-slider {
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

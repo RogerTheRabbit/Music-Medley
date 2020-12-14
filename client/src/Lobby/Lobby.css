@@ -1,51 +1,51 @@
-.main-container {
+.lobby-container {
 	height: 100vh;
-	width: 100vw;
+	/* width: 100vw; */
 	display: grid;
-	grid-template-columns: 1fr 2fr 1fr;
-	justify-items: stretch;
-	grid-auto-rows: minmax(100px, auto);
-	gap: 10px;
+	/* grid-template-columns: 1fr 2fr 1fr; */
 }
 
-.room-info {
+.room-info-section {
 	grid-column: 1;
 	grid-row: 1;
 	background-color: burlywood;
 }
 
-.search-bar {
+.search-section {
 	grid-column: 2;
 	grid-row: 1;
 	background-color: cadetblue;
 }
 
-.chatbox {
+.chatbox-section {
 	grid-column: 3;
 	grid-row: 1 / 6;
 	background-color: cornflowerblue;
+	overflow-y: auto;
 }
 
-.participants {
+.participants-section {
 	grid-column: 1;
 	grid-row: 2 / 6;
 	background-color: crimson;
+	overflow-y: auto;
 }
 
-.current-song {
+.current-song-section {
 	grid-column: 2;
 	grid-row: 2;
 	background-color: lightseagreen;
 }
 
-.queue {
+.queue-section {
 	grid-column: 2;
 	grid-row: 3 / 6;
 	background-color: deepskyblue;
+	overflow-y: auto;
 }
 
-.music-player {
+.controls-section {
 	background-color: indianred;
-	grid-column: 1 / -1;
+	grid-column: 1 / 4;
 	grid-row: 6;
 }

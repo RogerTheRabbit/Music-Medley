@@ -1,0 +1,39 @@
+.song-queue-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    min-width: 300px;
+}
+
+.song-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: 4.5em;
+}
+
+.song-item:hover {
+    background-color: #eceff1;
+}
+
+.song-item .album-art {
+    border-radius: 1em;
+    margin: 0.3em 0.6em 0.3em 0.6em;
+    height: 50px;
+    width: 50px;
+}
+
+.song-item .song-info {
+    margin: 0 1em 0 1em;
+    width: 100%;
+}
+
+.song-item .song-artist {
+    font-size: 12px;
+}
+
+.song-item .song-duration {
+    margin: 1em;
+}

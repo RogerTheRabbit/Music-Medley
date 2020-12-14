@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactPlayer from "react-player";
 import { connect } from "react-redux";
-import { togglePlaying, setAudioLevel, setProgress, setSong, setReady } from '../redux/player/playerActions';
+import { togglePlaying, setAudioLevel, setProgress, setDuration, setSong, setReady } from '../redux/player/playerActions';
 import withNetworking from './withTestNetworking';
 
 function Player(props) {
@@ -52,7 +52,7 @@ function Player(props) {
 				onEnded={props.onEnded}
 				onError={e => { }}
 				onProgress={e => props.setProgress(e.played)}
-				onDuration={e => { }}
+                onDuration={(duration) => props.setDuration(duration)}
 			/>
 			<h1>TESTING STATS:</h1>
 			<p>PROGRES: {props.progress}</p>
@@ -78,6 +78,7 @@ const mapDispatchToProps = dispatch => {
 		setProgress: (progress) => dispatch(setProgress(progress)),
 		setSong: (url) => dispatch(setSong(url)),
 		setReady: (ready) => dispatch(setReady(ready)),
+		setDuration: (ready) => dispatch(setDuration(ready)),
 	}
 }
 
