@@ -29,14 +29,19 @@ let server = app.listen(PORT, IP, function () {
 // Socket setup
 let io = socket(server);
 
-io.on("connect", function (client) {
+io.on("connection", function (client) {
 	console.log("Client[" + client.id + "] connected");
 	clients[client.id] = client;
 
 	client.emit(PROTOCOL.TEST, "TEST");
 
-	client.on("disconnect", function (reason) {
+	// broadcast when a user connects
+	client.broadcast.emit(PROTOCOL.NEW_USER, client + "has joined the room.");
+
+	// when client disconnects
+	client.on("disconnect", (reason) => {
 		// TODO: Remove disconnected clients from the clients variable
-		console.log("Client[" + client.id + "] disconnected for reason:", reason);
+		io.emit("Client[" + client.id + "] has disconnected for reason:", reason);
+		// console.log("Client[" + client.id + "] has disconnected for reason:", reason);
 	});
 });

@@ -21,7 +21,7 @@ function initialize() {
 	console.log("Trying to connect to:", "http://" + IP + ":" + PORT);
 
 	io.on("connect", (io) => {
-		console.log("Connected so server");
+		console.log("Connected to server");
 	});
 
 	io.on("disconnect", () => {
