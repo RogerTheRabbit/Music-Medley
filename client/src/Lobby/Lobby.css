@@ -5,47 +5,40 @@
 	/* grid-template-columns: 1fr 2fr 1fr; */
 }
 
-.room-info-section {
+.left-panel {
 	grid-column: 1;
 	grid-row: 1;
+	overflow-y: auto;
 	background-color: burlywood;
 }
 
-.search-section {
+.left-panel .left-panel-container {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.center-content {
 	grid-column: 2;
 	grid-row: 1;
+	overflow-y: auto;
 	background-color: cadetblue;
 }
 
-.chatbox-section {
+.center-content-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.right-panel {
 	grid-column: 3;
-	grid-row: 1 / 6;
+	grid-row: 1 / 2;
 	background-color: cornflowerblue;
-	overflow-y: auto;
-}
-
-.participants-section {
-	grid-column: 1;
-	grid-row: 2 / 6;
-	background-color: crimson;
-	overflow-y: auto;
-}
-
-.current-song-section {
-	grid-column: 2;
-	grid-row: 2;
-	background-color: lightseagreen;
-}
-
-.queue-section {
-	grid-column: 2;
-	grid-row: 3 / 6;
-	background-color: deepskyblue;
 	overflow-y: auto;
 }
 
 .controls-section {
 	background-color: indianred;
 	grid-column: 1 / 4;
-	grid-row: 6;
+	grid-row: 2;
 }

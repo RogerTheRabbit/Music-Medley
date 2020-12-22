@@ -1,9 +1,8 @@
 .song-queue-container {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    width: 100%;
-    min-width: 300px;
+    overflow: auto;
+    min-width: 372px;
 }
 
 .song-item {

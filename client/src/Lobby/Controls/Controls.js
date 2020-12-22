@@ -4,6 +4,7 @@ import { MDBIcon } from "mdbreact";
 import { setAudioLevel } from "../../redux/player/playerActions";
 import { connect } from "react-redux";
 import { formatDuration } from "../../utils/utils";
+import CurrentlyPlaying from "../CurrentlyPlaying/CurrentlyPlaying";
 
 function Controls(props) {
     const playing = true;
@@ -25,6 +26,7 @@ function Controls(props) {
     return (
         <>
             <div className="controls">
+                <CurrentlyPlaying className="left-section"/>
                 <div>
                     <button className="outlined-button btn-fill-horz-open btn-rounded">
                         <MDBIcon icon="random" />
@@ -32,8 +34,8 @@ function Controls(props) {
                     <button className="outlined-button btn-fill-horz-open btn-rounded">
                         <MDBIcon icon="step-backward" />
                     </button>
-                    <button className="outlined-button btn-fill-horz-open btn-rounded">
-                        <MDBIcon icon={playing ? "play" : "stop"} />
+                    <button className="primary outlined-button btn-fill-horz-open btn-rounded">
+                        <MDBIcon icon={playing ? "play" : "pause"} />
                     </button>
                     <button className="outlined-button btn-fill-horz-open btn-rounded">
                         <MDBIcon icon="step-forward" />
@@ -47,19 +49,19 @@ function Controls(props) {
                     <input type="range" min={0} max={props.duration} readOnly value={props.progress * props.duration} />
                     <div className="song-length">{formatDuration(props.duration)}</div>
                 </div>
-            </div>
-            <div className="volume-slider">
-                <MDBIcon icon={volumeIcon} />
-                <input
-                    type="range"
-                    min={0}
-                    max={1}
-                    step={0.01}
-                    value={props.volume}
-                    onChange={(e) => {
-                        props.setAudioLevel(e.target.value);
-                    }}
-                />
+                <div className="volume-slider">
+                    <MDBIcon icon={volumeIcon} />
+                    <input
+                        type="range"
+                        min={0}
+                        max={1}
+                        step={0.01}
+                        value={props.volume}
+                        onChange={(e) => {
+                            props.setAudioLevel(e.target.value);
+                        }}
+                    />
+                </div>
             </div>
         </>
     );

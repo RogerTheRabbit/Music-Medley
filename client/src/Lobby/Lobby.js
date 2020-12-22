@@ -15,23 +15,20 @@ import Chat from "./Chat/Chat";
 function Lobby() {
     return (
         <div className="lobby-container">
-            <div className="room-info-section">
-                <RoomInfo />
+            <div className="left-panel">
+                <div className="left-panel-container">
+                    <RoomInfo />
+                    <ParticipantContainer />
+                </div>
             </div>
-            <div className="search-section">
-                <Search />
+            <div className="center-content">
+                <div className="center-content-container">
+                    <Search />
+                    <SongQueueContainer />
+                </div>
             </div>
-            <div className="chatbox-section">
+            <div className="right-panel">
                 <Chat />
-            </div>
-            <div className="participants-section">
-                <ParticipantContainer />
-            </div>
-            <div className="current-song-section">
-                <CurrentlyPlaying />
-            </div>
-            <div className="queue-section">
-                <SongQueueContainer />
             </div>
             <div className="controls-section">
                 <Controls />

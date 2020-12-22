@@ -1,14 +1,26 @@
 .controls {
+    position: relative;
     display: flex;
+    height: 6.5em;
+    margin: 0 1em 0 1em;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
 .controls button {
-    width: auto;
-    margin: 0 auto;
+    width: 3em;
+    margin: 0.5em 0.25em 0.5em 0.25em;
     padding: 10px 10px 10px 10px;
+}
+
+.controls button.primary {
+    width: 4em;
+    height: 4em;
+}
+
+.controls button.primary i.fa-play {
+    padding-left: 4px;
 }
 
 /* Note: progress-bar is defined by Material Design Bootstrap */
@@ -30,9 +42,23 @@
     margin-left: 10px;
 }
 
+.left-section {
+    position: absolute;
+    left: 0;
+}
+
 .volume-slider {
-    float: right;
+    position: absolute;
+    right: 0;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.volume-slider i {
+    width: 18px;
+}
+
+.volume-slider input {
+    margin-left: 3px;
 }

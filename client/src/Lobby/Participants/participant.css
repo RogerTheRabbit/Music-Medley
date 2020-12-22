@@ -1,4 +1,8 @@
 .participant-container {
+    overflow: auto;
+}
+
+.participants {
     display: flex;
     flex-direction: column;
     height: 100%;

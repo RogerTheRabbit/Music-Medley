@@ -1,4 +1,5 @@
 import React from "react";
+import { MDBPopover, MDBPopoverBody, MDBIcon } from "mdbreact";
 import "./roominfo.css";
 
 export default function RoomInfo() {
@@ -9,13 +10,25 @@ export default function RoomInfo() {
         console.log("LEAVE ROOM");
     };
 
+    const editRoomName = () => {
+        // TODO: Edit room name
+        console.log("Edit room name...");
+    };
+
     return (
         <div>
-            <h3>{"Room Name (not mvp?)"}</h3>
-            {"Room Owner"}
-            {"Room Code"}
-            {"Room Password"}
+            {/* <h3>
+                {"Room Name"} <button className="outlined-button btn-fill-horz-open btn-rounded icon-button"><MDBIcon icon="edit" onClick={() => editRoomName()} /></button>
+            </h3> */}
             <p>Queue Length: {123.45}</p>
+            <MDBPopover placement="right" popover clickable domElement>
+                <button className="outlined-button btn-fill-horz-open btn-rounded icon-button">
+                    <MDBIcon icon="key" />
+                </button>
+                <div>
+                    <MDBPopoverBody>Password: {"Room Password"}</MDBPopoverBody>
+                </div>
+            </MDBPopover>
             <div className="room-buttons">
                 <button onClick={() => shareFunction()} className="outlined-button blue btn-fill-horz-open btn-rounded">
                     SHARE

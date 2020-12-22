@@ -1,7 +1,7 @@
 import React from "react";
 import "./currently-playing.css";
 
-export default function CurrentlyPlaying() {
+export default function CurrentlyPlaying({className, ...rest}) {
     const currentlyPlaying = {
         song: "Song 1",
         artist: "Artist 1",
@@ -9,8 +9,7 @@ export default function CurrentlyPlaying() {
     };
 
     return (
-        <div className="currently-playing">
-            <h2>Currently Playing</h2>
+        <div className={`currently-playing ${className}`} {...rest}>
             <div className="song-info">
                 <img src={currentlyPlaying.albumArt} className="album-art z-depth-1" />
                 <div className="song-text">
