@@ -11,7 +11,7 @@ export default function SongQueueContainer() {
         { title: "Song 5", artist: "Artist 3", duration: 453, albumArt: "https://picsum.photos/50" },
         { title: "Song 6", artist: "Artist 4", duration: 453, albumArt: "https://picsum.photos/50" },
         { title: "Song 7", artist: "Artist 5", duration: 453, albumArt: "https://picsum.photos/50" },
-        { title: "Song 8", artist: "Artist 5", duration: 453, albumArt: "https://picsum.photos/50" },
+        { title: "Song 8 - A song with a really really really long song name", artist: "Artist 5", duration: 453, albumArt: "https://picsum.photos/50" },
     ];
 
     return (

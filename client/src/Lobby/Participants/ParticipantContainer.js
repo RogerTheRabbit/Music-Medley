@@ -25,7 +25,7 @@ export default function ParticipantContainer() {
             profilePicture: "https://picsum.photos/50",
         },
         {
-            name: "Sixth User",
+            name: "Sixth User with a really really really long name for some reason that we should probably put a limit on...",
             profilePicture: "https://picsum.photos/50",
         },
     ];
