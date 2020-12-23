@@ -20,8 +20,6 @@
 .song-item .album-art {
     border-radius: 1em;
     margin: 0.3em 0.6em 0.3em 0.6em;
-    height: 50px;
-    width: 50px;
 }
 
 .song-item .song-info {

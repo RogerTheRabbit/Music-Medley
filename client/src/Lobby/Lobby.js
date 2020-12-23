@@ -23,6 +23,7 @@ function Lobby() {
             <div className="center-content">
                 <div className="center-content-container">
                     <Search />
+                    <br/>
                     <SongQueueContainer />
                 </div>
             </div>

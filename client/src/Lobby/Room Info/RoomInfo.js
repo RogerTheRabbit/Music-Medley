@@ -15,21 +15,21 @@ export default function RoomInfo() {
             {/* <h3>
                 {"Room Name"} <button className="outlined-button btn-fill-horz-open btn-rounded icon-button"><MDBIcon icon="edit" onClick={() => editRoomName()} /></button>
             </h3> */}
-            <p>Queue Length: {123.45}</p>
-            <MDBPopover placement="right" popover clickable domElement>
-                <button className="outlined-button btn-fill-horz-open btn-rounded icon-button">
-                    <MDBIcon icon="key" />
-                </button>
-                <div>
-                    <MDBPopoverBody>Password: {"Room Password"}</MDBPopoverBody>
-                </div>
-            </MDBPopover>
+            {/* <p>Queue Length: {123.45}</p> */}
             <div className="room-buttons">
-                <button onClick={() => shareFunction()} className="outlined-button blue btn-fill-horz-open btn-rounded">
-                    SHARE
+                <MDBPopover placement="top" popover clickable domElement>
+                    <button className="outlined-button btn-fill-horz-open btn-rounded icon-button-md">
+                        <MDBIcon icon="key" />
+                    </button>
+                    <div>
+                        <MDBPopoverBody>Password: {"Room Password"}</MDBPopoverBody>
+                    </div>
+                </MDBPopover>
+                <button onClick={() => shareFunction()} className="outlined-button blue btn-fill-horz-open btn-rounded icon-button-md">
+                    <MDBIcon icon="share-alt" />
                 </button>
-                <button onClick={() => leaveFunction()} className="outlined-button red btn-fill-horz-open btn-rounded">
-                    LEAVE
+                <button onClick={() => leaveFunction()} className="outlined-button red btn-fill-horz-open btn-rounded icon-button-md">
+                    <MDBIcon icon="sign-out-alt" />
                 </button>
             </div>
         </div>

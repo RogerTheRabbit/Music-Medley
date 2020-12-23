@@ -4,7 +4,7 @@ import { formatDuration } from "../../utils/utils";
 export default function SongQueueItem({ song }) {
     return (
         <div className="song-item ease-transition">
-            <img src={song.albumArt} alt="Album art" className="album-art z-depth-1" />
+            <img src={song.albumArt} alt="Album art" className="album-art z-depth-1" width="50px" height="50px"/>
             <div className="song-info">
                 <div>{song.title}</div>
                 <div className="song-artist">{song.artist}</div>

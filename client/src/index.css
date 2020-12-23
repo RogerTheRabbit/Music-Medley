@@ -126,6 +126,29 @@ input[type="text"] {
   color: gray;
 }
 
+.icon-button-md {
+  width: 3em;
+  height: 3em;
+  margin: 0.5em 0.25em 0.5em 0.25em;
+  padding: 10px;
+}
+
+.icon-button-lg {
+  width: 4em;
+  height: 4em;
+  margin: 0.5em 0.25em 0.5em 0.25em;
+  padding: 10px;
+}
+
+/* Icon button adjustments */
+i.fa-play {
+  padding-left: 4px;
+}
+
+i.fa-share-alt {
+  padding-right: 2px;
+}
+
 /* 
   CSS for scroll bars -- TODO: Finalize CSS
   https://mdbootstrap.com/docs/react/advanced/scroll/#test2 

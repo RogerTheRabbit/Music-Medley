@@ -7,21 +7,6 @@
     align-items: center;
 }
 
-.controls button {
-    width: 3em;
-    margin: 0.5em 0.25em 0.5em 0.25em;
-    padding: 10px 10px 10px 10px;
-}
-
-.controls button.primary {
-    width: 4em;
-    height: 4em;
-}
-
-.controls button.primary i.fa-play {
-    padding-left: 4px;
-}
-
 /* Note: progress-bar is defined by Material Design Bootstrap */
 .custom-progress-bar {
     display: flex;

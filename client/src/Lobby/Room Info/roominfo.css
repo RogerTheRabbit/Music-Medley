@@ -3,7 +3,3 @@
     flex-direction: row;
     justify-content: space-evenly;
 }
-
-.room-buttons .outlined-button {
-    width: 100px;
-}

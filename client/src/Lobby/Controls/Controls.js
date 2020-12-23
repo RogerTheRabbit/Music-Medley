@@ -28,19 +28,19 @@ function Controls(props) {
             <div className="controls">
                 <CurrentlyPlaying className="left-section"/>
                 <div>
-                    <button className="outlined-button btn-fill-horz-open btn-rounded">
+                    <button className="outlined-button btn-fill-horz-open btn-rounded icon-button-md">
                         <MDBIcon icon="random" />
                     </button>
-                    <button className="outlined-button btn-fill-horz-open btn-rounded">
+                    <button className="outlined-button btn-fill-horz-open btn-rounded icon-button-md">
                         <MDBIcon icon="step-backward" />
                     </button>
-                    <button className="primary outlined-button btn-fill-horz-open btn-rounded">
+                    <button className="primary outlined-button btn-fill-horz-open btn-rounded icon-button-lg">
                         <MDBIcon icon={playing ? "play" : "pause"} />
                     </button>
-                    <button className="outlined-button btn-fill-horz-open btn-rounded">
+                    <button className="outlined-button btn-fill-horz-open btn-rounded icon-button-md">
                         <MDBIcon icon="step-forward" />
                     </button>
-                    <button className="outlined-button btn-fill-horz-open btn-rounded">
+                    <button className="outlined-button btn-fill-horz-open btn-rounded icon-button-md">
                         <MDBIcon icon="redo-alt" />
                     </button>
                 </div>

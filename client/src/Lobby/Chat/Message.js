@@ -4,7 +4,7 @@ import { formatTime } from "../../utils/utils";
 export default function Message({ message }) {
     return (
         <div className="chat-message">
-            <img src={message.from.profilePicture} className={"z-depth-1"} alt="Profile" />
+            <img src={message.from.profilePicture} className={"z-depth-1"} alt="Profile" width="40px" height="40px"/>
             <div>
                 <div className="message-info">
                     <div className="message-from">{message.from.name}</div>
