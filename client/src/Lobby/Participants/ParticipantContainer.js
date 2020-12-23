@@ -31,7 +31,7 @@ export default function ParticipantContainer() {
     ];
 
     return (
-        <div className="participant-container">
+        <div className="participant-container thin-scroll-bar">
             {participants.map((participant, idx) => {
                 return <Participant key={idx} participant={participant} />;
             })}

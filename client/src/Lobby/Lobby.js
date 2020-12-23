@@ -9,7 +9,6 @@ import ParticipantContainer from "./Participants/ParticipantContainer";
 import Controls from "./Controls/Controls";
 import AudioSources from "../players/AudioSources";
 import SongQueueContainer from "./SongQueue/SongQueueContainer";
-import CurrentlyPlaying from "./CurrentlyPlaying/CurrentlyPlaying";
 import Chat from "./Chat/Chat";
 
 function Lobby() {

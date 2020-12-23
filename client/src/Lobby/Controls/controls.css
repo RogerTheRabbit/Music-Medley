@@ -1,7 +1,6 @@
 .controls {
     position: relative;
     display: flex;
-    height: 6.5em;
     margin: 0 1em 0 1em;
     flex-direction: column;
     justify-content: center;

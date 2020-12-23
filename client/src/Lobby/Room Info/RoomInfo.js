@@ -10,11 +10,6 @@ export default function RoomInfo() {
         console.log("LEAVE ROOM");
     };
 
-    const editRoomName = () => {
-        // TODO: Edit room name
-        console.log("Edit room name...");
-    };
-
     return (
         <div>
             {/* <h3>

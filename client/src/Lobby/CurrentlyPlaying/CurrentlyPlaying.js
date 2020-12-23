@@ -11,7 +11,7 @@ export default function CurrentlyPlaying({className, ...rest}) {
     return (
         <div className={`currently-playing ${className}`} {...rest}>
             <div className="song-info">
-                <img src={currentlyPlaying.albumArt} className="album-art z-depth-1" />
+                <img src={currentlyPlaying.albumArt} className="album-art z-depth-1" alt="Song art" />
                 <div className="song-text">
                     <h4>{currentlyPlaying.song}</h4>
                     <div>{currentlyPlaying.artist}</div>
