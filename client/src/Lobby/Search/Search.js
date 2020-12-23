@@ -1,4 +1,5 @@
 import React from "react";
+import "./search.css";
 
 export default function Search() {
     const search = (query) => {
@@ -6,7 +7,7 @@ export default function Search() {
     };
 
     return (
-        <div>
+        <div className="search-container">
             <input
                 type="text"
                 label="Search"

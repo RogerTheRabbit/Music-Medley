@@ -2,4 +2,6 @@
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    background-color: #202225;
+    border-radius: 0 0 0.5em 0.5em;
 }
