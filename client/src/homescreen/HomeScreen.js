@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { setUsername } from "../redux/lobby/lobbyActions";
 import "./HomeScreen.css";
@@ -13,38 +13,30 @@ const formComponents = {
   CREATE_PAGE: "Create Page",
 };
 
-class HomeScreen extends Component {
-  urlParams = new URLSearchParams(this.props.location?.search);
+function HomeScreen(props) {
+  let urlParams = new URLSearchParams(props.location?.search);
 
-  state = {
-    currentFormComponent: this.urlParams.get("roomCode") ? formComponents.JOIN_PAGE : formComponents.MAIN_PAGE,
-    userName: "",
-    roomCode: this.urlParams.get("roomCode") || "",
-    roomPassword: "",
+    const [currentFormComponent, setCurrentFormComponent] = useState(urlParams.get("roomCode") ? formComponents.JOIN_PAGE : formComponents.MAIN_PAGE);
+    const [roomCode, setRoomCode] = useState(urlParams.get("roomCode") || "");
+    const [roomPassword, setRoomPassword] = useState("");
+
+  const handleJoinPage = () => {
+      setCurrentFormComponent(formComponents.JOIN_PAGE);
   };
 
-  renderForm() {
-    const handleJoinPage = () => {
-      this.setState((state) => ({
-        currentFormComponent: formComponents.JOIN_PAGE,
-      }));
-    };
+  const handleCreatePage = () => {
+      setCurrentFormComponent(formComponents.CREATE_PAGE);
+  };
 
-    const handleCreatePage = () => {
-      this.setState((state) => ({
-        currentFormComponent: formComponents.CREATE_PAGE,
-      }));
-    };
+  const handleMainPage = () => {
+      setCurrentFormComponent(formComponents.MAIN_PAGE);
+  };
 
-    const handleMainPage = () => {
-      this.setState((state) => ({
-        currentFormComponent: formComponents.MAIN_PAGE,
-      }));
-    };
+  const roomURL = `/room/?roomCode=${roomCode}`;
 
-    const roomURL = `/room/?roomCode=${this.state.roomCode}`;
+  const renderForm = () => {
 
-    switch (this.state.currentFormComponent) {
+    switch (currentFormComponent) {
       case formComponents.MAIN_PAGE:
         return (
           <form>
@@ -75,23 +67,23 @@ class HomeScreen extends Component {
                 label="Username"
                 placeholder="Username"
                 className="z-depth-1-half"
-                value={this.props.userName}
-                onChange={(e) => this.props.setUsername(e.target.value)}
+                value={props.userName}
+                onChange={(e) => props.setUsername(e.target.value)}
               />
               <input
                 type="text"
                 label="Room Code"
                 placeholder="Room Code"
                 className="z-depth-1-half"
-                value={this.state.roomCode}
-                onChange={(e) => this.setState({ roomCode: e.target.value })}
+                value={roomCode}
+                onChange={(e) => setRoomCode(e.target.value)}
               />
               <input
                 type="password"
                 label="Room Password"
                 placeholder="Room Password (optional)"
                 className="z-depth-1-half"
-                onChange={(e) => this.setState({ roomPassword: e.target.value })}
+                onChange={(e) => setRoomPassword(e.target.value)}
               />
             </div>
             <div className="login-button-group py-4 mt-3">
@@ -115,15 +107,15 @@ class HomeScreen extends Component {
                 label="Username"
                 placeholder="Username"
                 className="z-depth-1-half"
-                value={this.props.userName}
-                onChange={(e) => this.props.setUsername(e.target.value)}
+                value={props.userName}
+                onChange={(e) => props.setUsername(e.target.value)}
               />
               <input
                 type="password"
                 label="Room Password"
                 placeholder="Room Password (optional)"
                 className="z-depth-1-half"
-                onChange={(e) => this.setState({ roomPassword: e.target.value })}
+                onChange={(e) => setRoomPassword(e.target.value)}
               />
             </div>
             <div className="login-button-group py-4 mt-3">
@@ -143,18 +135,16 @@ class HomeScreen extends Component {
     }
   }
 
-  render() {
-    return (
-      <div className="heavy-rain-gradient d-flex justify-content-center flex-container">
-        <MDBCard className="login-card align-self-center">
-          <MDBCardBody className="aqua-gradient login-card-body">
-            <img src={logo} className="login-image" alt="TODO: CHANGE ME TO WHATEVER THE ACTUAL THING IS LATER" />
-            {this.renderForm()}
-          </MDBCardBody>
-        </MDBCard>
-      </div>
-    );
-  }
+  return (
+    <div className="heavy-rain-gradient d-flex justify-content-center flex-container">
+      <MDBCard className="login-card align-self-center">
+        <MDBCardBody className="aqua-gradient login-card-body">
+          <img src={logo} className="login-image" alt="TODO: CHANGE ME TO WHATEVER THE ACTUAL THING IS LATER" />
+          {renderForm()}
+        </MDBCardBody>
+      </MDBCard>
+    </div>
+  );
 }
 
 const mapStateToProps = (state) => {
