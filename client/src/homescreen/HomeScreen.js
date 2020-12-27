@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { setUsername } from "../redux/lobby/lobbyActions";
 import "./HomeScreen.css";
 import logo from "../resource/Whale_Vector.svg";
 
@@ -11,7 +13,7 @@ const formComponents = {
   CREATE_PAGE: "Create Page",
 };
 
-export default class HomeScreen extends Component {
+class HomeScreen extends Component {
   urlParams = new URLSearchParams(this.props.location?.search);
 
   state = {
@@ -73,8 +75,8 @@ export default class HomeScreen extends Component {
                 label="Username"
                 placeholder="Username"
                 className="z-depth-1-half"
-                value={this.state.userName}
-                onChange={(e) => this.setState({ userName: e.target.value })}
+                value={this.props.userName}
+                onChange={(e) => this.props.setUsername(e.target.value)}
               />
               <input
                 type="text"
@@ -113,8 +115,8 @@ export default class HomeScreen extends Component {
                 label="Username"
                 placeholder="Username"
                 className="z-depth-1-half"
-                value={this.state.userName}
-                onChange={(e) => this.setState({ userName: e.target.value })}
+                value={this.props.userName}
+                onChange={(e) => this.props.setUsername(e.target.value)}
               />
               <input
                 type="password"
@@ -154,3 +156,15 @@ export default class HomeScreen extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+    return state.lobby;
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setUsername: (userName) => dispatch(setUsername(userName)),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

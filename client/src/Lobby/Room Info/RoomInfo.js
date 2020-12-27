@@ -1,13 +1,17 @@
 import React from "react";
+import { connect } from "react-redux";
+import { setConnected, resetLobby } from "../../redux/lobby/lobbyActions";
 import { MDBPopover, MDBPopoverBody, MDBIcon } from "mdbreact";
 import "./roominfo.css";
 
-export default function RoomInfo() {
+function RoomInfo( props ) {
     const shareFunction = () => {
         console.log("SHARE ROOM");
     };
     const leaveFunction = () => {
-        console.log("LEAVE ROOM");
+        console.log("RESETTING LOBBY");
+        props.setConnected(false);
+        props.resetLobby();
     };
 
     return (
@@ -35,3 +39,16 @@ export default function RoomInfo() {
         </div>
     );
 }
+
+const mapStateToProps = (state) => {
+    return state.lobby;
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setConnected: (connected) => dispatch(setConnected(connected)),
+        resetLobby: () => dispatch(resetLobby()),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RoomInfo);

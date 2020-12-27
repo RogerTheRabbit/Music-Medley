@@ -1,9 +1,15 @@
 import React from "react";
 import { formatTime } from "../../utils/utils";
+import { motion } from "framer-motion"
 
 export default function Message({ message }) {
     return (
-        <div className="chat-message">
+        <motion.div
+            className="chat-message"
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            transition={{ ease: "easeIn", duration: 0.1 }}
+        >
             <img src={message.from.profilePicture} className={"z-depth-1"} alt="Profile" width="40px" height="40px"/>
             <div>
                 <div className="message-info">
@@ -12,6 +18,6 @@ export default function Message({ message }) {
                 </div>
                 <div className="message-text">{message.message}</div>
             </div>
-        </div>
+        </motion.div>
     );
 }
