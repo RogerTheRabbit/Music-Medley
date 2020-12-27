@@ -3,24 +3,39 @@ import "./Lobby.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
-import Chat from './Components/Chat';
+import Search from "./Search/Search";
+import RoomInfo from "./Room Info/RoomInfo";
+import ParticipantContainer from "./Participants/ParticipantContainer";
+import Controls from "./Controls/Controls";
+import AudioSources from "../players/AudioSources";
+import SongQueueContainer from "./SongQueue/SongQueueContainer";
+import Chat from "./Chat/Chat";
 
 function Lobby() {
-  return (
-    
-    <div className="main-container">
-      <div className="room-info">Room Info</div>
-      <div className="search-bar">Search Bar</div>
-      <div className="chatbox">
-        <Chat/>
-      </div>
-      {/* <Chat/> */}
-      <div className="participants">Participants</div>
-      <div className="current-song">Current Song</div>
-      <div className="queue">Queue</div>
-      <div className="music-player">Music Player</div>
-    </div>
-  );
+    return (
+        <div className="lobby-container">
+            <div className="left-panel">
+                <div className="left-panel-container">
+                    <RoomInfo />
+                    <ParticipantContainer />
+                </div>
+            </div>
+            <div className="center-content">
+                <div className="center-content-container">
+                    <Search />
+                    <br/>
+                    <SongQueueContainer />
+                </div>
+            </div>
+            <div className="right-panel">
+                <Chat />
+            </div>
+            <div className="controls-section">
+                <Controls />
+            </div>
+            {/* <AudioSources /> */}
+        </div>
+    );
 }
 
 export default Lobby;

@@ -1,51 +1,47 @@
-.main-container {
+.lobby-container {
 	height: 100vh;
-	width: 100vw;
 	display: grid;
-	grid-template-columns: 1fr 2fr 1fr;
-	justify-items: stretch;
-	grid-auto-rows: minmax(100px, auto);
-	gap: 10px;
+	grid-template-rows: auto 6.5em;
+	grid-template-columns: 13em auto 25em;
 }
 
-.room-info {
+.left-panel {
 	grid-column: 1;
 	grid-row: 1;
-	background-color: burlywood;
+	overflow-y: auto;
+	background-color: #2f3136;
 }
 
-.search-bar {
+.left-panel .left-panel-container {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.center-content {
 	grid-column: 2;
 	grid-row: 1;
-	background-color: cadetblue;
+	overflow-y: auto;
+	background-color: #2f3136;
 }
 
-.chatbox {
+.center-content-container {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	background-color: #36393f;
+	border-radius: 0.5em;
+}
+
+.right-panel {
 	grid-column: 3;
-	grid-row: 1 / 6;
-	background-color: cornflowerblue;
+	grid-row: 1;
+	background-color: #2f3136;
+	overflow-y: auto;
 }
 
-.participants {
-	grid-column: 1;
-	grid-row: 2 / 6;
-	background-color: crimson;
-}
-
-.current-song {
-	grid-column: 2;
+.controls-section {
+	background-color: #202225;
+	grid-column: 1 / 4;
 	grid-row: 2;
-	background-color: lightseagreen;
-}
-
-.queue {
-	grid-column: 2;
-	grid-row: 3 / 6;
-	background-color: deepskyblue;
-}
-
-.music-player {
-	background-color: indianred;
-	grid-column: 1 / -1;
-	grid-row: 6;
 }

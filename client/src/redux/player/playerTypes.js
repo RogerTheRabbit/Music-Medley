@@ -6,4 +6,5 @@ export default {
     SET_PROGRESS: 'SET_PROGRESS',
     SET_SONG: 'SET_SONG',
     SET_READY: 'SET_READY',
+    SET_DURATION: "SET_DURATION",
 }

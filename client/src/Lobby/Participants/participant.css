@@ -1,0 +1,32 @@
+.participant-container {
+    overflow-y: auto;
+}
+
+.participants {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.participant {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.participant:hover {
+    background-color: rgba(4,4,5,0.07);
+}
+
+.participant img {
+    border-radius: 50%;
+    margin: 0.3em 0.3em 0.3em 0.3em;
+}
+
+.participant p {
+    margin: auto auto auto 0.3em;
+}
