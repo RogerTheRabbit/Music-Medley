@@ -18,6 +18,13 @@ const PROTOCOL = {
 };
 
 let clients = {};
+let rooms = {};
+
+let room1 = {
+	name: "room1",
+	password: "password",
+	participants: {}
+};
 
 // App setup
 let app = express();
@@ -35,6 +42,13 @@ io.on("connection", function (client) {
 
 	client.emit(PROTOCOL.TEST, "TEST");
 
+	client.on(PROTOCOL.JOIN_ROOM, () => {
+		client.join('room1');
+		rooms['room1'] = room1;
+		room1.participants[client.id] = client;
+		console.log(client.id + ' has joined room: ' + room1);
+		io.to("room1").emit(PROTOCOL.JOIN_ROOM, client + "has joined room: " + room1);
+	})
 	// broadcast when a user connects
 	client.broadcast.emit(PROTOCOL.NEW_USER, client + "has joined the room.");
 

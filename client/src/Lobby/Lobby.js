@@ -7,6 +7,7 @@ import Chat from './Components/Chat';
 
 function Lobby() {
   return (
+    
     <div className="main-container">
       <div className="room-info">Room Info</div>
       <div className="search-bar">Search Bar</div>

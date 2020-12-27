@@ -20,9 +20,14 @@ function initialize() {
 	let io = socket.connect("http://" + IP + ":" + PORT);
 	console.log("Trying to connect to:", "http://" + IP + ":" + PORT);
 
-	io.on("connect", (io) => {
+	io.on("connect", () => {
 		console.log("Connected to server");
+		io.emit(PROTOCOL.JOIN_ROOM);
 	});
+
+	io.on(PROTOCOL.JOIN_ROOM, (msg) => {
+		console.log(msg);
+	})
 
 	io.on("disconnect", () => {
 		console.log("Connection lost...");
