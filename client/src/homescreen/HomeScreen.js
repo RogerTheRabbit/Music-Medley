@@ -5,41 +5,53 @@ import "./HomeScreen.css";
 import logo from "../resource/Whale_Vector.svg";
 
 import { MDBCardBody, MDBAnimation, MDBCard } from "mdbreact";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const formComponents = {
-  MAIN_PAGE: "Main Page",
-  JOIN_PAGE: "Join Page",
-  CREATE_PAGE: "Create Page",
+  MAIN: "Main",
+  JOIN: "Join",
+  CREATE: "Create",
 };
 
 function HomeScreen(props) {
   let urlParams = new URLSearchParams(props.location?.search);
 
-    const [currentFormComponent, setCurrentFormComponent] = useState(urlParams.get("roomCode") ? formComponents.JOIN_PAGE : formComponents.MAIN_PAGE);
-    const [roomCode, setRoomCode] = useState(urlParams.get("roomCode") || "");
-    const [roomPassword, setRoomPassword] = useState("");
+  const [currentFormComponent, setCurrentFormComponent] = useState(urlParams.get("roomCode") ? formComponents.JOIN : formComponents.MAIN);
+  const [roomCode, setRoomCode] = useState(urlParams.get("roomCode") || "");
+  const [roomPassword, setRoomPassword] = useState("");
+  const roomURL = `/room/?roomCode=${roomCode}`;
+  const history = useHistory();
 
   const handleJoinPage = () => {
-      setCurrentFormComponent(formComponents.JOIN_PAGE);
+      setCurrentFormComponent(formComponents.JOIN);
   };
 
   const handleCreatePage = () => {
-      setCurrentFormComponent(formComponents.CREATE_PAGE);
+      setCurrentFormComponent(formComponents.CREATE);
   };
 
   const handleMainPage = () => {
-      setCurrentFormComponent(formComponents.MAIN_PAGE);
+      setCurrentFormComponent(formComponents.MAIN);
   };
 
-  const roomURL = `/room/?roomCode=${roomCode}`;
+  // TODO: Make network call to actually join room.
+  const joinRoom = () => {
+    console.log("Joining room");
+    history.push(roomURL);
+  }
+
+  // TODO: Make network call to actually create and join room.
+  const createRoom = () => {
+    console.log("Creating room");
+    history.push(roomURL);
+  }
 
   const renderForm = () => {
 
     switch (currentFormComponent) {
-      case formComponents.MAIN_PAGE:
+      case formComponents.MAIN:
         return (
-          <form>
+          <div className="login-card-body-content">
             <MDBAnimation type="zoomIn" reveal>
               <p className="h1 text-center py-4 login-header">MUSIC MEDLEY</p>
             </MDBAnimation>
@@ -54,19 +66,19 @@ function HomeScreen(props) {
                 CREATE ROOM
               </button>
             </div>
-          </form>
+          </div>
         );
 
-      case formComponents.JOIN_PAGE:
+      case formComponents.JOIN:
         return (
-          <form>
+          <div className="login-card-body-content">
             <p className="h1 text-center py-4 login-header">JOIN ROOM</p>
             <div className="d-flex justify-content-around flex-column align-content-center align-items-center flex-grow-1">
               <input
                 type="text"
                 label="Username"
                 placeholder="Username"
-                className="z-depth-1-half"
+                className="login-input z-depth-1-half"
                 value={props.userName}
                 onChange={(e) => props.setUsername(e.target.value)}
               />
@@ -74,7 +86,7 @@ function HomeScreen(props) {
                 type="text"
                 label="Room Code"
                 placeholder="Room Code"
-                className="z-depth-1-half"
+                className="login-input z-depth-1-half"
                 value={roomCode}
                 onChange={(e) => setRoomCode(e.target.value)}
               />
@@ -82,31 +94,29 @@ function HomeScreen(props) {
                 type="password"
                 label="Room Password"
                 placeholder="Room Password (optional)"
-                className="z-depth-1-half"
+                className="login-input z-depth-1-half"
                 onChange={(e) => setRoomPassword(e.target.value)}
               />
             </div>
             <div className="login-button-group py-4 mt-3">
               <button className="outlined-button btn-fill-horz-open btn-rounded" onClick={() => handleMainPage()}>
-                Go Back
+                Back
               </button>
-              <Link to={roomURL}>
-                <button className="outlined-button btn-fill-horz-open btn-rounded">Enter</button>
-              </Link>
+              <button onClick={()=>joinRoom()} className="outlined-button btn-fill-horz-open btn-rounded">Enter</button>
             </div>
-          </form>
+          </div>
         );
 
-      case formComponents.CREATE_PAGE:
+      case formComponents.CREATE:
         return (
-          <form>
+          <div className="login-card-body-content">
             <p className="h1 text-center py-4 login-header">CREATE ROOM</p>
             <div className="d-flex justify-content-around flex-column align-content-center align-items-center flex-grow-1">
               <input
                 type="text"
                 label="Username"
                 placeholder="Username"
-                className="z-depth-1-half"
+                className="login-input z-depth-1-half"
                 value={props.userName}
                 onChange={(e) => props.setUsername(e.target.value)}
               />
@@ -114,20 +124,18 @@ function HomeScreen(props) {
                 type="password"
                 label="Room Password"
                 placeholder="Room Password (optional)"
-                className="z-depth-1-half"
+                className="login-input z-depth-1-half"
                 onChange={(e) => setRoomPassword(e.target.value)}
               />
             </div>
             <div className="login-button-group py-4 mt-3">
               <button className="outlined-button btn-fill-horz-open btn-rounded" onClick={() => handleMainPage()}>
-                Go Back
+                Back
               </button>
               <br />
-              <Link to={roomURL}>
-                <button className="outlined-button btn-fill-horz-open btn-rounded">Enter</button>
-              </Link>
+              <button onClick={()=>createRoom()} className="outlined-button btn-fill-horz-open btn-rounded">Enter</button>
             </div>
-          </form>
+          </div>
         );
 
       default:
