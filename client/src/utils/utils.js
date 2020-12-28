@@ -23,6 +23,5 @@ export function formatDuration(duration) {
  * @param time Date object to format 
  */
 export function formatTime(time) {
-    console.log(time);
     return `${time.getHours()}:${time.getMinutes()}`;
 }

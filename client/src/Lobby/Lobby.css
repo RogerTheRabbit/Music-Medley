@@ -1,8 +1,12 @@
+:root {
+	--controller-height: 6.5em
+}
+
 .lobby-container {
 	height: 100vh;
 	display: grid;
-	grid-template-rows: auto 6.5em;
-	grid-template-columns: 13em auto 25em;
+	grid-template-rows: auto var(--controller-height);
+	grid-template-columns: 13em repeat(auto-fit, minmax(0px, 100%));
 }
 
 .left-panel {
@@ -44,4 +48,19 @@
 	background-color: #202225;
 	grid-column: 1 / 4;
 	grid-row: 2;
+}
+
+@media screen and (max-width: 786px) {
+
+	.center-content {
+		width: calc(100vw - 13em)
+	}
+
+	.right-panel {
+		position: absolute;
+		right: 0;
+		height: calc(100vh - var(--controller-height));
+		max-width: 100vw;
+	}
+
 }
