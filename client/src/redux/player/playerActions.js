@@ -41,3 +41,12 @@ export const setReady = (ready) => {
         }
     }
 }
+
+export const setDuration = (duration) => {
+    return {
+        type: TYPES.SET_DURATION,
+        data: {
+            duration,
+        },
+    };
+};

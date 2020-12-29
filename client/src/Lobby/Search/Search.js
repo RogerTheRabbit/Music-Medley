@@ -1,5 +1,6 @@
 import React from "react";
 import dotenv from "dotenv";
+import "./search.css";
 
 dotenv.config();
 
@@ -17,7 +18,7 @@ export default function Search() {
     };
     
     return (
-        <div>
+        <div className="search-container">
             <input
                 type="text"
                 label="Search"

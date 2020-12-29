@@ -1,5 +1,4 @@
 import React from "react";
-import AudioSources from "./players/AudioSources";
 import Lobby from "./Lobby/Lobby";
 import HomeScreen from "./homescreen/HomeScreen";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
@@ -25,7 +24,6 @@ export default function App(props) {
           <a href="/">Go back</a>
         </Route>
       </Switch>
-      {/* <AudioSources /> */}
     </Router>
   );
 }

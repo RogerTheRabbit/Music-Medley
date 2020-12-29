@@ -1,0 +1,25 @@
+.currently-playing {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.currently-playing .song-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.currently-playing .album-art {
+    height: 75px;
+    width: 75px;
+    border-radius: 1em;
+}
+
+.currently-playing .song-text {
+    margin-left: 1em;
+    justify-content: center;
+    align-items: center;
+}

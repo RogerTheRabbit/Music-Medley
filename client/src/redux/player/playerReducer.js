@@ -14,8 +14,8 @@ const initalState = {
     playbackRate: 1.00,     // Min=0.25, Max=2.00 default=1.00
     pip: false,
     progress: 0,
+    duration: 0,
 }
-
 
 const reducer = (state = initalState, action) => {
     switch (action.type) {
@@ -30,6 +30,12 @@ const reducer = (state = initalState, action) => {
                 ...state,
                 playing: !state.playing
             }
+        case TYPES.SET_DURATION:
+            console.log("SET DURATION RECIEVED", action.data.duration);
+            return {
+                ...state,
+                duration: action.data.duration,
+            };
         case TYPES.PLAY:
             console.log("PLAY RECIEVED")
             return {
