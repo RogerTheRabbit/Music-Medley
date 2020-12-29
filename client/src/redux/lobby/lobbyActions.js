@@ -15,6 +15,33 @@ export const addMessage = (newMessage) => {
     }
 }
 
+export const addSong = (newSong) => {
+    return {
+        type: TYPES.ADD_SONG,
+        data: {
+            newSong
+        }
+    }
+}
+
+export const addParticipant = (newParticipant) => {
+    return {
+        type: TYPES.ADD_PARTICIPANT,
+        data: {
+            newParticipant
+        }
+    }
+}
+
+export const removeParticipant = (participantId) => {
+    return {
+        type: TYPES.REMOVE_PARTICIPANT,
+        data: {
+            participantId
+        }
+    }
+}
+
 export const setUsername = (userName) => {
     return {
         type: TYPES.SET_USERNAME,
