@@ -1,13 +1,34 @@
 import React from "react";
+import { connect } from "react-redux";
+import { setConnected, resetLobby } from "../../redux/lobby/lobbyActions";
 import { MDBPopover, MDBPopoverBody, MDBIcon } from "mdbreact";
 import "./roominfo.css";
 
-export default function RoomInfo() {
+function RoomInfo( props ) {
+    
     const shareFunction = () => {
-        console.log("SHARE ROOM");
+        if(navigator.share) {
+            navigator.share({
+                title: "Music Medley Room",
+                text: "Join room to listen to music together!",
+                url: window.location.href,
+            }).then(() => {
+                console.log("Share successful!");
+            })
+        } else if (navigator.clipboard) {
+            navigator.clipboard.writeText(window.location.href)
+                .then(()=>{
+                    console.log("Share successful!");
+                });
+        } else {
+            console.log("Failed to copy...");
+        }
     };
+
     const leaveFunction = () => {
-        console.log("LEAVE ROOM");
+        console.log("RESETTING LOBBY");
+        props.setConnected(false);
+        props.resetLobby();
     };
 
     return (
@@ -35,3 +56,16 @@ export default function RoomInfo() {
         </div>
     );
 }
+
+const mapStateToProps = (state) => {
+    return state.lobby;
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setConnected: (connected) => dispatch(setConnected(connected)),
+        resetLobby: () => dispatch(resetLobby()),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RoomInfo);

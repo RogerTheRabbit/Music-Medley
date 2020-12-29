@@ -1,20 +1,21 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import { Redirect, Route } from "react-router-dom";
 
 /**
  * Checks if the websocket is connected to a room, if not, then redirect to join screen
  */
-export default function ConnectedRoute({ children, location, ...rest }) {
-  const somethingThatChecksIsConnected = true; // This will obviously need to be changed later when the networking stuff is implemented
-  const urlParams = new URLSearchParams(location?.search);
+function ConnectedRoute( props, rest ) {
+  const somethingThatChecksIsConnected = true;//props.connected;
+  const urlParams = new URLSearchParams(props.location?.search);
 
   return (
     <Route
       {...rest}
       children={() => {
         return somethingThatChecksIsConnected ? (
-          children
+          props.children
         ) : (
           <Redirect to={{ pathname: `/join/?roomCode=${urlParams.get("roomCode")}` }} />
         );
@@ -22,3 +23,9 @@ export default function ConnectedRoute({ children, location, ...rest }) {
     />
   );
 }
+
+const mapStateToProps = (state) => {
+    return state.lobby;
+};
+
+export default connect(mapStateToProps)(ConnectedRoute);

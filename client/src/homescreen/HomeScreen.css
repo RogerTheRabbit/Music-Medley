@@ -33,11 +33,15 @@
   border-radius: 15px;
 }
 
-.login-card-body form {
+.login-card-body-content {
   width: 100%;
   padding-left: 15px;
   display: flex;
   flex-direction: column;
+}
+
+.login-input {
+  width: 80%;
 }
 
 .main-login-options {

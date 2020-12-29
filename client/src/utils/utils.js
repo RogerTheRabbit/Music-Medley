@@ -17,7 +17,11 @@ export function formatDuration(duration) {
     return `${(duration / 60).toFixed(0)}:${(duration % 60).toFixed(0).padStart(2, 0)}`;
 }
 
-// TODO: Make this do actual formatting instead of just being an alias for formatDuration
+// TODO: Do better formatting - I just did this real quick because it's wayyy to late at night and I needa go to bed
+/**
+ * 
+ * @param time Date object to format 
+ */
 export function formatTime(time) {
-    return formatDuration(time);
+    return `${time.getHours()}:${time.getMinutes()}`;
 }
