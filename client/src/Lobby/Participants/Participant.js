@@ -4,7 +4,6 @@ import "./participant.css";
 
 export default function Participant({ participant, ...rest }) {
     return (
-        
         <motion.div
             {...rest} 
             className="participant"
@@ -13,7 +12,7 @@ export default function Participant({ participant, ...rest }) {
             transition={{ ease: "easeIn", duration: 0.1 }}
         >
             <img className="z-depth-1" src={participant.profilePicture} alt="Profile" width="40px" height="40px"/>
-            <p>{participant.name}</p>
+            <p>{participant.userName}</p>
         </motion.div>
     );
 }

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { connect } from "react-redux";
 import { setUsername } from "../redux/lobby/lobbyActions";
+import { WebSocketContext } from '../networking/networking';
 import "./HomeScreen.css";
 import logo from "../resource/Whale_Vector.svg";
 
@@ -21,6 +22,7 @@ function HomeScreen(props) {
   const [roomPassword, setRoomPassword] = useState("");
   const roomURL = `/room/?roomCode=${roomCode}`;
   const history = useHistory();
+  const networking = useContext(WebSocketContext);
 
   const handleJoinPage = () => {
       setCurrentFormComponent(formComponents.JOIN);
@@ -36,7 +38,7 @@ function HomeScreen(props) {
 
   // TODO: Make network call to actually join room.
   const joinRoom = () => {
-    console.log("Joining room");
+    networking.joinRoom(props.userName, roomCode, roomPassword);
     history.push(roomURL);
   }
 

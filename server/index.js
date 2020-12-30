@@ -41,13 +41,17 @@ io.on("connection", function (client) {
 	console.log("Client[" + client.id + "] connected");
 	clients[client.id] = client;
 
-	client.on(PROTOCOL.JOIN_ROOM, () => {
-		console.log(generateRoomCode(5));
+	client.on(PROTOCOL.JOIN_ROOM, ({userName, roomCode, roomPassword}) => {
 		client.join('room1');
 		// todo: add the room to the rooms object as it gets created
 		rooms['room1'] = room1;
-		room1.participants[client.id] = client;
-		io.to("room1").emit(PROTOCOL.JOIN_ROOM, client.id + " hello has joined room: " + room1.name);
+		const newParticipant = { 
+			id: client.id,
+			userName: userName,
+			profilePicture: `https://picsum.photos/id/${Math.trunc(Math.random() * 300)}/50/50`,
+		}
+		room1.participants[client.id] = newParticipant;
+		io.to("room1").emit(PROTOCOL.JOIN_ROOM, newParticipant);
 	})
 
 	// when client disconnects
@@ -69,4 +73,4 @@ function generateRoomCode(length) {
 	   result += characters.charAt(Math.floor(Math.random() * charactersLength));
 	}
 	return result;
- }
+}

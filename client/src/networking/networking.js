@@ -1,4 +1,7 @@
-import socket from "socket.io-client";
+import React, { createContext } from 'react';
+import socket from 'socket.io-client';
+import { useDispatch } from 'react-redux';
+import { addParticipant } from '../redux/lobby/lobbyActions';
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -6,9 +9,8 @@ dotenv.config();
 const IP = process.env.REACT_APP_IP;
 const PORT = process.env.REACT_APP_PORT;
 
-// Added some messages we might send.
-// The values aren't that important but they should be
-// consistent between the client and the server
+export const WebSocketContext = createContext(null)
+
 const PROTOCOL = {
 	TEST: "test",
 	NEW_USER: "new_user",
@@ -16,39 +18,52 @@ const PROTOCOL = {
 	USER_LEFT: "user_left"
 };
 
-// Initialize listeners here
-function initialize() {
-	let io = socket.connect("http://" + IP + ":" + PORT);
-	console.log("Trying to connect to:", "http://" + IP + ":" + PORT);
+export default ({ children }) => {
+    let io;
+    let ws;
 
-	io.on("connect", () => {
-		console.log("Connected to server");
-		io.emit(PROTOCOL.JOIN_ROOM);
-	});
+    const dispatch = useDispatch();
 
-	io.on(PROTOCOL.JOIN_ROOM, (msg) => {
-		console.log(msg);
-	})
+    const joinRoom = (userName, roomCode, roomPassword) => {
+        io.emit(PROTOCOL.JOIN_ROOM, {
+            userName: userName,
+            roomCode: roomCode,
+            roomPassword: roomPassword,
+        });
+    }
 
-	io.on(PROTOCOL.USER_LEFT, (msg) => 
-		console.log(msg)
-	);
+    if (!io) {
+        io = socket.connect("http://" + IP + ":" + PORT);
 
-	io.on("disconnect", (msg) => {
-		console.log(msg);
-	});
+        io.on("connect", () => {
+            console.log("Connected to server");
+        });
 
-	io.on(PROTOCOL.TEST, (data) => {
-		console.log(data);
-	});
+        io.on(PROTOCOL.JOIN_ROOM, (newParticipant) => {
+            dispatch(addParticipant(newParticipant))
+        })
+
+        io.on(PROTOCOL.USER_LEFT, (msg) => 
+            console.log(msg)
+        );
+
+        io.on("disconnect", (msg) => {
+            console.log(msg);
+        });
+
+        io.on(PROTOCOL.TEST, (data) => {
+            console.log(data);
+        });
+
+        ws = {
+            io: io,
+            joinRoom,
+        }
+    }
+
+    return (
+        <WebSocketContext.Provider value={ws}>
+            {children}
+        </WebSocketContext.Provider>
+    )
 }
-
-function joinRoom(roomName) {
-	console.log("Attempting to join room with id:", roomName);
-}
-
-function createAndJoinRoom(roomName, password) {
-	console.log("Attempting to join room with name '" + roomName + "' and password '" + password + "'");
-}
-
-export default { initialize, joinRoom, createAndJoinRoom };
