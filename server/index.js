@@ -13,8 +13,9 @@ const IP = process.env.IP;
 // consistent between the client and the server
 const PROTOCOL = {
 	TEST: "test",
-	NEW_USER: "newuser",
-	JOIN_ROOM: "joinroom",
+	NEW_USER: "new_user",
+	JOIN_ROOM: "join_room",
+	USER_LEFT: "user_left"
 };
 
 let clients = {};
@@ -40,22 +41,21 @@ io.on("connection", function (client) {
 	console.log("Client[" + client.id + "] connected");
 	clients[client.id] = client;
 
-	client.emit(PROTOCOL.TEST, "TEST");
-
 	client.on(PROTOCOL.JOIN_ROOM, () => {
 		client.join('room1');
+		// todo: add the room to the rooms object as it gets created
 		rooms['room1'] = room1;
 		room1.participants[client.id] = client;
-		console.log(client.id + ' has joined room: ' + room1);
-		io.to("room1").emit(PROTOCOL.JOIN_ROOM, client + " hello has joined room: " + room1);
+		io.to("room1").emit(PROTOCOL.JOIN_ROOM, client.id + " hello has joined room: " + room1.name);
 	})
-	// broadcast when a user connects
-	// client.broadcast.emit(PROTOCOL.NEW_USER, client + "has joined the room.");
 
 	// when client disconnects
 	client.on("disconnect", (reason) => {
-		// TODO: Remove disconnected clients from the clients variable
-		io.emit("Client[" + client.id + "] has disconnected for reason:", reason);
-		// console.log("Client[" + client.id + "] has disconnected for reason:", reason);
+		delete room1.participants[client.id];
+
+		io.to("room1").emit(PROTOCOL.USER_LEFT, "Client[" + client.id + "] has disconnected for reason:" + reason);
+		if (Object.entries(room1.participants).length === 0){
+			delete rooms['room1'];
+		}
 	});
 });

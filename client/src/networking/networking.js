@@ -11,8 +11,9 @@ const PORT = process.env.REACT_APP_PORT;
 // consistent between the client and the server
 const PROTOCOL = {
 	TEST: "test",
-	NEW_USER: "newuser",
-	JOIN_ROOM: "joinroom",
+	NEW_USER: "new_user",
+	JOIN_ROOM: "join_room",
+	USER_LEFT: "user_left"
 };
 
 // Initialize listeners here
@@ -29,8 +30,12 @@ function initialize() {
 		console.log(msg);
 	})
 
-	io.on("disconnect", () => {
-		console.log("Connection lost...");
+	io.on(PROTOCOL.USER_LEFT, (msg) => 
+		console.log(msg)
+	);
+
+	io.on("disconnect", (msg) => {
+		console.log(msg);
 	});
 
 	io.on(PROTOCOL.TEST, (data) => {
