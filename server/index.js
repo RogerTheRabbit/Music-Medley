@@ -42,6 +42,7 @@ io.on("connection", function (client) {
 	clients[client.id] = client;
 
 	client.on(PROTOCOL.JOIN_ROOM, () => {
+		console.log(generateRoomCode(5));
 		client.join('room1');
 		// todo: add the room to the rooms object as it gets created
 		rooms['room1'] = room1;
@@ -59,3 +60,13 @@ io.on("connection", function (client) {
 		}
 	});
 });
+
+function generateRoomCode(length) {
+	let result           = '';
+	let characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	let charactersLength = characters.length;
+	for ( let i = 0; i < length; i++ ) {
+	   result += characters.charAt(Math.floor(Math.random() * charactersLength));
+	}
+	return result;
+ }
