@@ -47,10 +47,10 @@ io.on("connection", function (client) {
 		rooms['room1'] = room1;
 		room1.participants[client.id] = client;
 		console.log(client.id + ' has joined room: ' + room1);
-		io.to("room1").emit(PROTOCOL.JOIN_ROOM, client + "has joined room: " + room1);
+		io.to("room1").emit(PROTOCOL.JOIN_ROOM, client + " hello has joined room: " + room1);
 	})
 	// broadcast when a user connects
-	client.broadcast.emit(PROTOCOL.NEW_USER, client + "has joined the room.");
+	// client.broadcast.emit(PROTOCOL.NEW_USER, client + "has joined the room.");
 
 	// when client disconnects
 	client.on("disconnect", (reason) => {
