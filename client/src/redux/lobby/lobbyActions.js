@@ -1,11 +1,5 @@
 import TYPES from "./lobbyTypes";
 
-export const resetLobby = () => {
-    return {
-        type: TYPES.RESET_LOBBY,
-    }
-}
-
 export const addMessage = (newMessage) => {
     return {
         type: TYPES.ADD_MESSAGE,
@@ -51,11 +45,11 @@ export const setUsername = (userName) => {
     }
 }
 
-export const setConnected = (connected) => {
+export const setRoom = (room) => {
     return {
-        type: TYPES.SET_USERNAME,
+        type: TYPES.SET_ROOM,
         data: {
-            connected
+            room
         }
     }
 }

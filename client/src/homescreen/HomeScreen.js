@@ -1,12 +1,12 @@
 import React, { useState, useContext } from "react";
 import { connect } from "react-redux";
-import { setUsername } from "../redux/lobby/lobbyActions";
+import { setRoom, setUsername } from "../redux/lobby/lobbyActions";
 import { WebSocketContext } from '../networking/networking';
+import { Redirect } from "react-router-dom";
 import "./HomeScreen.css";
 import logo from "../resource/Whale_Vector.svg";
 
-import { MDBCardBody, MDBAnimation, MDBCard } from "mdbreact";
-import { useHistory } from "react-router-dom";
+import { MDBCardBody, MDBAnimation, MDBCard, MDBIcon } from "mdbreact";
 
 const formComponents = {
   MAIN: "Main",
@@ -20,9 +20,14 @@ function HomeScreen(props) {
   const [currentFormComponent, setCurrentFormComponent] = useState(urlParams.get("roomCode") ? formComponents.JOIN : formComponents.MAIN);
   const [roomCode, setRoomCode] = useState(urlParams.get("roomCode") || "");
   const [roomPassword, setRoomPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const roomURL = `/room/?roomCode=${roomCode}`;
-  const history = useHistory();
   const networking = useContext(WebSocketContext);
+
+  if (props.room) {
+    // TODO: See if this redirect is breaking url path history
+    return <Redirect to={roomURL} />;
+  }
 
   const handleJoinPage = () => {
       setCurrentFormComponent(formComponents.JOIN);
@@ -36,16 +41,19 @@ function HomeScreen(props) {
       setCurrentFormComponent(formComponents.MAIN);
   };
 
-  // TODO: Make network call to actually join room.
+  const loadWhileConnecting = (children) => {
+    return loading ? <MDBIcon icon="spinner" /> : children;
+  }
+
   const joinRoom = () => {
+    setLoading(true);
     networking.joinRoom(props.userName, roomCode, roomPassword);
-    history.push(roomURL);
   }
 
   // TODO: Make network call to actually create and join room.
   const createRoom = () => {
+    setLoading(true);
     console.log("Creating room");
-    history.push(roomURL);
   }
 
   const renderForm = () => {
@@ -75,37 +83,41 @@ function HomeScreen(props) {
         return (
           <div className="login-card-body-content">
             <p className="h1 text-center py-4 login-header">JOIN ROOM</p>
-            <div className="d-flex justify-content-around flex-column align-content-center align-items-center flex-grow-1">
-              <input
-                type="text"
-                label="Username"
-                placeholder="Username"
-                className="login-input z-depth-1-half"
-                value={props.userName}
-                onChange={(e) => props.setUsername(e.target.value)}
-              />
-              <input
-                type="text"
-                label="Room Code"
-                placeholder="Room Code"
-                className="login-input z-depth-1-half"
-                value={roomCode}
-                onChange={(e) => setRoomCode(e.target.value)}
-              />
-              <input
-                type="password"
-                label="Room Password"
-                placeholder="Room Password (optional)"
-                className="login-input z-depth-1-half"
-                onChange={(e) => setRoomPassword(e.target.value)}
-              />
-            </div>
-            <div className="login-button-group py-4 mt-3">
-              <button className="outlined-button btn-fill-horz-open btn-rounded" onClick={() => handleMainPage()}>
-                Back
-              </button>
-              <button onClick={()=>joinRoom()} className="outlined-button btn-fill-horz-open btn-rounded">Enter</button>
-            </div>
+            {loadWhileConnecting(
+              <>
+                <div className="d-flex justify-content-around flex-column align-content-center align-items-center flex-grow-1">
+                  <input
+                    type="text"
+                    label="Username"
+                    placeholder="Username"
+                    className="login-input z-depth-1-half"
+                    value={props.userName}
+                    onChange={(e) => props.setUsername(e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    label="Room Code"
+                    placeholder="Room Code"
+                    className="login-input z-depth-1-half"
+                    value={roomCode}
+                    onChange={(e) => setRoomCode(e.target.value)}
+                  />
+                  <input
+                    type="password"
+                    label="Room Password"
+                    placeholder="Room Password (optional)"
+                    className="login-input z-depth-1-half"
+                    onChange={(e) => setRoomPassword(e.target.value)}
+                  />
+                </div>
+                <div className="login-button-group py-4 mt-3">
+                  <button className="outlined-button btn-fill-horz-open btn-rounded" onClick={() => handleMainPage()}>
+                    Back
+                  </button>
+                  <button onClick={()=>joinRoom()} className="outlined-button btn-fill-horz-open btn-rounded">Enter</button>
+                </div>
+              </>
+            )}
           </div>
         );
 
@@ -113,30 +125,34 @@ function HomeScreen(props) {
         return (
           <div className="login-card-body-content">
             <p className="h1 text-center py-4 login-header">CREATE ROOM</p>
-            <div className="d-flex justify-content-around flex-column align-content-center align-items-center flex-grow-1">
-              <input
-                type="text"
-                label="Username"
-                placeholder="Username"
-                className="login-input z-depth-1-half"
-                value={props.userName}
-                onChange={(e) => props.setUsername(e.target.value)}
-              />
-              <input
-                type="password"
-                label="Room Password"
-                placeholder="Room Password (optional)"
-                className="login-input z-depth-1-half"
-                onChange={(e) => setRoomPassword(e.target.value)}
-              />
-            </div>
-            <div className="login-button-group py-4 mt-3">
-              <button className="outlined-button btn-fill-horz-open btn-rounded" onClick={() => handleMainPage()}>
-                Back
-              </button>
-              <br />
-              <button onClick={()=>createRoom()} className="outlined-button btn-fill-horz-open btn-rounded">Enter</button>
-            </div>
+            {loadWhileConnecting(
+              <>
+                <div className="d-flex justify-content-around flex-column align-content-center align-items-center flex-grow-1">
+                  <input
+                    type="text"
+                    label="Username"
+                    placeholder="Username"
+                    className="login-input z-depth-1-half"
+                    value={props.userName}
+                    onChange={(e) => props.setUsername(e.target.value)}
+                  />
+                  <input
+                    type="password"
+                    label="Room Password"
+                    placeholder="Room Password (optional)"
+                    className="login-input z-depth-1-half"
+                    onChange={(e) => setRoomPassword(e.target.value)}
+                  />
+                </div>
+                <div className="login-button-group py-4 mt-3">
+                  <button className="outlined-button btn-fill-horz-open btn-rounded" onClick={() => handleMainPage()}>
+                    Back
+                  </button>
+                  <br />
+                  <button onClick={()=>createRoom()} className="outlined-button btn-fill-horz-open btn-rounded">Enter</button>
+                </div>
+              </>
+            )}
           </div>
         );
 
@@ -164,6 +180,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         setUsername: (userName) => dispatch(setUsername(userName)),
+        setRoom: (room) => dispatch(setRoom(room)),
     };
 };
 

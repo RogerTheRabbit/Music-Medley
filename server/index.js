@@ -15,6 +15,8 @@ const PROTOCOL = {
 	TEST: "test",
 	NEW_USER: "new_user",
 	JOIN_ROOM: "join_room",
+	JOIN_SUCCESSFUL: "join_successful",
+	USER_JOINED: "user_joined",
 	USER_LEFT: "user_left"
 };
 
@@ -50,15 +52,16 @@ io.on("connection", function (client) {
 			userName: userName,
 			profilePicture: `https://picsum.photos/id/${Math.trunc(Math.random() * 300)}/50/50`,
 		}
-		room1.participants[client.id] = newParticipant;
-		io.to("room1").emit(PROTOCOL.JOIN_ROOM, newParticipant);
+		rooms['room1'].participants[client.id] = newParticipant;
+		client.emit(PROTOCOL.JOIN_SUCCESSFUL, rooms['room1']);
+		client.to("room1").emit(PROTOCOL.USER_JOINED, newParticipant);
 	})
 
 	// when client disconnects
 	client.on("disconnect", (reason) => {
 		delete room1.participants[client.id];
 
-		io.to("room1").emit(PROTOCOL.USER_LEFT, "Client[" + client.id + "] has disconnected for reason:" + reason);
+		client.to("room1").emit(PROTOCOL.USER_LEFT, "Client[" + client.id + "] has disconnected for reason:" + reason);
 		if (Object.entries(room1.participants).length === 0){
 			delete rooms['room1'];
 		}

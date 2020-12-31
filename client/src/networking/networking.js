@@ -1,7 +1,7 @@
 import React, { createContext } from 'react';
 import socket from 'socket.io-client';
 import { useDispatch } from 'react-redux';
-import { addParticipant } from '../redux/lobby/lobbyActions';
+import { addParticipant, setRoom } from '../redux/lobby/lobbyActions';
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -15,6 +15,8 @@ const PROTOCOL = {
 	TEST: "test",
 	NEW_USER: "new_user",
 	JOIN_ROOM: "join_room",
+	JOIN_SUCCESSFUL: "join_successful",
+	USER_JOINED: "user_joined",
 	USER_LEFT: "user_left"
 };
 
@@ -32,6 +34,10 @@ export default ({ children }) => {
         });
     }
 
+    const disconnect = () => {
+        io.disconnect();
+    }
+
     if (!io) {
         io = socket.connect("http://" + IP + ":" + PORT);
 
@@ -39,7 +45,12 @@ export default ({ children }) => {
             console.log("Connected to server");
         });
 
-        io.on(PROTOCOL.JOIN_ROOM, (newParticipant) => {
+        io.on(PROTOCOL.JOIN_SUCCESSFUL, (room) => {
+            dispatch(setRoom(room));
+        });
+
+        io.on(PROTOCOL.USER_JOINED, (newParticipant) => {
+            console.log("User joined:", newParticipant);
             dispatch(addParticipant(newParticipant))
         })
 
@@ -48,7 +59,8 @@ export default ({ children }) => {
         );
 
         io.on("disconnect", (msg) => {
-            console.log(msg);
+            console.log("Disconnected: ", msg);
+            dispatch(setRoom(null));
         });
 
         io.on(PROTOCOL.TEST, (data) => {
@@ -58,6 +70,7 @@ export default ({ children }) => {
         ws = {
             io: io,
             joinRoom,
+            disconnect,
         }
     }
 

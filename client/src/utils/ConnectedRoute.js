@@ -7,14 +7,13 @@ import { Redirect, Route } from "react-router-dom";
  * Checks if the websocket is connected to a room, if not, then redirect to join screen
  */
 function ConnectedRoute( props, rest ) {
-  const somethingThatChecksIsConnected = true;//props.connected;
   const urlParams = new URLSearchParams(props.location?.search);
 
   return (
     <Route
       {...rest}
       children={() => {
-        return somethingThatChecksIsConnected ? (
+        return props.room ? (
           props.children
         ) : (
           <Redirect to={{ pathname: `/join/?roomCode=${urlParams.get("roomCode")}` }} />
