@@ -30,7 +30,7 @@ function RoomInfo( props ) {
 
     const leaveRoom = () => {
         console.log("LEAVING LOBBY");
-        networking.disconnect();
+        networking.resetConnection();
         props.setRoom(null);
     };
 

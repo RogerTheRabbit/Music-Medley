@@ -34,13 +34,13 @@ export default ({ children }) => {
         });
     }
 
-    const disconnect = () => {
+    const resetConnection = () => {
         io.disconnect();
+        io = socket.connect("http://" + IP + ":" + PORT);
+        initializeEventHandlers(io);
     }
 
-    if (!io) {
-        io = socket.connect("http://" + IP + ":" + PORT);
-
+    const initializeEventHandlers = (io) => {
         io.on("connect", () => {
             console.log("Connected to server");
         });
@@ -66,11 +66,17 @@ export default ({ children }) => {
         io.on(PROTOCOL.TEST, (data) => {
             console.log(data);
         });
+    }
+
+    if (!io) {
+        io = socket.connect("http://" + IP + ":" + PORT);
+
+        initializeEventHandlers(io);
 
         ws = {
             io: io,
             joinRoom,
-            disconnect,
+            resetConnection,
         }
     }
 
