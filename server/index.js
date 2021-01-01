@@ -61,7 +61,7 @@ io.on("connection", function (client) {
 	client.on("disconnect", (reason) => {
 		delete room1.participants[client.id];
 
-		client.to("room1").emit(PROTOCOL.USER_LEFT, "Client[" + client.id + "] has disconnected for reason:" + reason);
+		client.to("room1").emit(PROTOCOL.USER_LEFT, client.id, reason);
 		if (Object.entries(room1.participants).length === 0){
 			delete rooms['room1'];
 		}
