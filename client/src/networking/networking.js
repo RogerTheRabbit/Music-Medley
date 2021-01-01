@@ -1,7 +1,7 @@
 import React, { createContext } from 'react';
 import socket from 'socket.io-client';
 import { useDispatch } from 'react-redux';
-import { addParticipant, setRoom } from '../redux/lobby/lobbyActions';
+import { addParticipant, removeParticipant, setRoom } from '../redux/lobby/lobbyActions';
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -54,8 +54,8 @@ export default ({ children }) => {
             dispatch(addParticipant(newParticipant))
         })
 
-        io.on(PROTOCOL.USER_LEFT, (msg) => 
-            console.log(msg)
+        io.on(PROTOCOL.USER_LEFT, (userId, reason) => 
+            dispatch(removeParticipant(userId))
         );
 
         io.on("disconnect", (msg) => {
