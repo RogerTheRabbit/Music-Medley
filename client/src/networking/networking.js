@@ -13,7 +13,9 @@ export const WebSocketContext = createContext(null)
 
 const PROTOCOL = {
 	TEST: "test",
-	NEW_USER: "new_user",
+    NEW_USER: "new_user",
+    CREATE_ROOM: "create_room",
+    CREATE_SUCCESSFUL: "create_successful",
 	JOIN_ROOM: "join_room",
 	JOIN_SUCCESSFUL: "join_successful",
 	USER_JOINED: "user_joined",
@@ -25,6 +27,13 @@ export default ({ children }) => {
     let ws;
 
     const dispatch = useDispatch();
+
+    const createRoom = (userName, roomPassword) => {
+        io.emit(PROTOCOL.CREATE_ROOM, {
+            userName: userName,
+            roomPassword: roomPassword,
+        });
+    }
 
     const joinRoom = (userName, roomCode, roomPassword) => {
         io.emit(PROTOCOL.JOIN_ROOM, {
@@ -43,6 +52,11 @@ export default ({ children }) => {
     const initializeEventHandlers = (io) => {
         io.on("connect", () => {
             console.log("Connected to server");
+        });
+
+        io.on(PROTOCOL.CREATE_SUCCESSFUL, (room) => {
+            console.log(room);
+            dispatch(setRoom(room));
         });
 
         io.on(PROTOCOL.JOIN_SUCCESSFUL, (room) => {
@@ -76,6 +90,7 @@ export default ({ children }) => {
         ws = {
             io: io,
             joinRoom,
+            createRoom,
             resetConnection,
         }
     }

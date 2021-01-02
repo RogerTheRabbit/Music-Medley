@@ -14,6 +14,8 @@ const IP = process.env.IP;
 const PROTOCOL = {
 	TEST: "test",
 	NEW_USER: "new_user",
+	CREATE_ROOM: "create_room",
+	CREATE_SUCCESSFUL: "create_successful",
 	JOIN_ROOM: "join_room",
 	JOIN_SUCCESSFUL: "join_successful",
 	USER_JOINED: "user_joined",
@@ -24,7 +26,7 @@ let clients = {};
 let rooms = {};
 
 let room1 = {
-	name: "room1",
+	roomCode: "room1",
 	password: "password",
 	participants: {}
 };
@@ -42,6 +44,26 @@ let io = socket(server);
 io.on("connection", function (client) {
 	console.log("Client[" + client.id + "] connected");
 	clients[client.id] = client;
+
+	client.on(PROTOCOL.CREATE_ROOM, ({userName, roomPassword}) => {
+		let roomCode = generateRoomCode(5);
+		let room = {
+			roomCode: roomCode,
+			password: roomPassword,
+			participants: {}
+		}
+		rooms[roomCode] = room;
+		const newParticipant = { 
+			id: client.id,
+			userName: userName,
+			profilePicture: `https://picsum.photos/id/${Math.trunc(Math.random() * 300)}/50/50`,
+		}
+		rooms[roomCode].participants[client.id] = newParticipant;
+		console.log(rooms);
+		client.emit(PROTOCOL.CREATE_SUCCESSFUL, room);
+		client.to(roomCode).emit(PROTOCOL.USER_JOINED, newParticipant);
+
+	})
 
 	client.on(PROTOCOL.JOIN_ROOM, ({userName, roomCode, roomPassword}) => {
 		client.join('room1');
@@ -68,6 +90,7 @@ io.on("connection", function (client) {
 	});
 });
 
+
 function generateRoomCode(length) {
 	let result           = '';
 	let characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -77,3 +100,4 @@ function generateRoomCode(length) {
 	}
 	return result;
 }
+

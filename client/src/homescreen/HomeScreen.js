@@ -18,7 +18,8 @@ function HomeScreen(props) {
   let urlParams = new URLSearchParams(props.location?.search);
 
   const [currentFormComponent, setCurrentFormComponent] = useState(urlParams.get("roomCode") ? formComponents.JOIN : formComponents.MAIN);
-  const [roomCode, setRoomCode] = useState(urlParams.get("roomCode") || "");
+  let initialRoomCode = urlParams.get("roomCode") || props.room?.roomCode || "";
+  const [roomCode, setRoomCode] = useState(initialRoomCode);
   const [roomPassword, setRoomPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const roomURL = `/room/?roomCode=${roomCode}`;
@@ -46,14 +47,29 @@ function HomeScreen(props) {
   }
 
   const joinRoom = () => {
+    if (!props.userName){
+      alert("Username cannot be empty!");
+      return;
+    }
+    if (!roomCode){
+      alert("Room Code cannot be empty!");
+      return;
+    }
     setLoading(true);
     networking.joinRoom(props.userName, roomCode, roomPassword);
   }
 
   // TODO: Make network call to actually create and join room.
   const createRoom = () => {
+    if (!props.userName){
+      alert("Username cannot be empty!");
+      return;
+    }
+    
     setLoading(true);
+
     console.log("Creating room");
+    networking.createRoom(props.userName, roomPassword);
   }
 
   const renderForm = () => {
@@ -101,6 +117,7 @@ function HomeScreen(props) {
                     className="login-input z-depth-1-half"
                     value={roomCode}
                     onChange={(e) => setRoomCode(e.target.value)}
+                    
                   />
                   <input
                     type="password"
