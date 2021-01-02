@@ -1,6 +1,7 @@
-import React, {useState} from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { addMessage } from "../../redux/lobby/lobbyActions";
+import { toggleChat } from "../../redux/app/appActions";
 import MessageContainer from "./MessageContainer";import { motion } from "framer-motion"
 import "./chat.css";
 
@@ -11,14 +12,12 @@ const variants = {
 
 function ChatContainer( props ) {
 
-    const [isOpen, setIsOpen] = useState(true)
-
     const chatOnKeyPress = (e) => {
         if (e.keyCode === 13) {
             // TODO: Send message to server as well -- DATA STRUCTURE SUBJECT TO CHANGE
             props.addMessage({
                 from: {
-                    name: props.userName,
+                    name: props.lobby?.userName,
                     profilePicture: "https://picsum.photos/50",
                 },
                 timeStamp: new Date(),
@@ -30,10 +29,10 @@ function ChatContainer( props ) {
 
     return (
         <>
-            <button onClick={() => {setIsOpen(!isOpen)}}>Toggle chat</button>
             <motion.div 
                 className="chat"
-                animate={isOpen ? "open" : "closed"}
+                animate={props.app?.chatOpen ? "open" : "closed"}
+                transition={{ease:"easeOut", duration: "0.1"}}
                 variants={variants}
             >
                 <MessageContainer />
@@ -50,12 +49,16 @@ function ChatContainer( props ) {
 }
 
 const mapStateToProps = (state) => {
-    return state.lobby;
+    return {
+        lobby: state.lobby,
+        app: state.app
+    };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         addMessage: (newMessage) => dispatch(addMessage(newMessage)),
+        toggleChat: (newMessage) => dispatch(toggleChat(newMessage)),
     };
 };
 

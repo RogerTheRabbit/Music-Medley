@@ -4,14 +4,18 @@
 
 .lobby-container {
 	height: 100vh;
-	display: grid;
-	grid-template-rows: auto var(--controller-height);
-	grid-template-columns: 13em repeat(auto-fit, minmax(0px, 100%));
+	display: flex;
+	flex-direction: column;
+}
+
+.lobby-body {
+	display: flex;
+	height: 100%;
+	max-height: calc(100vh - var(--controller-height));
 }
 
 .left-panel {
-	grid-column: 1;
-	grid-row: 1;
+	width: 13em;
 	overflow-y: auto;
 	background-color: #2f3136;
 }
@@ -23,23 +27,20 @@
 }
 
 .center-content {
-	grid-column: 2;
-	grid-row: 1;
+	flex-grow: 1;
 	overflow-y: auto;
 	background-color: #2f3136;
 }
 
 .center-content-container {
-	height: 100%;
 	display: flex;
+	height: 100%;
 	flex-direction: column;
 	background-color: #36393f;
 	border-radius: 0.5em;
 }
 
-.right-panel {
-	grid-column: 3;
-	grid-row: 1;
+.right-panel-container {
 	background-color: #2f3136;
 	overflow-y: auto;
 }

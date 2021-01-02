@@ -1,0 +1,24 @@
+import React from 'react';
+import { connect } from "react-redux";
+import Search from './Search/Search';
+import { MDBIcon } from 'mdbreact';
+import { toggleChat } from '../redux/app/appActions';
+
+function CenterNav(props) {
+    return (
+        <div>
+            <Search/>
+            <button onClick={() => {props.toggleChat()}} className="outlined-button btn-fill-horz-open btn-rounded icon-button-md">
+                <MDBIcon icon="comment-alt" />
+            </button>
+        </div>
+    )
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        toggleChat: () => dispatch(toggleChat()),
+    };
+};
+
+export default connect(null, mapDispatchToProps)(CenterNav);
