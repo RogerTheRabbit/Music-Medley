@@ -5,7 +5,7 @@ import SearchResult from "./SearchResults";
 
 dotenv.config();
 
-const MAXRESULTS = 5;
+const MAXRESULTS = 5 ;
 const TOKEN = process.env.REACT_APP_SEARCH_TOKEN;
 
 export default function Search() {
@@ -14,7 +14,7 @@ export default function Search() {
     const search = (event) => {
         if (event.keyCode === 13){  // if enter is pressed
             const url = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=" + MAXRESULTS + "&q=" + event.target.value + "&key=" + TOKEN;
-            
+
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
@@ -36,9 +36,9 @@ export default function Search() {
                     
                 />
             </div>  
-            <div className="search-results-container" >
+            <div className="search-results-container z-depth-1" >
                     {songs.map((song, idx) => {
-                        return <SearchResult key={idx} song={song.snippet.title}/>;
+                        return <SearchResult key={idx} song={song.snippet}/>;
                     })}
             </div>
         </>
