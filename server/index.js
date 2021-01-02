@@ -7,10 +7,6 @@ dotenv.config();
 
 const PORT = process.env.PORT;
 const IP = process.env.IP;
-
-// Added some messages we might send.
-// The values aren't that important but they should be
-// consistent between the client and the server
 const PROTOCOL = {
 	TEST: "test",
 	NEW_USER: "new_user",
@@ -22,14 +18,8 @@ const PROTOCOL = {
 	USER_LEFT: "user_left"
 };
 
-let clients = {};
 let rooms = {};
-
-let room1 = {
-	roomCode: "room1",
-	password: "password",
-	participants: {}
-};
+let clients = {};
 
 // App setup
 let app = express();
@@ -43,8 +33,10 @@ let io = socket(server);
 
 io.on("connection", function (client) {
 	console.log("Client[" + client.id + "] connected");
-	clients[client.id] = client;
-
+	clients[client.id] = {
+		roomCode: null,
+		joined_room: false
+	}
 	client.on(PROTOCOL.CREATE_ROOM, ({userName, roomPassword}) => {
 		let roomCode = generateRoomCode(5);
 		let room = {
@@ -56,9 +48,14 @@ io.on("connection", function (client) {
 		const newParticipant = { 
 			id: client.id,
 			userName: userName,
+			roomCode: roomCode,
 			profilePicture: `https://picsum.photos/id/${Math.trunc(Math.random() * 300)}/50/50`,
 		}
 		rooms[roomCode].participants[client.id] = newParticipant;
+		clients[client.id] = {
+			roomCode: roomCode,
+			joined_room: true
+		};
 		console.log(rooms);
 		client.emit(PROTOCOL.CREATE_SUCCESSFUL, room);
 		client.to(roomCode).emit(PROTOCOL.USER_JOINED, newParticipant);
@@ -66,27 +63,42 @@ io.on("connection", function (client) {
 	})
 
 	client.on(PROTOCOL.JOIN_ROOM, ({userName, roomCode, roomPassword}) => {
-		client.join('room1');
-		// todo: add the room to the rooms object as it gets created
-		rooms['room1'] = room1;
+		//todo: implement check to see if room exists
+
+		//todo: implement password check
+		// if (!rooms[roomCode].password === roomPassword){
+		// 	alert("The password is incorrect. Try again.");
+		// }
+
+		client.join(roomCode);
 		const newParticipant = { 
 			id: client.id,
 			userName: userName,
+			roomCode: roomCode,
 			profilePicture: `https://picsum.photos/id/${Math.trunc(Math.random() * 300)}/50/50`,
 		}
-		rooms['room1'].participants[client.id] = newParticipant;
-		client.emit(PROTOCOL.JOIN_SUCCESSFUL, rooms['room1']);
-		client.to("room1").emit(PROTOCOL.USER_JOINED, newParticipant);
+		rooms[roomCode].participants[client.id] = newParticipant;
+		clients[client.id] = {
+			roomCode: roomCode,
+			joined_room: true
+		};
+		client.emit(PROTOCOL.JOIN_SUCCESSFUL, rooms[roomCode]);
+		client.to(roomCode).emit(PROTOCOL.USER_JOINED, newParticipant);
+		console.log(rooms); //todo delete
 	})
 
 	// when client disconnects
 	client.on("disconnect", (reason) => {
-		delete room1.participants[client.id];
-
-		client.to("room1").emit(PROTOCOL.USER_LEFT, client.id, reason);
-		if (Object.entries(room1.participants).length === 0){
-			delete rooms['room1'];
+		let roomCode = clients[client.id].roomCode;
+		if (roomCode){
+			delete rooms[roomCode].participants[client.id];			
+			client.to(roomCode).emit(PROTOCOL.USER_LEFT, client.id, reason);
+			if (Object.entries(rooms[roomCode].participants).length === 0){
+				delete rooms[roomCode];
+			}
+			delete clients[client.id];
 		}
+		console.log(rooms);
 	});
 });
 
