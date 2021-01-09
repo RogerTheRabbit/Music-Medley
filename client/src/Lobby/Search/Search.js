@@ -38,7 +38,7 @@ export default function Search() {
             </div>  
             <div className="search-results-container z-depth-1" >
                     {songs.map((song, idx) => {
-                        return <SearchResult key={idx} song={song.snippet}/>;
+                        return <SearchResult key={idx} song={song}/>;
                     })}
             </div>
         </>
