@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { connect } from "react-redux";
-import { setConnected, resetLobby } from "../../redux/lobby/lobbyActions";
+import { setRoom } from "../../redux/lobby/lobbyActions";
+import { WebSocketContext } from '../../networking/networking';
 import { MDBPopover, MDBPopoverBody, MDBIcon } from "mdbreact";
 import "./roominfo.css";
 
 function RoomInfo( props ) {
+
+    const networking = useContext(WebSocketContext)
     
-    const shareFunction = () => {
+    const shareRoom = () => {
         if(navigator.share) {
             navigator.share({
                 title: "Music Medley Room",
@@ -25,10 +28,10 @@ function RoomInfo( props ) {
         }
     };
 
-    const leaveFunction = () => {
-        console.log("RESETTING LOBBY");
-        props.setConnected(false);
-        props.resetLobby();
+    const leaveRoom = () => {
+        console.log("LEAVING LOBBY");
+        networking.resetConnection();
+        props.setRoom(null);
     };
 
     return (
@@ -46,10 +49,10 @@ function RoomInfo( props ) {
                         <MDBPopoverBody>Password: {"Room Password"}</MDBPopoverBody>
                     </div>
                 </MDBPopover>
-                <button onClick={() => shareFunction()} className="outlined-button blue btn-fill-horz-open btn-rounded icon-button-md">
+                <button onClick={() => shareRoom()} className="outlined-button blue btn-fill-horz-open btn-rounded icon-button-md">
                     <MDBIcon icon="share-alt" />
                 </button>
-                <button onClick={() => leaveFunction()} className="outlined-button red btn-fill-horz-open btn-rounded icon-button-md">
+                <button onClick={() => leaveRoom()} className="outlined-button red btn-fill-horz-open btn-rounded icon-button-md">
                     <MDBIcon icon="sign-out-alt" />
                 </button>
             </div>
@@ -63,8 +66,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setConnected: (connected) => dispatch(setConnected(connected)),
-        resetLobby: () => dispatch(resetLobby()),
+        setRoom: (room) => dispatch(setRoom(room)),
     };
 };
 
