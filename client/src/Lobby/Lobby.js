@@ -33,7 +33,7 @@ function Lobby() {
             <div className="controls-section">
                 <Controls />
             </div>
-            {/* <AudioSources /> */}
+            <AudioSources />
         </div>
     );
 }

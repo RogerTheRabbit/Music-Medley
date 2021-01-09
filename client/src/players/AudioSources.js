@@ -3,6 +3,11 @@ import ReactPlayer from "react-player";
 import { connect } from "react-redux";
 import { togglePlaying, setAudioLevel, setProgress, setDuration, setSong, setReady } from '../redux/player/playerActions';
 import withNetworking from './withTestNetworking';
+const dotenv = require("dotenv");
+
+dotenv.config();
+
+const DEBUG = process.env.REACT_APP_DEBUG_PLAYER === "true";
 
 function Player(props) {
 
@@ -20,18 +25,10 @@ function Player(props) {
 		pip,
 	} = props;
 
-	let player;
-
-	const playerRef = playerRef => {
-		player = playerRef;
-	}
-
 	return (
 		<>
 			<ReactPlayer
-				ref={playerRef}
-				width="500px"
-				height="300px"
+				className={!DEBUG && "hidden"}
 				url={url}
 				pip={pip}
 				playing={playing}
@@ -54,15 +51,19 @@ function Player(props) {
 				onProgress={e => props.setProgress(e.played)}
                 onDuration={(duration) => props.setDuration(duration)}
 			/>
-			<h1>TESTING STATS:</h1>
-			<p>PROGRES: {props.progress}</p>
-			<p>READY: {props.ready ? "Ready" : "Not ready"}</p>
-			<p>VOLUME: {props.volume}</p>
-			<input id="newSong" defaultValue={'https://www.youtube.com/watch?v=dQw4w9WgXcQ'} />
-			<button onClick={props.addSong}>Add Song</button>
-			<br />
-			<button onClick={props.togglePlaying}>{props.playing ? "PAUSE" : "PLAY"}</button>
-			Volume: <input max={1} min={0} type="range" step=".01" onChange={e => props.setAudioLevel(e.target.value)} defaultValue={props.volume} />
+			{DEBUG && (
+				<>
+					<h1>TESTING STATS:</h1>
+					<p>PROGRES: {props.progress}</p>
+					<p>READY: {props.ready ? "Ready" : "Not ready"}</p>
+					<p>VOLUME: {props.volume}</p>
+					<input id="newSong" defaultValue={'https://www.youtube.com/watch?v=dQw4w9WgXcQ'} />
+					<button onClick={props.addSong}>Add Song</button>
+					<br />
+					<button onClick={props.togglePlaying}>{props.playing ? "PAUSE" : "PLAY"}</button>
+					Volume: <input max={1} min={0} type="range" step=".01" onChange={e => props.setAudioLevel(e.target.value)} defaultValue={props.volume} />
+				</>
+			)}
 		</>
 	);
 }

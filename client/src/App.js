@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-d
 import ConnectedRoute from "./utils/ConnectedRoute";
 
 export default function App(props) {
+
   return (
     <Router>
       <Switch>
