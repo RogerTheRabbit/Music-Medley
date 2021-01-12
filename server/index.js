@@ -44,7 +44,8 @@ io.on("connection", function (client) {
 		let room = {
 			roomCode: roomCode,
 			password: roomPassword,
-			participants: {}
+			participants: {},
+			messages: [],
 		}
 		client.join(roomCode);
 		rooms[roomCode] = room;
@@ -118,4 +119,3 @@ function generateRoomCode(length) {
 	}
 	return result;
 }
- 

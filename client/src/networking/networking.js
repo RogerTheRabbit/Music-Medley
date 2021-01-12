@@ -58,11 +58,13 @@ export default ({ children }) => {
         });
 
         io.on(PROTOCOL.CREATE_SUCCESSFUL, (room) => {
+            room.connected = true;
             console.log(room);
             dispatch(setRoom(room));
         });
 
         io.on(PROTOCOL.JOIN_SUCCESSFUL, (room) => {
+            room.connected = true;
             dispatch(setRoom(room));
         });
 
@@ -87,7 +89,7 @@ export default ({ children }) => {
 
         io.on("disconnect", (msg) => {
             console.log("Disconnected: ", msg);
-            dispatch(setRoom(null));
+            dispatch(setRoom({connected: false}));
         });
 
         io.on(PROTOCOL.TEST, (data) => {
