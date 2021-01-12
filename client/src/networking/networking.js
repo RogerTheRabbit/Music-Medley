@@ -1,7 +1,7 @@
 import React, { createContext } from 'react';
 import socket from 'socket.io-client';
 import { useDispatch } from 'react-redux';
-import { addParticipant, removeParticipant, setRoom } from '../redux/lobby/lobbyActions';
+import { addParticipant, addSong, removeParticipant, setRoom } from '../redux/lobby/lobbyActions';
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -19,7 +19,8 @@ const PROTOCOL = {
 	JOIN_ROOM: "join_room",
 	JOIN_SUCCESSFUL: "join_successful",
 	USER_JOINED: "user_joined",
-	USER_LEFT: "user_left"
+    USER_LEFT: "user_left",
+    ADDED_SONG: "song_added"
 };
 
 export default ({ children }) => {
@@ -80,6 +81,21 @@ export default ({ children }) => {
         io.on(PROTOCOL.TEST, (data) => {
             console.log(data);
         });
+
+        io.on(PROTOCOL.ADDED_SONG, (songInfo) =>{
+            dispatch(addSong(songInfo));
+        });
+    }
+
+    const sendSong = (song) => {
+        const songInfo = {
+			photo: song.snippet.thumbnails.default.url,
+			url: "https://www.youtube.com/watch?v=" + song.id.videoId,
+			title: song.snippet.title,
+			channel: song.snippet.channelTitle
+        }
+        console.log(songInfo);
+        io.emit(PROTOCOL.ADDED_SONG, songInfo);
     }
 
     if (!io) {
@@ -92,6 +108,7 @@ export default ({ children }) => {
             joinRoom,
             createRoom,
             resetConnection,
+            sendSong,
         }
     }
 

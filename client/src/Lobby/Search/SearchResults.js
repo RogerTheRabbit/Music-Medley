@@ -1,15 +1,11 @@
-import React from "react";
+
+import React, {useContext } from "react";
 import {MDBIcon} from "mdbreact";
+import { WebSocketContext } from '../../networking/networking';
 
 
 export default function SearchResult({ song }) {
-    
-
-    const sendSong = () => {
-        //song.id.videoId is how to get the video id
-        socket.emit("https://www.youtube.com/watch?v=" + song.id.videoId)
-    }
-
+    const networking = useContext(WebSocketContext);
 
     return (
         <div className="individual-search-result-container">
@@ -20,7 +16,7 @@ export default function SearchResult({ song }) {
                     <div className="channel-name">{song.snippet.channelTitle}</div>
                 </div>
             </div>
-            <div className="add-song" onClick={sendSong}>
+            <div className="add-song" onClick={networking.sendSong(song)}>
                 <MDBIcon icon="plus" />
             </div>
         </div>
