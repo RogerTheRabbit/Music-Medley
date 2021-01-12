@@ -17,7 +17,9 @@ const PROTOCOL = {
     CREATE_ROOM: "create_room",
     CREATE_SUCCESSFUL: "create_successful",
 	JOIN_ROOM: "join_room",
-	JOIN_SUCCESSFUL: "join_successful",
+    JOIN_SUCCESSFUL: "join_successful",
+    INVALID_ROOMCODE: "invalid_roomcode",
+    INVALID_PASSWORD: "invalid password",
 	USER_JOINED: "user_joined",
 	USER_LEFT: "user_left"
 };
@@ -49,6 +51,7 @@ export default ({ children }) => {
         initializeEventHandlers(io);
     }
 
+    
     const initializeEventHandlers = (io) => {
         io.on("connect", () => {
             console.log("Connected to server");
@@ -63,10 +66,20 @@ export default ({ children }) => {
             dispatch(setRoom(room));
         });
 
+        io.on(PROTOCOL.INVALID_ROOMCODE, () => {
+            alert("The room code is not valid. Try again!")
+            console.log("invalid room code");
+            return false
+        });
+
+        io.on(PROTOCOL.INVALID_PASSWORD, () => {
+            alert("The password is incorrect. Try again!")
+        });
+
         io.on(PROTOCOL.USER_JOINED, (newParticipant) => {
             console.log("User joined:", newParticipant);
             dispatch(addParticipant(newParticipant))
-        })
+        });
 
         io.on(PROTOCOL.USER_LEFT, (userId, reason) => 
             dispatch(removeParticipant(userId))
