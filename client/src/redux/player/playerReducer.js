@@ -2,7 +2,6 @@ import TYPES from "./playerTypes";
 
 const initalState = {
     ready: false,
-    url: 'https://www.youtube.com/watch?v=dyRsYk0LyA8',
     playing: false,
     controls: true,
     light: null,
@@ -15,6 +14,8 @@ const initalState = {
     pip: false,
     progress: 0,
     duration: 0,
+    songs: [],
+    songIndex: 0,
 }
 
 const reducer = (state = initalState, action) => {
@@ -65,6 +66,11 @@ const reducer = (state = initalState, action) => {
             return {
                 ...state,
                 ready: action.data.ready
+            }
+        case TYPES.ADD_SONG:
+            return {
+                ...state,
+                songs: [...state.songs, action.data.newSong]
             }
         default:
             return state

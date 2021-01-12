@@ -50,3 +50,12 @@ export const setDuration = (duration) => {
         },
     };
 };
+
+export const addSong = (newSong) => {
+    return {
+        type: TYPES.ADD_SONG,
+        data: {
+            newSong
+        }
+    }
+}

@@ -1,7 +1,8 @@
 import React, { createContext } from 'react';
 import socket from 'socket.io-client';
 import { useDispatch } from 'react-redux';
-import { addParticipant, addSong, removeParticipant, setRoom } from '../redux/lobby/lobbyActions';
+import { addParticipant, removeParticipant, setRoom } from '../redux/lobby/lobbyActions';
+import { addSong } from '../redux/player/playerActions';
 import dotenv from "dotenv";
 
 dotenv.config();

@@ -9,15 +9,6 @@ export const addMessage = (newMessage) => {
     }
 }
 
-export const addSong = (newSong) => {
-    return {
-        type: TYPES.ADD_SONG,
-        data: {
-            newSong
-        }
-    }
-}
-
 export const addParticipant = (newParticipant) => {
     return {
         type: TYPES.ADD_PARTICIPANT,

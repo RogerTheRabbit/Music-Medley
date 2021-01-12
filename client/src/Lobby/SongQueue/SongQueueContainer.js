@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { addSong } from "../../redux/lobby/lobbyActions";
+import { addSong } from "../../redux/player/playerActions";
 import SongQueueItem from "./SongQueueItem";
 import "./song-queue.css";
 
@@ -21,7 +21,7 @@ function SongQueueContainer(props) {
 }
 
 const mapStateToProps = (state) => {
-    return state.lobby;
+    return state.lobby, state.player;
 };
 
 const mapDispatchToProps = (dispatch) => {

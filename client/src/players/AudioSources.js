@@ -12,7 +12,8 @@ const DEBUG = process.env.REACT_APP_DEBUG_PLAYER === "true";
 function Player(props) {
 
 	const {
-		url,
+		songs,
+		songIndex,
 		playing,
 		controls,
 		light,
@@ -29,7 +30,7 @@ function Player(props) {
 		<>
 			<ReactPlayer
 				className={!DEBUG && "hidden"}
-				url={url}
+				url={songs[songIndex]}
 				pip={pip}
 				playing={playing}
 				controls={controls}

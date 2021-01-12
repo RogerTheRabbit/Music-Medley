@@ -3,7 +3,6 @@ import TYPES from "./lobbyTypes";
 const initialState = {
     userName: "",
     messages: [],
-    songs: [],
     participants: {},
     room: null, // Note: A room value of null indicates to ConnectedRoute that there is no connection to the room.
                 // Although, it might make sense to change this functionality in the future.
@@ -15,11 +14,6 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 messages: [...state.messages, action.data.newMessage]
-            }
-        case TYPES.ADD_SONG:
-            return {
-                ...state,
-                songs: [...state.songs, action.data.newSong]
             }
         case TYPES.ADD_PARTICIPANT:
             return {
