@@ -55,7 +55,7 @@ function HomeScreen(props) {
       alert("Room Code cannot be empty!");
       return;
     }
-    setLoading(true);
+    // setLoading(true);
     networking.joinRoom(props.userName, roomCode, roomPassword);
   }
 
