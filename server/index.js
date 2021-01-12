@@ -46,6 +46,7 @@ io.on("connection", function (client) {
 			password: roomPassword,
 			participants: {}
 		}
+		client.join(roomCode);
 		rooms[roomCode] = room;
 		const newParticipant = { 
 			id: client.id,
@@ -70,29 +71,27 @@ io.on("connection", function (client) {
 		if (!(roomCode in rooms)){
 			client.emit(PROTOCOL.INVALID_ROOMCODE);
 		}
-		else if (rooms[roomCode].password){
-			// check if the password is correct
-			if (!(rooms[roomCode].password === roomPassword)){
-				client.emit(PROTOCOL.INVALID_PASSWORD);
-			} 
-			else {
-				client.join(roomCode);
-				const newParticipant = { 
-					id: client.id,
-					userName: userName,
-					roomCode: roomCode,
-					profilePicture: `https://picsum.photos/id/${Math.trunc(Math.random() * 300)}/50/50`,
-				}
-				rooms[roomCode].participants[client.id] = newParticipant;
-				clients[client.id] = {
-					roomCode: roomCode,
-					joined_room: true
-				};
-				client.emit(PROTOCOL.JOIN_SUCCESSFUL, rooms[roomCode]);
-				client.to(roomCode).emit(PROTOCOL.USER_JOINED, newParticipant);
-				console.log(rooms); //todo delete
+		// check if the password is correct
+		if (!(rooms[roomCode].password === roomPassword)){
+			client.emit(PROTOCOL.INVALID_PASSWORD);
+		} 
+		else {
+			client.join(roomCode);
+			const newParticipant = { 
+				id: client.id,
+				userName: userName,
+				roomCode: roomCode,
+				profilePicture: `https://picsum.photos/id/${Math.trunc(Math.random() * 300)}/50/50`,
 			}
-		}	
+			rooms[roomCode].participants[client.id] = newParticipant;
+			clients[client.id] = {
+				roomCode: roomCode,
+				joined_room: true
+			};
+			client.emit(PROTOCOL.JOIN_SUCCESSFUL, rooms[roomCode]);
+			client.to(roomCode).emit(PROTOCOL.USER_JOINED, newParticipant);
+			console.log(rooms); //todo delete
+		}
 	})
 
 	// when client disconnects
