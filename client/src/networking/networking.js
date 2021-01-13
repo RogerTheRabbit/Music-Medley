@@ -21,7 +21,8 @@ const PROTOCOL = {
 	JOIN_SUCCESSFUL: "join_successful",
 	USER_JOINED: "user_joined",
     USER_LEFT: "user_left",
-    ADDED_SONG: "song_added"
+    ADDED_SONG: "song_added",
+    QUEUE_SONG: "song_queued"
 };
 
 export default ({ children }) => {
@@ -83,7 +84,7 @@ export default ({ children }) => {
             console.log(data);
         });
 
-        io.on(PROTOCOL.ADDED_SONG, (songInfo) =>{
+        io.on(PROTOCOL.QUEUE_SONG, (songInfo) => {
             dispatch(addSong(songInfo));
         });
     }
@@ -96,7 +97,7 @@ export default ({ children }) => {
 			channel: song.snippet.channelTitle
         }
         console.log(songInfo);
-        io.emit(PROTOCOL.ADDED_SONG, songInfo);
+        io.emit(PROTOCOL.ADDED_SONG, {songInfo});
     }
 
     if (!io) {

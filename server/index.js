@@ -16,7 +16,8 @@ const PROTOCOL = {
 	JOIN_SUCCESSFUL: "join_successful",
 	USER_JOINED: "user_joined",
 	USER_LEFT: "user_left",
-	ADDED_SONG: "song_added"
+	ADDED_SONG: "song_added",
+	QUEUE_SONG: "song_queued"
 };
 
 let rooms = {};
@@ -105,8 +106,8 @@ io.on("connection", function (client) {
 	client.on(PROTOCOL.ADDED_SONG, (songInfo) => {
 		let roomCode = clients[client.id].roomCode;
 		console.log(songInfo);
-		client.to(roomCode).emit(PROTOCOL.ADDED_SONG, songInfo);
-	})
+		client.to(roomCode).emit(PROTOCOL.QUEUE_SONG, songInfo);
+	});
 
 });
 

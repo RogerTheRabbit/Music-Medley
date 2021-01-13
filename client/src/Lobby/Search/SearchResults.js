@@ -16,7 +16,7 @@ export default function SearchResult({ song }) {
                     <div className="channel-name">{song.snippet.channelTitle}</div>
                 </div>
             </div>
-            <div className="add-song" onClick={networking.sendSong(song)}>
+            <div className="add-song" onClick={() => {networking.sendSong(song)}}>
                 <MDBIcon icon="plus" />
             </div>
         </div>
