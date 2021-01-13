@@ -44,7 +44,8 @@ io.on("connection", function (client) {
 		let room = {
 			roomCode: roomCode,
 			password: roomPassword,
-			participants: {}
+			participants: {},
+			messages: [],
 		}
 		client.join(roomCode);
 		rooms[roomCode] = room;
@@ -90,7 +91,6 @@ io.on("connection", function (client) {
 			};
 			client.emit(PROTOCOL.JOIN_SUCCESSFUL, rooms[roomCode]);
 			client.to(roomCode).emit(PROTOCOL.USER_JOINED, newParticipant);
-			console.log(rooms); //todo delete
 		}
 	})
 
@@ -118,4 +118,3 @@ function generateRoomCode(length) {
 	}
 	return result;
 }
- 

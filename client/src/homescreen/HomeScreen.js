@@ -25,7 +25,7 @@ function HomeScreen(props) {
   const roomURL = `/room/?roomCode=${roomCode}`;
   const networking = useContext(WebSocketContext);
 
-  if (props.room) {
+  if (props.connected) {
     // TODO: See if this redirect is breaking url path history
     return <Redirect to={roomURL} />;
   }
