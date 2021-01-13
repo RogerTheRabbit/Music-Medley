@@ -9,7 +9,7 @@ dotenv.config();
 const IP = process.env.REACT_APP_IP;
 const PORT = process.env.REACT_APP_PORT;
 
-export const WebSocketContext = createContext(null)
+export const WebSocketContext = createContext(null);
 
 const PROTOCOL = {
 	TEST: "test",
@@ -21,7 +21,9 @@ const PROTOCOL = {
     INVALID_ROOMCODE: "invalid_roomcode",
     INVALID_PASSWORD: "invalid_password",
 	USER_JOINED: "user_joined",
-	USER_LEFT: "user_left"
+    USER_LEFT: "user_left",
+    PAUSE_PLAYER: "pause_player",
+    PLAY_PLAYER: "play_player",
 };
 
 export default ({ children }) => {
@@ -51,6 +53,12 @@ export default ({ children }) => {
         initializeEventHandlers(io);
     }
     
+    const pausePlayer = (timestamp) => {
+        io.emit(PROTOCOL.PAUSE_PLAYER, {
+            timestamp: timestamp
+        })
+    }
+
     const initializeEventHandlers = (io) => {
         io.on("connect", () => {
             console.log("Connected to server");

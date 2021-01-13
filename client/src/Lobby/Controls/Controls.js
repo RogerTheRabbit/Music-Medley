@@ -1,15 +1,15 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import "./controls.css";
 import { MDBIcon } from "mdbreact";
 import { setAudioLevel } from "../../redux/player/playerActions";
 import { connect } from "react-redux";
 import { formatDuration } from "../../utils/utils";
 import CurrentlyPlaying from "../CurrentlyPlaying/CurrentlyPlaying";
+import { WebSocketContext } from '../../networking/networking';
 
 function Controls(props) {
-    const playing = true;
-
     let volumeIcon;
+    const networking = useContext(WebSocketContext);
 
     switch (true) {
         case props.volume > 0.5:
@@ -23,6 +23,17 @@ function Controls(props) {
             break;
     }
 
+    const togglePlayPause = () => {
+        // if the player is currently playing, then we want to pause
+        if (props.playing){
+            
+        } 
+        // if the player is paused, we want it to resume
+        else {
+
+        }
+    }
+
     return (
         <>
             <div className="controls">
@@ -34,8 +45,9 @@ function Controls(props) {
                     <button className="outlined-button btn-fill-horz-open btn-rounded icon-button-md">
                         <MDBIcon icon="step-backward" />
                     </button>
-                    <button className="primary outlined-button btn-fill-horz-open btn-rounded icon-button-lg">
-                        <MDBIcon icon={playing ? "play" : "pause"} />
+                    <button className="primary outlined-button btn-fill-horz-open btn-rounded icon-button-lg"
+                        onClick={() => togglePlayPause()}>
+                        <MDBIcon icon={props.playing ? "pause" : "play"} />
                     </button>
                     <button className="outlined-button btn-fill-horz-open btn-rounded icon-button-md">
                         <MDBIcon icon="step-forward" />
@@ -75,6 +87,6 @@ const mapDispatchToProps = (dispatch) => {
     return {
         setAudioLevel: (newLevel) => dispatch(setAudioLevel(newLevel)),
     };
-};
+};  
 
 export default connect(mapStateToProps, mapDispatchToProps)(Controls);
