@@ -19,7 +19,7 @@ const PROTOCOL = {
 	JOIN_ROOM: "join_room",
     JOIN_SUCCESSFUL: "join_successful",
     INVALID_ROOMCODE: "invalid_roomcode",
-    INVALID_PASSWORD: "invalid password",
+    INVALID_PASSWORD: "invalid_password",
 	USER_JOINED: "user_joined",
 	USER_LEFT: "user_left"
 };
@@ -50,7 +50,6 @@ export default ({ children }) => {
         io = socket.connect("http://" + IP + ":" + PORT);
         initializeEventHandlers(io);
     }
-
     
     const initializeEventHandlers = (io) => {
         io.on("connect", () => {

@@ -91,7 +91,6 @@ io.on("connection", function (client) {
 			};
 			client.emit(PROTOCOL.JOIN_SUCCESSFUL, rooms[roomCode]);
 			client.to(roomCode).emit(PROTOCOL.USER_JOINED, newParticipant);
-			console.log(rooms); //todo delete
 		}
 	})
 
