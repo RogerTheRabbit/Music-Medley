@@ -14,6 +14,8 @@ const PROTOCOL = {
 	CREATE_SUCCESSFUL: "create_successful",
 	JOIN_ROOM: "join_room",
 	JOIN_SUCCESSFUL: "join_successful",
+	INVALID_ROOMCODE: "invalid_roomcode",
+    INVALID_PASSWORD: "invalid password",
 	USER_JOINED: "user_joined",
 	USER_LEFT: "user_left"
 };
@@ -42,8 +44,10 @@ io.on("connection", function (client) {
 		let room = {
 			roomCode: roomCode,
 			password: roomPassword,
-			participants: {}
+			participants: {},
+			messages: [],
 		}
+		client.join(roomCode);
 		rooms[roomCode] = room;
 		const newParticipant = { 
 			id: client.id,
@@ -63,28 +67,31 @@ io.on("connection", function (client) {
 	})
 
 	client.on(PROTOCOL.JOIN_ROOM, ({userName, roomCode, roomPassword}) => {
-		//todo: implement check to see if room exists
-
-		//todo: implement password check
-		// if (!rooms[roomCode].password === roomPassword){
-		// 	alert("The password is incorrect. Try again.");
-		// }
-
-		client.join(roomCode);
-		const newParticipant = { 
-			id: client.id,
-			userName: userName,
-			roomCode: roomCode,
-			profilePicture: `https://picsum.photos/id/${Math.trunc(Math.random() * 300)}/50/50`,
+		
+		// check that the roomCode is valid
+		if (!(roomCode in rooms)){
+			client.emit(PROTOCOL.INVALID_ROOMCODE);
 		}
-		rooms[roomCode].participants[client.id] = newParticipant;
-		clients[client.id] = {
-			roomCode: roomCode,
-			joined_room: true
-		};
-		client.emit(PROTOCOL.JOIN_SUCCESSFUL, rooms[roomCode]);
-		client.to(roomCode).emit(PROTOCOL.USER_JOINED, newParticipant);
-		console.log(rooms); //todo delete
+		// check if the password is correct
+		if (!(rooms[roomCode].password === roomPassword)){
+			client.emit(PROTOCOL.INVALID_PASSWORD);
+		} 
+		else {
+			client.join(roomCode);
+			const newParticipant = { 
+				id: client.id,
+				userName: userName,
+				roomCode: roomCode,
+				profilePicture: `https://picsum.photos/id/${Math.trunc(Math.random() * 300)}/50/50`,
+			}
+			rooms[roomCode].participants[client.id] = newParticipant;
+			clients[client.id] = {
+				roomCode: roomCode,
+				joined_room: true
+			};
+			client.emit(PROTOCOL.JOIN_SUCCESSFUL, rooms[roomCode]);
+			client.to(roomCode).emit(PROTOCOL.USER_JOINED, newParticipant);
+		}
 	})
 
 	// when client disconnects
@@ -102,7 +109,6 @@ io.on("connection", function (client) {
 	});
 });
 
-
 function generateRoomCode(length) {
 	let result           = '';
 	let characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -112,4 +118,3 @@ function generateRoomCode(length) {
 	}
 	return result;
 }
-

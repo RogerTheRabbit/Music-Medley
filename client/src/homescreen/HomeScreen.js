@@ -25,7 +25,7 @@ function HomeScreen(props) {
   const roomURL = `/room/?roomCode=${roomCode}`;
   const networking = useContext(WebSocketContext);
 
-  if (props.room) {
+  if (props.connected) {
     // TODO: See if this redirect is breaking url path history
     return <Redirect to={roomURL} />;
   }
@@ -55,7 +55,7 @@ function HomeScreen(props) {
       alert("Room Code cannot be empty!");
       return;
     }
-    setLoading(true);
+    // setLoading(true);
     networking.joinRoom(props.userName, roomCode, roomPassword);
   }
 
@@ -65,9 +65,7 @@ function HomeScreen(props) {
       alert("Username cannot be empty!");
       return;
     }
-    
-    setLoading(true);
-
+    // setLoading(true);
     console.log("Creating room");
     networking.createRoom(props.userName, roomPassword);
   }
