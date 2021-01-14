@@ -2,6 +2,7 @@ import React, { createContext } from 'react';
 import socket from 'socket.io-client';
 import { useDispatch } from 'react-redux';
 import { addParticipant, removeParticipant, setRoom } from '../redux/lobby/lobbyActions';
+import { setPlayingState, setProgress} from '../redux/player/playerActions';
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -24,6 +25,7 @@ const PROTOCOL = {
     USER_LEFT: "user_left",
     PAUSE_PLAYER: "pause_player",
     PLAY_PLAYER: "play_player",
+    SET_PLAYING: "set_playing",
 };
 
 export default ({ children }) => {
@@ -53,10 +55,11 @@ export default ({ children }) => {
         initializeEventHandlers(io);
     }
     
-    const pausePlayer = (timestamp) => {
-        io.emit(PROTOCOL.PAUSE_PLAYER, {
-            timestamp: timestamp
-        })
+    const setPlaying = (playing, timestamp) => {
+        io.emit(PROTOCOL.SET_PLAYING, {
+            playing: playing,
+            timestamp: timestamp,
+        });
     }
 
     const initializeEventHandlers = (io) => {
@@ -94,6 +97,16 @@ export default ({ children }) => {
             dispatch(removeParticipant(userId))
         );
 
+        io.on(PROTOCOL.SET_PLAYING, (playing, timestamp) => {
+            console.log(playing, timestamp);
+            if (playing){
+                dispatch(setPlayingState(true));
+            } else {
+                dispatch(setPlayingState(false));
+                dispatch(setProgress(timestamp));
+            }
+        })
+
         io.on("disconnect", (msg) => {
             console.log("Disconnected: ", msg);
             dispatch(setRoom({connected: false}));
@@ -114,6 +127,7 @@ export default ({ children }) => {
             joinRoom,
             createRoom,
             resetConnection,
+            setPlaying,
         }
     }
 

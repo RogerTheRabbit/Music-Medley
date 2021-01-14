@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import "./controls.css";
 import { MDBIcon } from "mdbreact";
-import { setAudioLevel } from "../../redux/player/playerActions";
+import { setAudioLevel, togglePlaying } from "../../redux/player/playerActions";
 import { connect } from "react-redux";
 import { formatDuration } from "../../utils/utils";
 import CurrentlyPlaying from "../CurrentlyPlaying/CurrentlyPlaying";
@@ -23,14 +23,18 @@ function Controls(props) {
             break;
     }
 
-    const togglePlayPause = () => {
-        // if the player is currently playing, then we want to pause
-        if (props.playing){
-            
+    const togglePlaying = () => {
+        // if the player is currently playing, then we want to pause on local first then send signal to server, 
+        // we'll pass in the timestamp so the server can sync up the other clients to this time
+        if (props.playing){ 
+            props.togglePlaying();
+            let timestamp = props.progress;
+            networking.setPlaying(false, timestamp)
         } 
-        // if the player is paused, we want it to resume
+        // if the player is paused, we want it to resume/play
         else {
-
+            networking.setPlaying(true);
+            props.togglePlaying();
         }
     }
 
@@ -46,7 +50,7 @@ function Controls(props) {
                         <MDBIcon icon="step-backward" />
                     </button>
                     <button className="primary outlined-button btn-fill-horz-open btn-rounded icon-button-lg"
-                        onClick={() => togglePlayPause()}>
+                        onClick={() => togglePlaying()}>
                         <MDBIcon icon={props.playing ? "pause" : "play"} />
                     </button>
                     <button className="outlined-button btn-fill-horz-open btn-rounded icon-button-md">
@@ -86,6 +90,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         setAudioLevel: (newLevel) => dispatch(setAudioLevel(newLevel)),
+        togglePlaying: () => dispatch(togglePlaying()),
     };
 };  
 

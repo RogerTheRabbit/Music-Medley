@@ -19,7 +19,8 @@ const PROTOCOL = {
 	USER_JOINED: "user_joined",
 	USER_LEFT: "user_left",
 	PAUSE_PLAYER: "pause_player",
-    PLAY_PLAYER: "play_player",
+	PLAY_PLAYER: "play_player",
+	SET_PLAYING: "set_playing",
 };
 
 let rooms = {};
@@ -84,6 +85,10 @@ io.on("connection", function (client) {
 			client.emit(PROTOCOL.JOIN_SUCCESSFUL, rooms[roomCode]);
 			client.to(roomCode).emit(PROTOCOL.USER_JOINED, newParticipant);
 		}
+	})
+
+	client.on(PROTOCOL.SET_PLAYING, ({playing, timestamp}) => {
+		client.to(roomCode).emit(PROTOCOL.SET_PLAYING, playing, timestamp);
 	})
 
 	// when client disconnects
