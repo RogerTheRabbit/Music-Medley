@@ -81,7 +81,7 @@ export default ({ children }) => {
         io.on(PROTOCOL.INVALID_ROOMCODE, () => {
             alert("The room code is not valid. Try again!")
             console.log("invalid room code");
-            return false
+            return false;
         });
 
         io.on(PROTOCOL.INVALID_PASSWORD, () => {

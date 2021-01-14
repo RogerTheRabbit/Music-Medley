@@ -34,7 +34,7 @@ function Controls(props) {
         // if the player is paused, we want it to resume/play
         else {
             networking.setPlaying(true);
-            props.togglePlaying();
+            // props.togglePlaying();
         }
     }
 

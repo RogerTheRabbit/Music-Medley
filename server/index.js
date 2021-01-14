@@ -88,7 +88,12 @@ io.on("connection", function (client) {
 	})
 
 	client.on(PROTOCOL.SET_PLAYING, ({playing, timestamp}) => {
-		client.to(roomCode).emit(PROTOCOL.SET_PLAYING, playing, timestamp);
+		console.log(playing, timestamp)
+		if (playing){
+			io.in(roomCode).emit(PROTOCOL.SET_PLAYING, playing);
+		} else {
+			client.to(roomCode).emit(PROTOCOL.SET_PLAYING, playing, timestamp);
+		}
 	})
 
 	// when client disconnects
