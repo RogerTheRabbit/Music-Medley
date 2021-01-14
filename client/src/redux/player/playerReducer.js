@@ -19,6 +19,7 @@ const initalState = {
 
 const reducer = (state = initalState, action) => {
     switch (action.type) {
+        
         case TYPES.SET_PROGRESS:
             return {
                 ...state,
@@ -42,18 +43,6 @@ const reducer = (state = initalState, action) => {
                 ...state,
                 duration: action.data.duration,
             };
-        // case TYPES.PLAY:
-        //     console.log("PLAY RECIEVED")
-        //     return {
-        //         ...state,
-        //         playing: true
-        //     }
-        // case TYPES.PAUSE:
-        //     console.log("PAUSE RECIEVED")
-        //     return {
-        //         ...state,
-        //         playing: false
-        //     }
         case TYPES.SET_SONG:
             console.log("SET_SONG RECIEVED", action.data.url)
             return {

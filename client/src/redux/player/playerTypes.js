@@ -1,6 +1,4 @@
 export default {
-    // PLAY: 'PLAY',
-    // PAUSE: 'PAUSE',
     SET_PLAYING: 'SET_PLAYING',
     TOGGLE_PLAYING: 'TOGGLE_PLAYING',
     SET_AUDIO_LEVEL: 'SET_AUDIO_LEVEL',
