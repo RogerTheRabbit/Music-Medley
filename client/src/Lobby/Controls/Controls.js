@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import "./controls.css";
 import { MDBIcon } from "mdbreact";
 import { setAudioLevel, togglePlaying } from "../../redux/player/playerActions";
@@ -28,13 +28,11 @@ function Controls(props) {
         // we'll pass in the timestamp so the server can sync up the other clients to this time
         if (props.playing){ 
             props.togglePlaying();
-            let timestamp = props.progress;
-            networking.setPlaying(false, timestamp)
+            networking.setPlaying(false, props.progress)
         } 
         // if the player is paused, we want it to resume/play
         else {
             networking.setPlaying(true);
-            // props.togglePlaying();
         }
     }
 

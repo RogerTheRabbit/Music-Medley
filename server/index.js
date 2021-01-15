@@ -38,7 +38,6 @@ let io = socket(server);
 io.on("connection", function (client) {
 	console.log("Client[" + client.id + "] connected");
 	let roomCode;
-	let code;
 	client.on(PROTOCOL.CREATE_ROOM, ({userName, roomPassword}) => {
 		roomCode = generateRoomCode(5);
 		let room = {
@@ -74,7 +73,6 @@ io.on("connection", function (client) {
 		else {
 			client.join(roomCode);
 			roomCode = roomCode;
-			code = roomCode;
 			const newParticipant = { 
 				id: client.id,
 				userName: userName,

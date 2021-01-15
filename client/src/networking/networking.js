@@ -98,7 +98,6 @@ export default ({ children }) => {
         );
 
         io.on(PROTOCOL.SET_PLAYING, (playing, timestamp) => {
-            console.log(playing, timestamp);
             dispatch(setPlayingState(playing));
             if (!playing) {
                 dispatch(setProgress(timestamp));
