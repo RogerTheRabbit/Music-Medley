@@ -2,6 +2,7 @@ import React, { createContext } from 'react';
 import socket from 'socket.io-client';
 import { useDispatch } from 'react-redux';
 import { addParticipant, removeParticipant, setRoom } from '../redux/lobby/lobbyActions';
+import { setPlayingState, setProgress} from '../redux/player/playerActions';
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -9,7 +10,7 @@ dotenv.config();
 const IP = process.env.REACT_APP_IP;
 const PORT = process.env.REACT_APP_PORT;
 
-export const WebSocketContext = createContext(null)
+export const WebSocketContext = createContext(null);
 
 const PROTOCOL = {
 	TEST: "test",
@@ -21,7 +22,10 @@ const PROTOCOL = {
     INVALID_ROOMCODE: "invalid_roomcode",
     INVALID_PASSWORD: "invalid_password",
 	USER_JOINED: "user_joined",
-	USER_LEFT: "user_left"
+    USER_LEFT: "user_left",
+    PAUSE_PLAYER: "pause_player",
+    PLAY_PLAYER: "play_player",
+    SET_PLAYING: "set_playing",
 };
 
 export default ({ children }) => {
@@ -51,6 +55,13 @@ export default ({ children }) => {
         initializeEventHandlers(io);
     }
     
+    const setPlaying = (playing, timestamp) => {
+        io.emit(PROTOCOL.SET_PLAYING, {
+            playing: playing,
+            timestamp: timestamp,
+        });
+    }
+
     const initializeEventHandlers = (io) => {
         io.on("connect", () => {
             console.log("Connected to server");
@@ -70,7 +81,7 @@ export default ({ children }) => {
         io.on(PROTOCOL.INVALID_ROOMCODE, () => {
             alert("The room code is not valid. Try again!")
             console.log("invalid room code");
-            return false
+            return false;
         });
 
         io.on(PROTOCOL.INVALID_PASSWORD, () => {
@@ -85,6 +96,13 @@ export default ({ children }) => {
         io.on(PROTOCOL.USER_LEFT, (userId, reason) => 
             dispatch(removeParticipant(userId))
         );
+
+        io.on(PROTOCOL.SET_PLAYING, (playing, timestamp) => {
+            dispatch(setPlayingState(playing));
+            if (!playing) {
+                dispatch(setProgress(timestamp));
+            }
+        })
 
         io.on("disconnect", (msg) => {
             console.log("Disconnected: ", msg);
@@ -106,6 +124,7 @@ export default ({ children }) => {
             joinRoom,
             createRoom,
             resetConnection,
+            setPlaying,
         }
     }
 

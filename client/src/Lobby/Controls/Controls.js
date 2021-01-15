@@ -1,15 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./controls.css";
 import { MDBIcon } from "mdbreact";
-import { setAudioLevel } from "../../redux/player/playerActions";
+import { setAudioLevel, togglePlaying } from "../../redux/player/playerActions";
 import { connect } from "react-redux";
 import { formatDuration } from "../../utils/utils";
 import CurrentlyPlaying from "../CurrentlyPlaying/CurrentlyPlaying";
+import { WebSocketContext } from '../../networking/networking';
 
 function Controls(props) {
-    const playing = true;
-
     let volumeIcon;
+    const networking = useContext(WebSocketContext);
 
     switch (true) {
         case props.volume > 0.5:
@@ -23,6 +23,19 @@ function Controls(props) {
             break;
     }
 
+    const togglePlaying = () => {
+        // if the player is currently playing, then we want to pause on local first then send signal to server, 
+        // we'll pass in the timestamp so the server can sync up the other clients to this time
+        if (props.playing){ 
+            props.togglePlaying();
+            networking.setPlaying(false, props.progress)
+        } 
+        // if the player is paused, we want it to resume/play
+        else {
+            networking.setPlaying(true);
+        }
+    }
+
     return (
         <>
             <div className="controls">
@@ -34,8 +47,9 @@ function Controls(props) {
                     <button className="outlined-button btn-fill-horz-open btn-rounded icon-button-md">
                         <MDBIcon icon="step-backward" />
                     </button>
-                    <button className="primary outlined-button btn-fill-horz-open btn-rounded icon-button-lg">
-                        <MDBIcon icon={playing ? "play" : "pause"} />
+                    <button className="primary outlined-button btn-fill-horz-open btn-rounded icon-button-lg"
+                        onClick={() => togglePlaying()}>
+                        <MDBIcon icon={props.playing ? "pause" : "play"} />
                     </button>
                     <button className="outlined-button btn-fill-horz-open btn-rounded icon-button-md">
                         <MDBIcon icon="step-forward" />
@@ -74,7 +88,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         setAudioLevel: (newLevel) => dispatch(setAudioLevel(newLevel)),
+        togglePlaying: () => dispatch(togglePlaying()),
     };
-};
+};  
 
 export default connect(mapStateToProps, mapDispatchToProps)(Controls);

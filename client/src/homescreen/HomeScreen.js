@@ -59,7 +59,6 @@ function HomeScreen(props) {
     networking.joinRoom(props.userName, roomCode, roomPassword);
   }
 
-  // TODO: Make network call to actually create and join room.
   const createRoom = () => {
     if (!props.userName){
       alert("Username cannot be empty!");
@@ -115,7 +114,6 @@ function HomeScreen(props) {
                     className="login-input z-depth-1-half"
                     value={roomCode}
                     onChange={(e) => setRoomCode(e.target.value)}
-                    
                   />
                   <input
                     type="password"
