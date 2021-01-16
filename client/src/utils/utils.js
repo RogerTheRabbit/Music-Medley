@@ -14,7 +14,7 @@
  * @param duration duration to format in seconds
  */
 export function formatDuration(duration) {
-    return `${(duration / 60).toFixed(0)}:${(duration % 60).toFixed(0).padStart(2, 0)}`;
+    return `${Math.floor(duration / 60).toFixed(0)}:${(duration % 60).toFixed(0).padStart(2, 0)}`;
 }
 
 // TODO: Do better formatting - I just did this real quick because it's wayyy to late at night and I needa go to bed

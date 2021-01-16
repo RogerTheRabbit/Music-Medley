@@ -6,6 +6,15 @@ export const togglePlaying = () => {
     }
 }
 
+export const setPlayingState = (playingStatus) => {
+    return {
+        type: TYPES.SET_PLAYING,
+        data: {
+            playingStatus
+        }
+    }
+}
+
 export const setAudioLevel = (newLevel) => {
     return {
         type: TYPES.SET_AUDIO_LEVEL,
