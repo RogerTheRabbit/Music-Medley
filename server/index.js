@@ -96,6 +96,12 @@ io.on("connection", function (client) {
 		}
 	})
 
+	client.on(PROTOCOL.ADDED_SONG, (songInfo) => {
+		//let roomCode = clients[client.id].roomCode;
+		console.log(songInfo);
+		client.emit(PROTOCOL.QUEUE_SONG, songInfo);
+	})
+
 	// when client disconnects
 	client.on("disconnect", (reason) => {
 		let roomCode = clients[client.id].roomCode;
@@ -108,13 +114,7 @@ io.on("connection", function (client) {
 			delete clients[client.id];
 		}
 		console.log(rooms);
-	});
-
-	client.on(PROTOCOL.ADDED_SONG, (songInfo) => {
-		let roomCode = clients[client.id].roomCode;
-		console.log(songInfo);
-		client.to(roomCode).emit(PROTOCOL.QUEUE_SONG, songInfo);
-	});
+	})
 
 });
 

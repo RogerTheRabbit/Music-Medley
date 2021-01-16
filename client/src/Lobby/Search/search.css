@@ -23,6 +23,7 @@
   align-self: center;
   align-items: center;
   background-color: white;
+  z-index: 999;
 }
 
 .individual-search-result-container {

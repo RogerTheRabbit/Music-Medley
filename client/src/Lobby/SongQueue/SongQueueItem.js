@@ -1,8 +1,32 @@
-import React from "react";
+import React,{useState} from "react";
 import { formatDuration } from "../../utils/utils";
 import { motion } from "framer-motion"
+// import dotenv from "dotenv";
+
+// dotenv.config();
+
+// const TOKEN = process.env.REACT_APP_SEARCH_TOKEN;
+// const MAXRESULTS = 5;
 
 export default function SongQueueItem({ song }) {
+    // const [duration, storeDuration] = useState();
+
+    // const getDuration = () => {
+        
+    //     const url = "https://youtube.googleapis.com/youtube/v3/videos?part=contentDetails&id=" + song.videoId + "&maxResults=" + MAXRESULTS +"&key=" + TOKEN;
+
+    //     fetch(url)
+    //             .then(response => response.json())
+    //             .then(data => {
+    //                 storeDuration(data.items);
+    //                 console.log(data.items);
+    //             })
+        
+        
+    // };
+    
+    // getDuration();
+
     return (
         <motion.div
             className="song-item"
@@ -19,3 +43,4 @@ export default function SongQueueItem({ song }) {
         </motion.div>
     );
 }
+

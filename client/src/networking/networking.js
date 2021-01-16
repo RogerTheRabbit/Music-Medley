@@ -108,10 +108,11 @@ export default ({ children }) => {
 			photo: song.snippet.thumbnails.default.url,
 			url: "https://www.youtube.com/watch?v=" + song.id.videoId,
 			title: song.snippet.title,
-			channel: song.snippet.channelTitle
+            channel: song.snippet.channelTitle,
+            videoId: song.id.videoId
         }
         console.log(songInfo);
-        io.emit(PROTOCOL.ADDED_SONG, {songInfo});
+        io.emit(PROTOCOL.ADDED_SONG, songInfo);
     }
 
     if (!io) {
