@@ -10,7 +10,7 @@ cd [project root]/server
 npm install
 ```
 
-In a new terminal:
+In a separate terminal:
 
 ```shell
 cd [project root]/client
@@ -24,7 +24,7 @@ cd [project root]/server
 npm start
 ```
 
-In a new terminal:
+In a separate terminal:
 
 ```shell
 cd [project root]/client
