@@ -42,7 +42,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 messages: action.data.room?.messages || [],
                 participants: action.data.room?.participants || {},
-                connected: action.data.room.connected,
+                connected: action.data.room ? action.data.room.connected : false,
             }
         default:
             return state
