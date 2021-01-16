@@ -178,7 +178,7 @@ function HomeScreen(props) {
     <div className="heavy-rain-gradient d-flex justify-content-center flex-container">
       <MDBCard className="login-card align-self-center">
         <MDBCardBody className="aqua-gradient login-card-body">
-          <img src={logo} className="login-image" alt="TODO: CHANGE ME TO WHATEVER THE ACTUAL THING IS LATER" />
+          <img src={logo} className="login-image" alt="Willy Nuttley" width="25%" height="100%" />
           {renderForm()}
         </MDBCardBody>
       </MDBCard>
