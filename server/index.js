@@ -2,13 +2,13 @@
 const express = require("express");
 const socket = require("socket.io");
 const dotenv = require("dotenv");
+const {nanoid} = require("nanoid");
 
 dotenv.config();
 
 const PORT = process.env.PORT;
 const IP = process.env.IP;
 const PROTOCOL = {
-	TEST: "test",
 	NEW_USER: "new_user",
 	CREATE_ROOM: "create_room",
 	CREATE_SUCCESSFUL: "create_successful",
@@ -39,7 +39,7 @@ io.on("connection", function (client) {
 	console.log("Client[" + client.id + "] connected");
 	let roomCode;
 	client.on(PROTOCOL.CREATE_ROOM, ({userName, roomPassword}) => {
-		roomCode = generateRoomCode(5);
+		roomCode = nanoid(6);
 		let room = {
 			roomCode: roomCode,
 			password: roomPassword,
@@ -57,7 +57,6 @@ io.on("connection", function (client) {
 		console.log(rooms);
 		client.emit(PROTOCOL.CREATE_SUCCESSFUL, room);
 		client.to(roomCode).emit(PROTOCOL.USER_JOINED, newParticipant);
-
 	})
 
 	client.on(PROTOCOL.JOIN_ROOM, ({userName, roomCode:receivedRoomCode, roomPassword}) => {
@@ -86,7 +85,6 @@ io.on("connection", function (client) {
 	})
 
 	client.on(PROTOCOL.SET_PLAYING, ({playing, timestamp}) => {
-		console.log(playing, timestamp)
 		if (playing){
 			io.in(roomCode).emit(PROTOCOL.SET_PLAYING, playing);
 		} else {
@@ -106,13 +104,3 @@ io.on("connection", function (client) {
 		console.log(rooms);
 	});
 });
-
-function generateRoomCode(length) {
-	let result           = '';
-	let characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-	let charactersLength = characters.length;
-	for ( let i = 0; i < length; i++ ) {
-	   result += characters.charAt(Math.floor(Math.random() * charactersLength));
-	}
-	return result;
-}

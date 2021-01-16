@@ -13,7 +13,6 @@ const PORT = process.env.REACT_APP_PORT;
 export const WebSocketContext = createContext(null);
 
 const PROTOCOL = {
-	TEST: "test",
     NEW_USER: "new_user",
     CREATE_ROOM: "create_room",
     CREATE_SUCCESSFUL: "create_successful",
@@ -107,10 +106,6 @@ export default ({ children }) => {
         io.on("disconnect", (msg) => {
             console.log("Disconnected: ", msg);
             dispatch(setRoom({connected: false}));
-        });
-
-        io.on(PROTOCOL.TEST, (data) => {
-            console.log(data);
         });
     }
 
