@@ -5,6 +5,17 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    height: var(--controller-height);
+}
+
+.mobile-controls {
+    position: absolute;
+    bottom: var(--controller-height);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #202225;
 }
 
 /* Note: progress-bar is defined by Material Design Bootstrap */
