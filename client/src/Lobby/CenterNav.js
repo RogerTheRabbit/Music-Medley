@@ -9,9 +9,6 @@ function CenterNav(props) {
     return (
         <div>
             <Search/>
-            <button onClick={() => {props.toggleChat()}} className="outlined-button btn-fill-horz-open btn-rounded icon-button-md z-index-10">
-                <MDBIcon icon="comment-alt" />
-            </button>
             { isMobile && <button onClick={() => {props.toggleLeftPanel()}} className="outlined-button btn-fill-horz-open btn-rounded icon-button-md z-index-10">
                 <MDBIcon icon="comment-alt" />
             </button> }

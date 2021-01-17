@@ -2,7 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { addMessage } from "../../redux/lobby/lobbyActions";
 import { toggleChat } from "../../redux/app/appActions";
-import MessageContainer from "./MessageContainer";import { motion } from "framer-motion"
+import { MDBIcon } from 'mdbreact';
+import MessageContainer from "./MessageContainer";
+import { motion } from "framer-motion"
 import { isMobile } from 'react-device-detect';
 import "./chat.css";
 
@@ -30,6 +32,9 @@ function ChatContainer( props ) {
 
     return (
         <>
+            <button onClick={() => {props.toggleChat()}} className="toggle-chat-button outlined-button btn-fill-horz-open btn-rounded icon-button-md z-index-10">
+                <MDBIcon icon="comment-alt" />
+            </button>
             <motion.div
                 className={isMobile ? "mobile-chat z-index-1" : "chat"}
                 animate={props.app?.chatOpen ? "open" : "closed"}

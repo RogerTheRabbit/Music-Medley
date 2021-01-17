@@ -5,6 +5,7 @@
     width: 25em;
 	background-color: #2f3136;
 }
+
 .mobile-chat {
     position: absolute;
     display: flex;
@@ -25,6 +26,12 @@
 .mobile-chat .chat-input {
     width: calc(100% - 1.4em);
     margin: 10px;
+}
+
+.toggle-chat-button {
+    position: absolute;
+    top: 0;
+    right: 1em;
 }
 
 .message-container {

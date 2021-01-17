@@ -4,7 +4,7 @@ import { isMobile } from 'react-device-detect';
 const initialState = {
     chatOpen: false,
     leftPanelOpen: !isMobile,
-    mobileControlsOpen: true,
+    mobileControlsOpen: false,
 }
 
 const reducer = (state = initialState, action) => {

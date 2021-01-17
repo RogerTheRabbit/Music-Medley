@@ -8,7 +8,8 @@ import { formatDuration } from "../../utils/utils";
 import CurrentlyPlaying from "../CurrentlyPlaying/CurrentlyPlaying";
 import { WebSocketContext } from '../../networking/networking';
 import { isMobile } from 'react-device-detect';
-import { motion } from "framer-motion";
+import { AnimateSharedLayout, motion } from "framer-motion";
+import { controllerHeight } from "../../utils/constants"
 
 const variants = {
     open: { opacity: 1, y: 0, height: "100%" },
@@ -52,7 +53,7 @@ function Controls(props) {
             <MDBIcon icon="step-backward" />
         </button>
         <button className="primary outlined-button btn-fill-horz-open btn-rounded icon-button-lg"
-            onClick={() => props.togglePlaying()}>
+            onClick={() => togglePlaying()}>
             <MDBIcon icon={props.player.playing ? "pause" : "play"} />
         </button>
         <button className="outlined-button btn-fill-horz-open btn-rounded icon-button-md">
@@ -70,10 +71,27 @@ function Controls(props) {
                 animate={props.app?.mobileControlsOpen ? "open" : "closed"}
                 transition={{ease:"easeOut", duration: "0.1"}}
                 variants={variants}
+                drag="y"
+                dragConstraints={{top: 0}}
+                onDragEnd={(event, info) => {
+                    if(info.offset.y > 0) {
+                        props.toggleMobileControls();
+                    }
+                }}
             >
                 {mediaButtons}
             </motion.div>}
-            <div className="controls" onClick={()=> {isMobile && props.toggleMobileControls()}}>
+            <motion.div 
+                className="controls"
+                onClick={()=> {isMobile && props.toggleMobileControls()}}
+                drag={!props.app?.mobileControlsOpen && "y"}
+                dragConstraints={{top: 0, bottom: 0}}
+                onDragEnd={(event, info) => {
+                    if(info.offset.y < 0) {
+                        props.toggleMobileControls();
+                    }
+                }}
+            >
                 {!isMobile && mediaButtons}
                 <CurrentlyPlaying className="left-section"/>
                 <div className="custom-progress-bar">
@@ -94,7 +112,7 @@ function Controls(props) {
                         }}
                     />
                 </div>
-            </div>
+            </motion.div>
         </>
     );
 }
