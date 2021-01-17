@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { formatDuration } from "../../utils/utils";
 import CurrentlyPlaying from "../CurrentlyPlaying/CurrentlyPlaying";
 import { WebSocketContext } from '../../networking/networking';
+import { isMobile } from 'react-device-detect';
 
 function Controls(props) {
     let volumeIcon;

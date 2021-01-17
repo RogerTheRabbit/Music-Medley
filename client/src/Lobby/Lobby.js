@@ -1,22 +1,18 @@
 import React from "react";
 import "./Lobby.css";
-import RoomInfo from "./Room Info/RoomInfo";
-import ParticipantContainer from "./Participants/ParticipantContainer";
 import Controls from "./Controls/Controls";
 import AudioSources from "../players/AudioSources";
 import SongQueueContainer from "./SongQueue/SongQueueContainer";
 import Chat from "./Chat/Chat";
 import CenterNav from "./CenterNav";
+import LeftPanel from "./LeftPanel";
 
 function Lobby() {
     return (
         <div className="lobby-container">
             <div className="lobby-body">
                 <div className="left-panel">
-                    <div className="left-panel-container">
-                        <RoomInfo />
-                        <ParticipantContainer />
-                    </div>
+                    <LeftPanel />
                 </div>
                 <div className="center-content">
                     <div className="center-content-container">

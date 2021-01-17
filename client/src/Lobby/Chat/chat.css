@@ -3,9 +3,26 @@
     flex-direction: column;
     height: 100%;
     width: 25em;
+	background-color: #2f3136;
+}
+.mobile-chat {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 25em;
+    max-width: 100%;
+    right: 0;
+    background-color: #2f3136;
+    padding-top: 0.5em;
 }
 
 .chat .chat-input {
+    width: calc(100% - 1.4em);
+    margin: 10px;
+}
+
+.mobile-chat .chat-input {
     width: calc(100% - 1.4em);
     margin: 10px;
 }

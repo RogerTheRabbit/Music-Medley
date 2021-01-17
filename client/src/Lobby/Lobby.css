@@ -15,12 +15,21 @@
 }
 
 .left-panel {
-	width: 13em;
 	overflow-y: auto;
 	background-color: #2f3136;
 }
 
+.mobile-left-panel {
+	overflow-y: auto;
+	background-color: #2f3136;
+	width: 13em;
+	position: absolute;
+	z-index: 1;
+	height: 100vh;
+}
+
 .left-panel .left-panel-container {
+	width: 13em;
 	display: flex;
 	flex-direction: column;
 	height: 100%;

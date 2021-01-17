@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { addMessage } from "../../redux/lobby/lobbyActions";
 import { toggleChat } from "../../redux/app/appActions";
 import MessageContainer from "./MessageContainer";import { motion } from "framer-motion"
+import { isMobile } from 'react-device-detect';
 import "./chat.css";
 
 const variants = {
@@ -29,20 +30,20 @@ function ChatContainer( props ) {
 
     return (
         <>
-            <motion.div 
-                className="chat"
+            <motion.div
+                className={isMobile ? "mobile-chat z-index-1" : "chat"}
                 animate={props.app?.chatOpen ? "open" : "closed"}
                 transition={{ease:"easeOut", duration: "0.1"}}
                 variants={variants}
             >
                 <MessageContainer />
-                <input
+                {props.app?.chatOpen && <input
                     type="text"
                     label="Send message..."
                     placeholder="Send message..."
                     className="chat-input z-depth-1-half"
                     onKeyDown={chatOnKeyPress}
-                />
+                />}
             </motion.div>
         </>
     );

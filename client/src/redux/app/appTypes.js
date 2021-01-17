@@ -1,3 +1,4 @@
 export default {
     TOGGLE_CHAT: 'TOGGLE_CHAT',
+    TOGGLE_LEFT_PANEL: 'TOGGLE_LEFT_PANEL',
 }
