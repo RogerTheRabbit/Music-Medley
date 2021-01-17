@@ -5,8 +5,7 @@ const initialState = {
     messages: [],
     songs: [],
     participants: {},
-    room: null, // Note: A room value of null indicates to ConnectedRoute that there is no connection to the room.
-                // Although, it might make sense to change this functionality in the future.
+    connected: false,
 }
 
 const reducer = (state = initialState, action) => {
@@ -41,7 +40,9 @@ const reducer = (state = initialState, action) => {
         case TYPES.SET_ROOM:
             return {
                 ...state,
-                room: action.data.room
+                messages: action.data.room?.messages || [],
+                participants: action.data.room?.participants || {},
+                connected: action.data.room ? action.data.room.connected : false,
             }
         default:
             return state

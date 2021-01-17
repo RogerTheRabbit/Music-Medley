@@ -18,13 +18,14 @@ function HomeScreen(props) {
   let urlParams = new URLSearchParams(props.location?.search);
 
   const [currentFormComponent, setCurrentFormComponent] = useState(urlParams.get("roomCode") ? formComponents.JOIN : formComponents.MAIN);
-  const [roomCode, setRoomCode] = useState(urlParams.get("roomCode") || "");
+  let initialRoomCode = urlParams.get("roomCode") || props.room?.roomCode || "";
+  const [roomCode, setRoomCode] = useState(initialRoomCode);
   const [roomPassword, setRoomPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const roomURL = `/room/?roomCode=${roomCode}`;
   const networking = useContext(WebSocketContext);
 
-  if (props.room) {
+  if (props.connected) {
     // TODO: See if this redirect is breaking url path history
     return <Redirect to={roomURL} />;
   }
@@ -46,14 +47,26 @@ function HomeScreen(props) {
   }
 
   const joinRoom = () => {
-    setLoading(true);
+    if (!props.userName){
+      alert("Username cannot be empty!");
+      return;
+    }
+    if (!roomCode){
+      alert("Room Code cannot be empty!");
+      return;
+    }
+    // setLoading(true);
     networking.joinRoom(props.userName, roomCode, roomPassword);
   }
 
-  // TODO: Make network call to actually create and join room.
   const createRoom = () => {
-    setLoading(true);
+    if (!props.userName){
+      alert("Username cannot be empty!");
+      return;
+    }
+    // setLoading(true);
     console.log("Creating room");
+    networking.createRoom(props.userName, roomPassword);
   }
 
   const renderForm = () => {
@@ -165,7 +178,7 @@ function HomeScreen(props) {
     <div className="heavy-rain-gradient d-flex justify-content-center flex-container">
       <MDBCard className="login-card align-self-center">
         <MDBCardBody className="aqua-gradient login-card-body">
-          <img src={logo} className="login-image" alt="TODO: CHANGE ME TO WHATEVER THE ACTUAL THING IS LATER" />
+          <img src={logo} className="login-image" alt="Willy Nuttley" width="25%" height="100%" />
           {renderForm()}
         </MDBCardBody>
       </MDBCard>

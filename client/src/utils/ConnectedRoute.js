@@ -13,7 +13,7 @@ function ConnectedRoute( props, rest ) {
     <Route
       {...rest}
       children={() => {
-        return props.room ? (
+        return props.connected ? (
           props.children
         ) : (
           <Redirect to={{ pathname: `/join/?roomCode=${urlParams.get("roomCode")}` }} />
