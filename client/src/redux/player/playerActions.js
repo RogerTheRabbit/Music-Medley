@@ -69,11 +69,11 @@ export const addSong = (newSong) => {
     }
 };
 
-export const setSongs = (songs) => {
+export const setPlayer = (room) => {
     return {
-        type: TYPES.SET_SONGS,
+        type: TYPES.SET_PLAYER,
         data: {
-            songs
+            room
         }
     }
 };

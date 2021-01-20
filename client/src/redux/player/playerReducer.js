@@ -67,10 +67,10 @@ const reducer = (state = initalState, action) => {
                 ...state,
                 songs: [...state.songs, action.data.newSong]
             };
-        case TYPES.SET_SONGS:
+        case TYPES.SET_PLAYER:
             return {
                 ...state,
-                songs: action.data.songs
+                songs: action.data.room?.queue || []
             }
         default:
             return state

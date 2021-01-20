@@ -2,7 +2,7 @@ import React, { createContext } from 'react';
 import socket from 'socket.io-client';
 import { useDispatch } from 'react-redux';
 import { addParticipant, removeParticipant, setRoom } from '../redux/lobby/lobbyActions';
-import { setPlayingState, setProgress, addSong, setSongs} from '../redux/player/playerActions';
+import { setPlayingState, setProgress, addSong, setPlayer} from '../redux/player/playerActions';
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -72,13 +72,13 @@ export default ({ children }) => {
             room.connected = true;
             console.log(room);
             dispatch(setRoom(room));
+            dispatch(setPlayer(room));
         });
 
         io.on(PROTOCOL.JOIN_SUCCESSFUL, (room) => {
-            let queue = room.queue;
             room.connected = true;
             dispatch(setRoom(room));
-            dispatch(setSongs(queue));
+            dispatch(setPlayer(room));
         });
 
         io.on(PROTOCOL.INVALID_ROOMCODE, () => {
