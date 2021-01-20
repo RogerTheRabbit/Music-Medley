@@ -67,4 +67,13 @@ export const addSong = (newSong) => {
             newSong
         }
     }
-}
+};
+
+export const setSongs = (songs) => {
+    return {
+        type: TYPES.SET_SONGS,
+        data: {
+            songs
+        }
+    }
+};

@@ -47,6 +47,8 @@ io.on("connection", function (client) {
 			password: roomPassword,
 			participants: {},
 			messages: [],
+			queue: [],
+			curSong: 0,
 		}
 		client.join(roomCode);
 		rooms[roomCode] = room;
@@ -87,9 +89,9 @@ io.on("connection", function (client) {
 	})
 
 	client.on(PROTOCOL.ADDED_SONG, (songInfo) => {
-		//let roomCode = clients[client.id].roomCode;
 		console.log(songInfo);
-		client.emit(PROTOCOL.QUEUE_SONG, songInfo);
+		rooms[roomCode].queue.push(songInfo);
+		io.to(roomCode).emit(PROTOCOL.QUEUE_SONG, songInfo);
 	})
 
 	client.on(PROTOCOL.SET_PLAYING, ({playing, timestamp}) => {

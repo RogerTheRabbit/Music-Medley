@@ -67,6 +67,11 @@ const reducer = (state = initalState, action) => {
                 ...state,
                 songs: [...state.songs, action.data.newSong]
             };
+        case TYPES.SET_SONGS:
+            return {
+                ...state,
+                songs: action.data.songs
+            }
         default:
             return state
     }

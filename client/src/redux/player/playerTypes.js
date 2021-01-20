@@ -7,4 +7,5 @@ export default {
     SET_READY: 'SET_READY',
     SET_DURATION: "SET_DURATION",
     ADD_SONG: 'ADD_SONG',
+    SET_SONGS: 'SET_SONGS',
 }
