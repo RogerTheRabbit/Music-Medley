@@ -105,7 +105,7 @@ export default ({ children }) => {
 
         io.on("disconnect", (msg) => {
             console.log("Disconnected: ", msg);
-            dispatch(setRoom({connected: false}));
+            dispatch(setRoom({}));
         });
     }
 

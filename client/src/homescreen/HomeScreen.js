@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react";
 import { connect } from "react-redux";
-import { setRoom, setUsername } from "../redux/lobby/lobbyActions";
+import { setUsername } from "../redux/lobby/lobbyActions";
 import { WebSocketContext } from '../networking/networking';
-import { Redirect } from "react-router-dom";
+import { Redirect, useLocation } from "react-router-dom";
 import "./HomeScreen.css";
 import logo from "../resource/Whale_Vector.svg";
 
@@ -15,19 +15,18 @@ const formComponents = {
 };
 
 function HomeScreen(props) {
-  let urlParams = new URLSearchParams(props.location?.search);
+  let urlParams = new URLSearchParams(useLocation().search);
 
   const [currentFormComponent, setCurrentFormComponent] = useState(urlParams.get("roomCode") ? formComponents.JOIN : formComponents.MAIN);
-  let initialRoomCode = urlParams.get("roomCode") || props.room?.roomCode || "";
+  let initialRoomCode = props.roomCode || urlParams.get("roomCode") || "";
   const [roomCode, setRoomCode] = useState(initialRoomCode);
   const [roomPassword, setRoomPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const roomURL = `/room/?roomCode=${roomCode}`;
   const networking = useContext(WebSocketContext);
 
   if (props.connected) {
     // TODO: See if this redirect is breaking url path history
-    return <Redirect to={roomURL} />;
+    return <Redirect to={`/room/?roomCode=${props.roomCode}`} />;
   }
 
   const handleJoinPage = () => {
@@ -193,7 +192,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         setUsername: (userName) => dispatch(setUsername(userName)),
-        setRoom: (room) => dispatch(setRoom(room)),
     };
 };
 
