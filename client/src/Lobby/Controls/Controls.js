@@ -8,8 +8,7 @@ import { formatDuration } from "../../utils/utils";
 import CurrentlyPlaying from "../CurrentlyPlaying/CurrentlyPlaying";
 import { WebSocketContext } from '../../networking/networking';
 import { isMobile } from 'react-device-detect';
-import { AnimateSharedLayout, motion } from "framer-motion";
-import { controllerHeight } from "../../utils/constants"
+import { motion } from "framer-motion";
 
 const variants = {
     open: { opacity: 1, y: 0, height: "100%" },
