@@ -16,7 +16,8 @@ function Player(props) {
 	const networking = useContext(WebSocketContext);
 
 	const {
-		url,
+		songs,
+		songIndex,
 		playing,
 		controls,
 		light,
@@ -39,7 +40,7 @@ function Player(props) {
 		<>
 			<ReactPlayer
 				className={!DEBUG && "hidden"}
-				url={url}
+				url={songs[songIndex]?.url}
 				pip={pip}
 				playing={playing}
 				controls={controls}
@@ -64,9 +65,10 @@ function Player(props) {
 			{DEBUG && (
 				<>
 					<h1>TESTING STATS:</h1>
-					<p>PROGRES: {props.progress}</p>
+					<p>PROGRESS: {props.progress}</p>
 					<p>READY: {props.ready ? "Ready" : "Not ready"}</p>
 					<p>VOLUME: {props.volume}</p>
+					<p>Current song: {props.songs[props.songIndex]?.url}</p>
 					<input id="newSong" defaultValue={'https://www.youtube.com/watch?v=dQw4w9WgXcQ'} />
 					<button onClick={props.addSong}>Add Song</button>
 					<br />

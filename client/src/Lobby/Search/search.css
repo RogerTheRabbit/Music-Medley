@@ -1,13 +1,77 @@
 .search-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .search-input {
-    margin: 0.5em 0.25em 0.5em 0.25em;
-    height: 3em;
-    width: 20em;
-    max-width: 100%;
+  margin: 0.5em 0.25em 0.5em 0.25em;
+  height: 3em;
+  width: 20em;
+  max-width: 100%;
+}
+
+.search-results-container {
+  position: absolute;
+  border-radius: 1em;
+  top: 4em;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+  align-items: center;
+  background-color: white;
+  z-index: 999;
+}
+
+.individual-search-result-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
+  padding: 8px;
+}
+
+.individual-search-result-container:hover {
+  background-color: rgb(187, 187, 187);
+}
+
+.search-result {
+  display: flex;
+  align-items: left;
+}
+
+.add-song {
+  display: flex;
+  align-items: right;
+}
+
+.add-song:hover {
+  background-color: gray;
+}
+
+.thumbnail {
+  height: 50px;
+  width: 50px;
+  border-radius: 1em;
+}
+
+.song-information {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4px;
+}
+
+.song-name {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.channel-name {
+  font-size: 12px;
+  font-weight: 500;
 }

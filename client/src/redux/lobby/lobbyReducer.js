@@ -3,8 +3,8 @@ import TYPES from "./lobbyTypes";
 const initialState = {
     userName: "",
     messages: [],
-    songs: [],
     participants: {},
+    roomCode: '',
     connected: false,
 }
 
@@ -14,11 +14,6 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 messages: [...state.messages, action.data.newMessage]
-            }
-        case TYPES.ADD_SONG:
-            return {
-                ...state,
-                songs: [...state.songs, action.data.newSong]
             }
         case TYPES.ADD_PARTICIPANT:
             return {
@@ -42,7 +37,8 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 messages: action.data.room?.messages || [],
                 participants: action.data.room?.participants || {},
-                connected: action.data.room ? action.data.room.connected : false,
+                roomCode: action.data.room?.roomCode || state.roomCode,
+                connected: action.data.room?.connected || false,
             }
         default:
             return state

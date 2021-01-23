@@ -18,6 +18,8 @@ const PROTOCOL = {
     INVALID_PASSWORD: "invalid_password",
 	USER_JOINED: "user_joined",
 	USER_LEFT: "user_left",
+	ADDED_SONG: "song_added",
+	QUEUE_SONG: "song_queued",
 	PAUSE_PLAYER: "pause_player",
 	PLAY_PLAYER: "play_player",
 	SET_PLAYING: "set_playing",
@@ -48,6 +50,8 @@ io.on("connection", function (client) {
 			participants: {},
 			messages: [],
 			currProgress: 0,
+			queue: [],
+			curSong: 0,
 		}
 		client.join(roomCode);
 		rooms[roomCode] = room;
@@ -87,6 +91,12 @@ io.on("connection", function (client) {
 		}
 	})
 
+	client.on(PROTOCOL.ADDED_SONG, (songInfo) => {
+		console.log(songInfo);
+		rooms[roomCode].queue.push(songInfo);
+		io.to(roomCode).emit(PROTOCOL.QUEUE_SONG, songInfo);
+	})
+
 	client.on(PROTOCOL.SET_PLAYING, ({playing, progress}) => {
 		if (playing){
 			io.in(roomCode).emit(PROTOCOL.SET_PLAYING, playing);
@@ -117,5 +127,6 @@ io.on("connection", function (client) {
 			}
 		}
 		console.log(rooms);
-	});
+	})
+
 });
