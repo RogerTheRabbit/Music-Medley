@@ -50,6 +50,7 @@ io.on("connection", function (client) {
 			participants: {},
 			messages: [],
 			currProgress: 0,
+			playingStatus: false,
 			queue: [],
 			curSong: 0,
 		}
@@ -103,6 +104,7 @@ io.on("connection", function (client) {
 		} else {
 			client.to(roomCode).emit(PROTOCOL.SET_PLAYING, playing, progress);
 		}
+		rooms[roomCode].playingStatus = playing;
 	})
 
 	client.on(PROTOCOL.PROGRESS_CHECK, (clientProgress) => {

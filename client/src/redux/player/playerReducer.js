@@ -68,9 +68,15 @@ const reducer = (state = initalState, action) => {
                 songs: [...state.songs, action.data.newSong]
             };
         case TYPES.SET_PLAYER:
+            console.log(action.data.room?.currProgress)
+            console.log(action.data.room?.playingStatus)
+
             return {
                 ...state,
-                songs: action.data.room?.queue || []
+                songs: action.data.room?.queue || [],
+                songIndex: action.data.room?.curSong || 0,
+                progress: action.data.room?.currProgress,
+                playing: action.data.room?.playingStatus,
             }
         default:
             return state
