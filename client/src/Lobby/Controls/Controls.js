@@ -83,7 +83,7 @@ function Controls(props) {
             <motion.div 
                 className="controls"
                 onClick={()=> {isMobile && props.toggleMobileControls()}}
-                drag={!props.app?.mobileControlsOpen && "y"}
+                drag={!props.app?.mobileControlsOpen && isMobile && "y"}
                 dragConstraints={{top: 0, bottom: 0}}
                 onDragEnd={(event, info) => {
                     if(info.offset.y < 0) {
