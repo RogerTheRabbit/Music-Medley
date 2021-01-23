@@ -1,7 +1,11 @@
-import React, {useState} from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { addMessage } from "../../redux/lobby/lobbyActions";
-import MessageContainer from "./MessageContainer";import { motion } from "framer-motion"
+import { toggleChat } from "../../redux/app/appActions";
+import { MDBIcon } from 'mdbreact';
+import MessageContainer from "./MessageContainer";
+import { motion } from "framer-motion"
+import { isMobile } from 'react-device-detect';
 import "./chat.css";
 
 const variants = {
@@ -11,14 +15,12 @@ const variants = {
 
 function ChatContainer( props ) {
 
-    const [isOpen, setIsOpen] = useState(true)
-
     const chatOnKeyPress = (e) => {
         if (e.keyCode === 13) {
             // TODO: Send message to server as well -- DATA STRUCTURE SUBJECT TO CHANGE
             props.addMessage({
                 from: {
-                    name: props.userName,
+                    name: props.lobby?.userName,
                     profilePicture: "https://picsum.photos/50",
                 },
                 timeStamp: new Date(),
@@ -30,32 +32,39 @@ function ChatContainer( props ) {
 
     return (
         <>
-            <button onClick={() => {setIsOpen(!isOpen)}}>Toggle chat</button>
-            <motion.div 
-                className="chat"
-                animate={isOpen ? "open" : "closed"}
+            <button onClick={() => {props.toggleChat()}} className="toggle-chat-button outlined-button btn-fill-horz-open btn-rounded icon-button-md z-index-10">
+                <MDBIcon icon="comment-alt" />
+            </button>
+            <motion.div
+                className={isMobile ? "mobile-chat z-index-1" : "chat"}
+                animate={props.app?.chatOpen ? "open" : "closed"}
+                transition={{ease:"easeOut", duration: "0.1"}}
                 variants={variants}
             >
                 <MessageContainer />
-                <input
+                {props.app?.chatOpen && <input
                     type="text"
                     label="Send message..."
                     placeholder="Send message..."
                     className="chat-input z-depth-1-half"
                     onKeyDown={chatOnKeyPress}
-                />
+                />}
             </motion.div>
         </>
     );
 }
 
 const mapStateToProps = (state) => {
-    return state.lobby;
+    return {
+        lobby: state.lobby,
+        app: state.app
+    };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         addMessage: (newMessage) => dispatch(addMessage(newMessage)),
+        toggleChat: (newMessage) => dispatch(toggleChat(newMessage)),
     };
 };
 

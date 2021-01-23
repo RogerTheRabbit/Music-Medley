@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import ReactPlayer from "react-player";
 import { connect } from "react-redux";
 import { togglePlaying, setAudioLevel, setProgress, setDuration, setSong, setReady } from '../redux/player/playerActions';
-import withNetworking from './withTestNetworking';
 import { WebSocketContext } from '../networking/networking';
 
 const dotenv = require("dotenv");
@@ -96,5 +95,4 @@ const mapDispatchToProps = dispatch => {
 	}
 }
 
-const playerWithNetworking = withNetworking(Player);
-export default connect(mapStateToProps, mapDispatchToProps)(playerWithNetworking);
+export default connect(mapStateToProps, mapDispatchToProps)(Player);

@@ -1,10 +1,21 @@
 .controls {
     position: relative;
     display: flex;
-    margin: 0 1em 0 1em;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    height: var(--controller-height);
+	background-color: #202225;
+}
+
+.mobile-controls {
+    position: absolute;
+    bottom: var(--controller-height);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #202225;
 }
 
 /* Note: progress-bar is defined by Material Design Bootstrap */
@@ -28,12 +39,12 @@
 
 .left-section {
     position: absolute;
-    left: 0;
+    left: 1em;
 }
 
 .volume-slider {
     position: absolute;
-    right: 0;
+    right: 1em;
     display: flex;
     justify-content: center;
     align-items: center;
