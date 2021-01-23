@@ -5,6 +5,7 @@ const initialState = {
     messages: [],
     songs: [],
     participants: {},
+    roomCode: '',
     connected: false,
 }
 
@@ -42,7 +43,8 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 messages: action.data.room?.messages || [],
                 participants: action.data.room?.participants || {},
-                connected: action.data.room ? action.data.room.connected : false,
+                roomCode: action.data.room?.roomCode || state.roomCode,
+                connected: action.data.room?.connected || false,
             }
         default:
             return state
