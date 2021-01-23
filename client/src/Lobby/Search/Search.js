@@ -36,7 +36,7 @@ export default function Search() {
                     
                 />
             </div>  
-            <div className="search-results-container z-depth-1" tabindex="0" onBlur={(e) => {e.currentTarget === e.target && setSongs([])}}>
+            <div className="search-results-container z-depth-1" tabIndex="0" onBlur={(e) => {e.currentTarget === e.target && setSongs([])}}>
                     {songs.map((song, idx) => {
                         return <SearchResult key={idx} song={song}/>;
                     })}

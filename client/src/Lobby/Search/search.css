@@ -30,11 +30,9 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  /* border-radius: 4em; */
   align-items: center;
   color: black;
   padding: 8px;
-  /* margin-bottom: 0.5em; */
 }
 
 .individual-search-result-container:hover {
