@@ -16,7 +16,7 @@ function SongQueueContainer(props) {
 }
 
 const mapStateToProps = (state) => {
-    return state.lobby, state.player;
+    return state.player;
 };
 
 const mapDispatchToProps = (dispatch) => {
