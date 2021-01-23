@@ -82,6 +82,7 @@ input[type="text"] {
   border: solid #fff;
   padding-top: 0.7rem;
   padding-bottom: 0.7rem;
+  outline: none!important;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
@@ -111,11 +112,13 @@ input[type="text"] {
   top: 50%;
   z-index: -1;
 }
+
 .btn-fill-horz-open:before {
   bottom: 50%;
   left: 50%;
   border-radius: 0 10em 10em 0;
 }
+
 .btn-fill-horz-open:after {
   bottom: 50%;
   right: 50%;
@@ -134,6 +137,7 @@ input[type="text"] {
 .btn-fill-horz-open.outlined-button:after {
   background-color: white;
 }
+
 .btn-fill-horz-open.outlined-button:hover {
   color: gray;
 }
@@ -170,11 +174,11 @@ i.fa-share-alt {
   background-color: #2f3136;
   border-radius: 10px;
 }
-  
+
 ::-webkit-scrollbar {
-width: 12px;
+  width: 12px;
 }
-  
+
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: #202225;
@@ -182,12 +186,12 @@ width: 12px;
 
 .thin-scroll-bar::-webkit-scrollbar-track {
 }
-  
+
 .thin-scroll-bar::-webkit-scrollbar {
   width: 6px;
   padding: 10px;
 }
-  
+
 .thin-scroll-bar::-webkit-scrollbar-thumb {
   width: 5px;
   border-radius: 6px;

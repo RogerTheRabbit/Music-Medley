@@ -2,7 +2,7 @@ import React, { createContext } from 'react';
 import socket from 'socket.io-client';
 import { useDispatch } from 'react-redux';
 import { addParticipant, removeParticipant, setRoom } from '../redux/lobby/lobbyActions';
-import { setPlayingState, setProgress} from '../redux/player/playerActions';
+import { setPlayingState, setProgress, addSong, setPlayer} from '../redux/player/playerActions';
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -22,6 +22,8 @@ const PROTOCOL = {
     INVALID_PASSWORD: "invalid_password",
 	USER_JOINED: "user_joined",
     USER_LEFT: "user_left",
+    ADDED_SONG: "song_added",
+    QUEUE_SONG: "song_queued",
     PAUSE_PLAYER: "pause_player",
     PLAY_PLAYER: "play_player",
     SET_PLAYING: "set_playing",
@@ -70,11 +72,13 @@ export default ({ children }) => {
             room.connected = true;
             console.log(room);
             dispatch(setRoom(room));
+            dispatch(setPlayer(room));
         });
 
         io.on(PROTOCOL.JOIN_SUCCESSFUL, (room) => {
             room.connected = true;
             dispatch(setRoom(room));
+            dispatch(setPlayer(room));
         });
 
         io.on(PROTOCOL.INVALID_ROOMCODE, () => {
@@ -89,7 +93,7 @@ export default ({ children }) => {
 
         io.on(PROTOCOL.USER_JOINED, (newParticipant) => {
             console.log("User joined:", newParticipant);
-            dispatch(addParticipant(newParticipant))
+            dispatch(addParticipant(newParticipant));
         });
 
         io.on(PROTOCOL.USER_LEFT, (userId, reason) => 
@@ -105,8 +109,28 @@ export default ({ children }) => {
 
         io.on("disconnect", (msg) => {
             console.log("Disconnected: ", msg);
-            dispatch(setRoom({connected: false}));
+            dispatch(setRoom({}));
         });
+
+        io.on(PROTOCOL.TEST, (data) => {
+            console.log(data);
+        });
+
+        io.on(PROTOCOL.QUEUE_SONG, (songInfo) => {
+            dispatch(addSong(songInfo));
+        });
+    }
+
+    const sendSong = (song) => {
+        const songInfo = {
+			photo: song.snippet.thumbnails.default.url,
+			url: "https://www.youtube.com/watch?v=" + song.id.videoId,
+			title: song.snippet.title,
+            channel: song.snippet.channelTitle,
+            videoId: song.id.videoId
+        }
+        console.log(songInfo);
+        io.emit(PROTOCOL.ADDED_SONG, songInfo);
     }
 
     if (!io) {
@@ -119,6 +143,7 @@ export default ({ children }) => {
             joinRoom,
             createRoom,
             resetConnection,
+            sendSong,
             setPlaying,
         }
     }
