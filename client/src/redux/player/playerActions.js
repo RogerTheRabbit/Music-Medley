@@ -59,3 +59,21 @@ export const setDuration = (duration) => {
         },
     };
 };
+
+export const addSong = (newSong) => {
+    return {
+        type: TYPES.ADD_SONG,
+        data: {
+            newSong
+        }
+    }
+};
+
+export const setPlayer = (room) => {
+    return {
+        type: TYPES.SET_PLAYER,
+        data: {
+            room
+        }
+    }
+};
