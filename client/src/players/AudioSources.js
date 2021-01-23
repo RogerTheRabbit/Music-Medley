@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ReactPlayer from "react-player";
 import { connect } from "react-redux";
 import { togglePlaying, setAudioLevel, setProgress, setDuration, setSong, setReady } from '../redux/player/playerActions';
 import withNetworking from './withTestNetworking';
+import { WebSocketContext } from '../networking/networking';
+
 const dotenv = require("dotenv");
 
 dotenv.config();
@@ -10,6 +12,8 @@ dotenv.config();
 const DEBUG = process.env.REACT_APP_DEBUG_PLAYER === "true";
 
 function Player(props) {
+
+	const networking = useContext(WebSocketContext);
 
 	const {
 		url,
@@ -24,6 +28,12 @@ function Player(props) {
 		playbackRate,
 		pip,
 	} = props;
+
+	const updateProgress = (e) => {
+		let updatedProgress = e.played;
+		props.setProgress(updatedProgress);
+		networking.progressCheck(updatedProgress);
+	}
 
 	return (
 		<>
@@ -48,7 +58,7 @@ function Player(props) {
 				onSeek={e => console.log("onSeek", e)}
 				onEnded={props.onEnded}
 				onError={e => { }}
-				onProgress={e => props.setProgress(e.played)}
+				onProgress={e => updateProgress(e)}
                 onDuration={(duration) => props.setDuration(duration)}
 			/>
 			{DEBUG && (
@@ -67,6 +77,7 @@ function Player(props) {
 		</>
 	);
 }
+
 
 const mapStateToProps = (state) => {
 	return state.player

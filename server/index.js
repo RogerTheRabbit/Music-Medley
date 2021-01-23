@@ -21,6 +21,8 @@ const PROTOCOL = {
 	PAUSE_PLAYER: "pause_player",
 	PLAY_PLAYER: "play_player",
 	SET_PLAYING: "set_playing",
+	PROGRESS_CHECK: "progress_check",
+    CORRECT_PROGRESS: "correct_progress",
 };
 
 let rooms = {};
@@ -45,6 +47,7 @@ io.on("connection", function (client) {
 			password: roomPassword,
 			participants: {},
 			messages: [],
+			currProgress: 0,
 		}
 		client.join(roomCode);
 		rooms[roomCode] = room;
@@ -66,7 +69,7 @@ io.on("connection", function (client) {
 			client.emit(PROTOCOL.INVALID_ROOMCODE);
 		}
 		// check if the password is correct
-		if (rooms[roomCode].password !== roomPassword){
+		else if (rooms[roomCode].password !== roomPassword){
 			client.emit(PROTOCOL.INVALID_PASSWORD);
 		} 
 		else {
@@ -84,11 +87,23 @@ io.on("connection", function (client) {
 		}
 	})
 
-	client.on(PROTOCOL.SET_PLAYING, ({playing, timestamp}) => {
+	client.on(PROTOCOL.SET_PLAYING, ({playing, progress}) => {
 		if (playing){
 			io.in(roomCode).emit(PROTOCOL.SET_PLAYING, playing);
 		} else {
-			client.to(roomCode).emit(PROTOCOL.SET_PLAYING, playing, timestamp);
+			client.to(roomCode).emit(PROTOCOL.SET_PLAYING, playing, progress);
+		}
+	})
+
+	client.on(PROTOCOL.PROGRESS_CHECK, (clientProgress) => {
+		console.log("server progress: ", rooms[roomCode].currProgress);
+		console.log("client progress: ", clientProgress);
+		let progressInServer = rooms[roomCode].currProgress;
+		if (progressInServer < clientProgress){
+			rooms[roomCode].currProgress = clientProgress;
+		} else if (progressInServer - clientProgress > 1){
+			console.log('Progress is too far apart.')
+			client.emit(PROTOCOL.CORRECT_PROGRESS, progressInServer);
 		}
 	})
 

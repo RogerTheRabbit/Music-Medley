@@ -25,6 +25,8 @@ const PROTOCOL = {
     PAUSE_PLAYER: "pause_player",
     PLAY_PLAYER: "play_player",
     SET_PLAYING: "set_playing",
+    PROGRESS_CHECK: "progress_check",
+    CORRECT_PROGRESS: "correct_progress",
 };
 
 export default ({ children }) => {
@@ -54,11 +56,15 @@ export default ({ children }) => {
         initializeEventHandlers(io);
     }
     
-    const setPlaying = (playing, timestamp) => {
+    const setPlaying = (playing, progress) => {
         io.emit(PROTOCOL.SET_PLAYING, {
             playing: playing,
-            timestamp: timestamp,
+            progress: progress,
         });
+    }
+
+    const progressCheck = (currProgress) => {
+        io.emit(PROTOCOL.PROGRESS_CHECK, currProgress)
     }
 
     const initializeEventHandlers = (io) => {
@@ -96,12 +102,17 @@ export default ({ children }) => {
             dispatch(removeParticipant(userId))
         );
 
-        io.on(PROTOCOL.SET_PLAYING, (playing, timestamp) => {
+        io.on(PROTOCOL.SET_PLAYING, (playing, progress) => {
             dispatch(setPlayingState(playing));
             if (!playing) {
-                dispatch(setProgress(timestamp));
+                dispatch(setProgress(progress));
             }
-        })
+        });
+
+        io.on(PROTOCOL.CORRECT_PROGRESS, (progress) => {
+            dispatch(setProgress(progress));
+            console.log("progress updated to: " + progress);
+        });
 
         io.on("disconnect", (msg) => {
             console.log("Disconnected: ", msg);
@@ -120,6 +131,7 @@ export default ({ children }) => {
             createRoom,
             resetConnection,
             setPlaying,
+            progressCheck,
         }
     }
 
