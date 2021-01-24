@@ -1,5 +1,5 @@
-import React, {useContext } from "react";
-import {MDBIcon} from "mdbreact";
+import React, { useContext } from "react";
+import { MDBIcon } from "mdbreact";
 import { WebSocketContext } from '../../networking/networking';
 
 export default function SearchResult({ song }) {
@@ -14,9 +14,9 @@ export default function SearchResult({ song }) {
                     <div className="channel-name">{song.snippet.channelTitle}</div>
                 </div>
             </div>
-            <div className="add-song" onClick={() => {networking.sendSong(song)}}>
+            <div className="outlined-button btn-fill-horz-open btn-rounded icon-button md" onClick={() => {networking.sendSong(song)}}>
                 <MDBIcon icon="plus" />
             </div>
         </div>
-     );
+    );
 }

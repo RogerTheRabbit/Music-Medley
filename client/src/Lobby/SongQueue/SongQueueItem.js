@@ -16,7 +16,6 @@ export default function SongQueueItem({ song }) {
                 <div>{song.title}</div>
                 <div className="song-artist">{song.channel}</div>
             </div>
-            <div className="song-duration">{formatDuration(song.duration)}</div>
         </motion.div>
     );
 }

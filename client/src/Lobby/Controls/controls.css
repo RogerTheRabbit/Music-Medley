@@ -18,6 +18,11 @@
     background-color: #202225;
 }
 
+.media-buttons {
+    display: flex;
+    align-items: center;
+}
+
 /* Note: progress-bar is defined by Material Design Bootstrap */
 .custom-progress-bar {
     display: flex;
@@ -52,6 +57,8 @@
 
 .volume-slider i {
     width: 18px;
+    min-width: 18px;
+    max-width: 18px;
 }
 
 .volume-slider input {

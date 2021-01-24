@@ -32,7 +32,7 @@ function ChatContainer( props ) {
 
     return (
         <>
-            <button onClick={() => {props.toggleChat()}} className="toggle-chat-button outlined-button btn-fill-horz-open btn-rounded icon-button-md z-index-10">
+            <button onClick={() => {props.toggleChat()}} className="toggle-chat-button outlined-button btn-fill-horz-open btn-rounded icon-button md z-index-10">
                 <MDBIcon icon="comment-alt" />
             </button>
             <motion.div
