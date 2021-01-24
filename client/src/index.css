@@ -1,3 +1,7 @@
+* {
+  outline: none!important;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
@@ -20,7 +24,7 @@ code {
 }
 
 .btn-rounded {
-  border-radius: 10em !important;
+  border-radius: 10em!important;
 }
 
 .no-padding {
@@ -38,7 +42,6 @@ code {
 input[type="button"],
 input[type="password"],
 input[type="text"] {
-  /* width: 80%; */
   border-radius: 1.4em;
   outline: none;
   border: none;
@@ -142,18 +145,30 @@ input[type="text"] {
   color: gray;
 }
 
-.icon-button-md {
-  width: 3em;
-  height: 3em;
+.icon-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 0.5em 0.25em 0.5em 0.25em;
   padding: 10px;
 }
 
-.icon-button-lg {
+.icon-button.md {
+  width: 3em;
+  min-width: 3em;
+  max-width: 3em;
+  height: 3em;
+  min-height: 3em;
+  max-height: 3em;
+}
+
+.icon-button.lg {
   width: 4em;
+  min-width: 4em;
+  max-width: 4em;
   height: 4em;
-  margin: 0.5em 0.25em 0.5em 0.25em;
-  padding: 10px;
+  min-height: 4em;
+  max-height: 4em;
 }
 
 /* Icon button adjustments */
@@ -163,6 +178,80 @@ i.fa-play {
 
 i.fa-share-alt {
   padding-right: 2px;
+}
+
+/* Slider inputs: designed using https://www.cssportal.com/style-input-range/ */
+
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  background-color: transparent;
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 14px;
+  cursor: pointer;
+  background: #4F545C;
+  border-radius: 14px;
+}
+input[type=range]::-webkit-slider-thumb {
+  height: 14px;
+  width: 14px;
+  border-radius: 7px;
+  background: #65C8D0;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: 0px;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #4F545C;
+}
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 14px;
+  cursor: pointer;
+  background: #4F545C;
+  border-radius: 14px;
+}
+input[type=range]::-moz-range-thumb {
+  height: 14px;
+  width: 14px;
+  border-radius: 7px;
+  background: #65C8D0;
+  cursor: pointer;
+}
+input[type=range]::-ms-track {
+  width: 100%;
+  height: 14px;
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+  background: #4F545C;
+  border-radius: 28px;
+}
+input[type=range]::-ms-fill-upper {
+  background: #4F545C;
+  border-radius: 28px;
+}
+input[type=range]::-ms-thumb {
+  margin-top: 1px;
+  height: 14px;
+  width: 14px;
+  border-radius: 7px;
+  background: #65C8D0;
+  cursor: pointer;
+}
+input[type=range]:focus::-ms-fill-lower {
+  background: #4F545C;
+}
+input[type=range]:focus::-ms-fill-upper {
+  background: #4F545C;
 }
 
 /* 

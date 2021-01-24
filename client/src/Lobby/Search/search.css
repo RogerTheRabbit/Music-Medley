@@ -1,12 +1,11 @@
 .search-container {
   width: 100%;
   display: flex;
-  justify-content: center;
   align-items: center;
 }
 
 .search-input {
-  margin: 0.5em 0.25em 0.5em 0.25em;
+  margin: 0.5em 0.5em 0.5em 0.5em;
   height: 3em;
   width: 20em;
   max-width: 100%;
@@ -16,14 +15,19 @@
   position: absolute;
   border-radius: 1em;
   top: 4em;
-  width: 50%;
+  width: 40em;
+  max-width: 60%;
+  max-height: 75%;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-self: center;
   align-items: center;
-  background-color: white;
+  background-color: #36393f;
+  border: 1px solid #202225;
   z-index: 999;
+  margin: 0 0.5em 0 0.5em;
 }
 
 .individual-search-result-container {
@@ -31,22 +35,24 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: black;
-  padding: 8px;
+  padding: 0.5em;
+}
+
+.individual-search-result-container:first-child {
+  border-radius: 1em 1em 0 0;
+}
+
+.individual-search-result-container:last-child {
+  border-radius: 0 0 1em 1em;
 }
 
 .individual-search-result-container:hover {
-  background-color: rgb(187, 187, 187);
+  background-color: #202225;
 }
 
 .search-result {
   display: flex;
-  align-items: left;
-}
-
-.add-song {
-  display: flex;
-  align-items: right;
+  align-items: center;
 }
 
 .add-song:hover {
@@ -63,7 +69,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 4px;
+  padding: 0 0.5em 0 0.5em;
 }
 
 .song-name {
