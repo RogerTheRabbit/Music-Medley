@@ -34,10 +34,20 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  color: white;
+}
+
+.song-item .song-title:hover {
+  color: hsl(197,calc(var(--saturation-factor, 1)*100%),47.8%);
 }
 
 .song-item .song-artist {
   font-size: 12px;
+  color: gray;
+}
+
+.song-item .song-artist:hover {
+  color: hsl(197,calc(var(--saturation-factor, 1)*100%),47.8%);
 }
 
 .song-item .song-duration {

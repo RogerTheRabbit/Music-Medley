@@ -1,5 +1,4 @@
 import React from "react";
-import { formatDuration } from "../../utils/utils";
 import { motion } from "framer-motion"
 
 export default function SongQueueItem({ song }) {
@@ -13,10 +12,10 @@ export default function SongQueueItem({ song }) {
         >
             <img src={song.photo} alt="Song display" className="song-photo z-depth-1" width="50px" height="50px"/>
             <div className="song-info">
-                <div className="song-title">{song.title}</div>
-                <div className="song-artist">{song.channel}</div>
+                <a className="song-title" target="_blank" href={song.url}>{song.title}</a>
+                <br />
+                <a className="song-artist" target="_blank" href={`https://www.youtube.com/channel/${song.chanelId}`}>{song.channel}</a>
             </div>
         </motion.div>
     );
 }
-

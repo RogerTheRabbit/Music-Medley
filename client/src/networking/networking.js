@@ -127,9 +127,9 @@ export default ({ children }) => {
 			url: "https://www.youtube.com/watch?v=" + song.id.videoId,
 			title: song.snippet.title,
             channel: song.snippet.channelTitle,
+            chanelId: song.snippet.channelId,
             videoId: song.id.videoId
         }
-        console.log(songInfo);
         io.emit(PROTOCOL.ADDED_SONG, songInfo);
     }
 
