@@ -17,6 +17,7 @@
 .left-panel {
 	overflow-y: auto;
 	background-color: #2f3136;
+	min-width: 13em;
 }
 
 .mobile-left-panel {
@@ -52,6 +53,8 @@
 .right-panel-container {
 	background-color: #2f3136;
 	overflow-y: auto;
+	overflow-x: hidden;
+	min-width: fit-content;
 }
 
 .controls-section {

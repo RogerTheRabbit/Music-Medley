@@ -30,6 +30,12 @@
   text-overflow: ellipsis;
 }
 
+.song-item .song-title {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .song-item .song-artist {
   font-size: 12px;
 }

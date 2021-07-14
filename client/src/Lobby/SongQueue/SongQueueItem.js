@@ -13,7 +13,7 @@ export default function SongQueueItem({ song }) {
         >
             <img src={song.photo} alt="Song display" className="song-photo z-depth-1" width="50px" height="50px"/>
             <div className="song-info">
-                <div>{song.title}</div>
+                <div className="song-title">{song.title}</div>
                 <div className="song-artist">{song.channel}</div>
             </div>
         </motion.div>
