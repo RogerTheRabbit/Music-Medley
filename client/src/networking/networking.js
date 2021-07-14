@@ -134,7 +134,9 @@ export default ({ children }) => {
     }
 
     if (!io) {
-        io = socket.connect("http://" + IP + ":" + PORT);
+        io = socket(`http://${IP}:${PORT}`, {
+            withCredentials: true,
+        });
 
         initializeEventHandlers(io);
 

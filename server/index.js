@@ -35,7 +35,13 @@ let server = app.listen(PORT, IP, function () {
 });
 
 // Socket setup
-let io = socket(server);
+let io = socket(server, {
+	cors: {
+		origin: process.env.CLIENT_ORIGIN,
+		methods: ["GET"],
+		credentials: true,
+	}
+});
 
 io.on("connection", function (client) {
 	console.log("Client[" + client.id + "] connected");
