@@ -180,47 +180,58 @@ i.fa-share-alt {
   padding-right: 2px;
 }
 
-/* Slider inputs: designed using https://www.cssportal.com/style-input-range/ */
+/* Slider inputs: designed using https://www.cssportal.com/style-input-range/ and modified by https://github.com/RogerTheRabbit */
 
 input[type=range] {
   -webkit-appearance: none;
   width: 100%;
+  height: 14px;
   background-color: transparent;
+  border-radius: 7px;
+  background: linear-gradient(to right, #4F545C calc(var(--progress) + 2px), #36393f calc(var(--progress) + 2px));
 }
+
+input[type=range]:hover {
+  -webkit-appearance: none;
+  width: 100%;
+  background-color: transparent;
+  border-radius: 7px;
+  background: linear-gradient(to right, #65C8D0 calc(var(--progress) + 2px), #36393f calc(var(--progress) + 2px));
+}
+
 input[type=range]:focus {
   outline: none;
 }
+
 input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
   height: 14px;
   cursor: pointer;
-  background: #4F545C;
   border-radius: 14px;
 }
 input[type=range]::-webkit-slider-thumb {
   height: 14px;
   width: 14px;
   border-radius: 7px;
-  background: #65C8D0;
+  background: white;
   cursor: pointer;
   -webkit-appearance: none;
   margin-top: 0px;
 }
 input[type=range]:focus::-webkit-slider-runnable-track {
-  background: #4F545C;
 }
 input[type=range]::-moz-range-track {
   width: 100%;
   height: 14px;
   cursor: pointer;
-  background: #4F545C;
   border-radius: 14px;
 }
 input[type=range]::-moz-range-thumb {
   height: 14px;
   width: 14px;
   border-radius: 7px;
-  background: #65C8D0;
+  background: white;
+  border: none;
   cursor: pointer;
 }
 input[type=range]::-ms-track {
@@ -232,11 +243,9 @@ input[type=range]::-ms-track {
   color: transparent;
 }
 input[type=range]::-ms-fill-lower {
-  background: #4F545C;
   border-radius: 28px;
 }
 input[type=range]::-ms-fill-upper {
-  background: #4F545C;
   border-radius: 28px;
 }
 input[type=range]::-ms-thumb {
@@ -244,14 +253,12 @@ input[type=range]::-ms-thumb {
   height: 14px;
   width: 14px;
   border-radius: 7px;
-  background: #65C8D0;
+  background: white;
   cursor: pointer;
 }
 input[type=range]:focus::-ms-fill-lower {
-  background: #4F545C;
 }
 input[type=range]:focus::-ms-fill-upper {
-  background: #4F545C;
 }
 
 /* 

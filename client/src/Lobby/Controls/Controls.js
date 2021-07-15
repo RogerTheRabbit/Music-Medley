@@ -95,7 +95,7 @@ function Controls(props) {
                 <CurrentlyPlaying className="left-section"/>
                 <div className="custom-progress-bar">
                     <div className="song-progress">{formatDuration(props.player.duration * props.player.progress)}</div>
-                    <input type="range" min={0} max={props.player.duration} readOnly value={props.player.progress * props.player.duration} />
+                    <input type="range" min={0} max={props.player.duration} readOnly value={props.player.progress * props.player.duration} style={{ "--progress": `${props.player.progress * 100}%` }} />
                     <div className="song-length">{formatDuration(props.player.duration)}</div>
                 </div>
                 <div className="volume-slider">
@@ -109,6 +109,7 @@ function Controls(props) {
                         onChange={(e) => {
                             props.setAudioLevel(e.target.value);
                         }}
+                        style={{ "--progress": `${props.player.volume * 100}%` }}
                     />
                 </div>
             </motion.div>
