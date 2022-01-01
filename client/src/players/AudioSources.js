@@ -1,7 +1,6 @@
 import React, { useContext, useRef } from 'react';
 import ReactPlayer from "react-player";
 import { connect } from "react-redux";
-import { togglePlaying, setAudioLevel, setProgress, setDuration, setSong, setReady } from '../redux/player/playerActions';
 import { togglePlaying, setAudioLevel, setProgress, setDuration, setSong, setReady, setPlayerRef } from '../redux/player/playerActions';
 import { WebSocketContext } from '../networking/networking';
 
