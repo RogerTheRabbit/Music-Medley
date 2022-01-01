@@ -1,5 +1,4 @@
 import React from "react";
-import { formatDuration } from "../../utils/utils";
 import { motion } from "framer-motion"
 
 export default function SongQueueItem({ song }) {

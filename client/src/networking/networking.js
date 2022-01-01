@@ -1,7 +1,7 @@
 import React, { createContext } from 'react';
 import socket from 'socket.io-client';
 import { useDispatch } from 'react-redux';
-import { addParticipant, removeParticipant, setRoom } from '../redux/lobby/lobbyActions';
+import { addMessage, addParticipant, removeParticipant, setRoom } from '../redux/lobby/lobbyActions';
 import { setPlayingState, setProgress, addSong, setPlayer} from '../redux/player/playerActions';
 import dotenv from "dotenv";
 
@@ -29,9 +29,11 @@ const PROTOCOL = {
     SET_PLAYING: "set_playing",
     PROGRESS_CHECK: "progress_check",
     CORRECT_PROGRESS: "correct_progress",
+    SEND_MESSAGE: "send_message",
+    RECEIVE_MESSAGE: "receive_message",
 };
 
-export default ({ children }) => {
+const Networking = ({ children }) => {
     let io;
     let ws;
 
@@ -67,6 +69,10 @@ export default ({ children }) => {
 
     const progressCheck = (currProgress) => {
         io.emit(PROTOCOL.PROGRESS_CHECK, currProgress)
+    }
+
+    const sendMessage = (message) => {
+        io.emit(PROTOCOL.SEND_MESSAGE, message);
     }
 
     const initializeEventHandlers = (io) => {
@@ -118,6 +124,11 @@ export default ({ children }) => {
             console.log("progress updated to: " + progress);
         });
 
+        io.on(PROTOCOL.RECEIVE_MESSAGE, (message) => {
+            message.timestamp = new Date(message.timestamp);
+            dispatch(addMessage(message));
+        })
+
         io.on("disconnect", (msg) => {
             console.log("Disconnected: ", msg);
             dispatch(setRoom({}));
@@ -145,7 +156,9 @@ export default ({ children }) => {
     }
 
     if (!io) {
-        io = socket.connect("http://" + IP + ":" + PORT);
+        io = socket(`http://${IP}:${PORT}`, {
+            withCredentials: true,
+        });
 
         initializeEventHandlers(io);
 
@@ -157,6 +170,7 @@ export default ({ children }) => {
             sendSong,
             setPlaying,
             progressCheck,
+            sendMessage,
         }
     }
 
@@ -166,3 +180,5 @@ export default ({ children }) => {
         </WebSocketContext.Provider>
     )
 }
+
+export default Networking;

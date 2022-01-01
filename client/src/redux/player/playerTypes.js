@@ -1,4 +1,4 @@
-export default {
+const TYPES = {
     SET_PLAYING: 'SET_PLAYING',
     TOGGLE_PLAYING: 'TOGGLE_PLAYING',
     SET_AUDIO_LEVEL: 'SET_AUDIO_LEVEL',
@@ -9,3 +9,5 @@ export default {
     ADD_SONG: 'ADD_SONG',
     SET_PLAYER: 'SET_PLAYER',
 }
+
+export default TYPES;

@@ -1,5 +1,7 @@
-export default {
+const TYPES = {
     TOGGLE_CHAT: 'TOGGLE_CHAT',
     TOGGLE_LEFT_PANEL: 'TOGGLE_LEFT_PANEL',
     TOGGLE_MOBILE_CONTROLS: 'TOGGLE_MOBILE_CONTROLS',
 }
+
+export default TYPES;

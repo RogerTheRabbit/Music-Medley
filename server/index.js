@@ -25,6 +25,8 @@ const PROTOCOL = {
 	SET_PLAYING: "set_playing",
 	PROGRESS_CHECK: "progress_check",
     CORRECT_PROGRESS: "correct_progress",
+	SEND_MESSAGE: "send_message",
+	RECEIVE_MESSAGE: "receive_message",
 };
 
 let rooms = {};
@@ -37,7 +39,13 @@ let server = app.listen(PORT, IP, function () {
 });
 
 // Socket setup
-let io = socket(server);
+let io = socket(server, {
+	cors: {
+		origin: process.env.CLIENT_ORIGIN,
+		methods: ["GET"],
+		credentials: true,
+	}
+});
 
 io.on("connection", function (client) {
 	console.log("Client[" + client.id + "] connected");
@@ -118,6 +126,10 @@ io.on("connection", function (client) {
 			client.emit(PROTOCOL.CORRECT_PROGRESS, progressInServer);
 		}
 	})
+
+	client.on(PROTOCOL.SEND_MESSAGE, (message) => {
+		io.in(roomCode).emit(PROTOCOL.RECEIVE_MESSAGE, message);
+	});
 
 	// when client disconnects
 	client.on("disconnect", (reason) => {
