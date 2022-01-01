@@ -19,7 +19,6 @@ function ChatContainer( props ) {
 
     const chatOnKeyPress = (e) => {
         if (e.keyCode === 13) {
-            // TODO: Send message to server as well -- DATA STRUCTURE SUBJECT TO CHANGE
             networking.sendMessage({
                 from: {
                     name: props.lobby?.userName,
