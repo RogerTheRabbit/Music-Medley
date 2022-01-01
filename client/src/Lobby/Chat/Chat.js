@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { connect } from "react-redux";
-import { addMessage } from "../../redux/lobby/lobbyActions";
 import { toggleChat } from "../../redux/app/appActions";
 import { MDBIcon } from 'mdbreact';
 import MessageContainer from "./MessageContainer";
 import { motion } from "framer-motion"
 import { isMobile } from 'react-device-detect';
 import "./chat.css";
+import { WebSocketContext } from "../../networking/networking";
 
 const variants = {
     open: { opacity: 1, x: 0 },
@@ -15,10 +15,12 @@ const variants = {
 
 function ChatContainer( props ) {
 
+    const networking = useContext(WebSocketContext);
+
     const chatOnKeyPress = (e) => {
         if (e.keyCode === 13) {
             // TODO: Send message to server as well -- DATA STRUCTURE SUBJECT TO CHANGE
-            props.addMessage({
+            networking.sendMessage({
                 from: {
                     name: props.lobby?.userName,
                     profilePicture: "https://picsum.photos/50",
@@ -63,7 +65,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addMessage: (newMessage) => dispatch(addMessage(newMessage)),
         toggleChat: (newMessage) => dispatch(toggleChat(newMessage)),
     };
 };

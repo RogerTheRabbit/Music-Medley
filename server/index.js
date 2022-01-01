@@ -23,6 +23,8 @@ const PROTOCOL = {
 	PAUSE_PLAYER: "pause_player",
 	PLAY_PLAYER: "play_player",
 	SET_PLAYING: "set_playing",
+	SEND_MESSAGE: "send_message",
+	RECEIVE_MESSAGE: "receive_message",
 };
 
 let rooms = {};
@@ -107,6 +109,10 @@ io.on("connection", function (client) {
 			client.to(roomCode).emit(PROTOCOL.SET_PLAYING, playing, timestamp);
 		}
 	})
+
+	client.on(PROTOCOL.SEND_MESSAGE, (message) => {
+		io.in(roomCode).emit(PROTOCOL.RECEIVE_MESSAGE, message);
+	});
 
 	// when client disconnects
 	client.on("disconnect", (reason) => {
