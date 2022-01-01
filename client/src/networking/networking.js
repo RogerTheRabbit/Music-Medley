@@ -29,6 +29,8 @@ const PROTOCOL = {
     SET_PLAYING: "set_playing",
     PROGRESS_CHECK: "progress_check",
     CORRECT_PROGRESS: "correct_progress",
+    SYNC_PLAYER: "sync_player",
+    SYNC_PLAYER_ACK: "sync_player_ack",
     SEND_MESSAGE: "send_message",
     RECEIVE_MESSAGE: "receive_message",
 };
@@ -69,6 +71,10 @@ const Networking = ({ children }) => {
 
     const progressCheck = (currProgress) => {
         io.emit(PROTOCOL.PROGRESS_CHECK, currProgress)
+    }
+
+    const syncPlayer = () => {
+        io.emit(PROTOCOL.SYNC_PLAYER);
     }
 
     const sendMessage = (message) => {
@@ -124,6 +130,10 @@ const Networking = ({ children }) => {
             console.log("progress updated to: " + progress);
         });
 
+        io.on(PROTOCOL.SYNC_PLAYER_ACK, (room) => {
+            dispatch(setPlayer(room));
+        })
+
         io.on(PROTOCOL.RECEIVE_MESSAGE, (message) => {
             message.timestamp = new Date(message.timestamp);
             dispatch(addMessage(message));
@@ -170,6 +180,7 @@ const Networking = ({ children }) => {
             sendSong,
             setPlaying,
             progressCheck,
+            syncPlayer,
             sendMessage,
         }
     }

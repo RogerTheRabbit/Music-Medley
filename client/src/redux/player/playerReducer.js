@@ -1,6 +1,6 @@
 import TYPES from "./playerTypes";
 
-const initalState = {
+const initialState = {
     ready: false,
     playing: false,
     controls: true,
@@ -18,7 +18,7 @@ const initalState = {
     songIndex: 0,
 }
 
-const reducer = (state = initalState, action) => {
+const reducer = (state = initialState, action) => {
     switch (action.type) {
         
         case TYPES.SET_PROGRESS:
@@ -68,8 +68,7 @@ const reducer = (state = initalState, action) => {
                 songs: [...state.songs, action.data.newSong]
             };
         case TYPES.SET_PLAYER:
-            console.log(action.data.room?.currProgress)
-            console.log(action.data.room?.playingStatus)
+            state.playerRef.current?.seekTo(action.data.room?.currProgress, 'fraction');
 
             return {
                 ...state,
@@ -77,6 +76,11 @@ const reducer = (state = initalState, action) => {
                 songIndex: action.data.room?.curSong || 0,
                 progress: action.data.room?.currProgress,
                 playing: action.data.room?.playingStatus,
+            }
+        case TYPES.SET_PLAYER_REF:
+            return {
+                ...state,
+                playerRef: action.data.playerRef
             }
         default:
             return state

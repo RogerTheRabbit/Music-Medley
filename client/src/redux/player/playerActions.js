@@ -77,3 +77,12 @@ export const setPlayer = (room) => {
         }
     }
 };
+
+export const setPlayerRef = (playerRef) => {
+    return {
+        type: TYPES.SET_PLAYER_REF,
+        data: {
+            playerRef
+        }
+    }
+}

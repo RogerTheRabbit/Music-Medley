@@ -24,6 +24,8 @@ const PROTOCOL = {
 	PLAY_PLAYER: "play_player",
 	SET_PLAYING: "set_playing",
 	PROGRESS_CHECK: "progress_check",
+	SYNC_PLAYER: "sync_player",
+	SYNC_PLAYER_ACK: "sync_player_ack",
     CORRECT_PROGRESS: "correct_progress",
 	SEND_MESSAGE: "send_message",
 	RECEIVE_MESSAGE: "receive_message",
@@ -70,7 +72,6 @@ io.on("connection", function (client) {
 			profilePicture: `https://picsum.photos/id/${Math.trunc(Math.random() * 300)}/50/50`,
 		}
 		rooms[roomCode].participants[client.id] = newParticipant;
-		console.log(rooms);
 		client.emit(PROTOCOL.CREATE_SUCCESSFUL, room);
 		client.to(roomCode).emit(PROTOCOL.USER_JOINED, newParticipant);
 	})
@@ -101,7 +102,6 @@ io.on("connection", function (client) {
 	})
 
 	client.on(PROTOCOL.ADDED_SONG, (songInfo) => {
-		console.log(songInfo);
 		rooms[roomCode].queue.push(songInfo);
 		io.to(roomCode).emit(PROTOCOL.QUEUE_SONG, songInfo);
 	})
@@ -121,10 +121,14 @@ io.on("connection", function (client) {
 		let progressInServer = rooms[roomCode].currProgress;
 		if (progressInServer < clientProgress){
 			rooms[roomCode].currProgress = clientProgress;
-		} else if (progressInServer - clientProgress > 1){
+		} else if (progressInServer - clientProgress > 1) { // Progress is measured as a percentage, not a time, so unless there is a 100.1% difference, then this will never trigger.
 			console.log('Progress is too far apart.')
 			client.emit(PROTOCOL.CORRECT_PROGRESS, progressInServer);
 		}
+	})
+
+	client.on(PROTOCOL.SYNC_PLAYER, () => {
+		client.emit(PROTOCOL.SYNC_PLAYER_ACK, rooms[roomCode]);
 	})
 
 	client.on(PROTOCOL.SEND_MESSAGE, (message) => {

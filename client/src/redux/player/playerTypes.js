@@ -8,6 +8,7 @@ const TYPES = {
     SET_DURATION: "SET_DURATION",
     ADD_SONG: 'ADD_SONG',
     SET_PLAYER: 'SET_PLAYER',
+    SET_PLAYER_REF: 'SET_PLAYER_REF',
 }
 
 export default TYPES;
