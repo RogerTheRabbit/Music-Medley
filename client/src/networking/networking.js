@@ -1,7 +1,7 @@
 import React, { createContext } from 'react';
 import socket from 'socket.io-client';
 import { useDispatch } from 'react-redux';
-import { addParticipant, removeParticipant, setRoom } from '../redux/lobby/lobbyActions';
+import { addMessage, addParticipant, removeParticipant, setRoom } from '../redux/lobby/lobbyActions';
 import { setPlayingState, setProgress, addSong, setPlayer} from '../redux/player/playerActions';
 import dotenv from "dotenv";
 
@@ -27,9 +27,11 @@ const PROTOCOL = {
     PAUSE_PLAYER: "pause_player",
     PLAY_PLAYER: "play_player",
     SET_PLAYING: "set_playing",
+    SEND_MESSAGE: "send_message",
+    RECEIVE_MESSAGE: "receive_message",
 };
 
-export default ({ children }) => {
+const Networking = ({ children }) => {
     let io;
     let ws;
 
@@ -61,6 +63,10 @@ export default ({ children }) => {
             playing: playing,
             timestamp: timestamp,
         });
+    }
+
+    const sendMessage = (message) => {
+        io.emit(PROTOCOL.SEND_MESSAGE, message);
     }
 
     const initializeEventHandlers = (io) => {
@@ -107,6 +113,11 @@ export default ({ children }) => {
             }
         })
 
+        io.on(PROTOCOL.RECEIVE_MESSAGE, (message) => {
+            message.timestamp = new Date(message.timestamp);
+            dispatch(addMessage(message));
+        })
+
         io.on("disconnect", (msg) => {
             console.log("Disconnected: ", msg);
             dispatch(setRoom({}));
@@ -147,6 +158,7 @@ export default ({ children }) => {
             resetConnection,
             sendSong,
             setPlaying,
+            sendMessage,
         }
     }
 
@@ -156,3 +168,5 @@ export default ({ children }) => {
         </WebSocketContext.Provider>
     )
 }
+
+export default Networking;

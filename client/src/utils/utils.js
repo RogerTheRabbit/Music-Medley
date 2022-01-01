@@ -23,5 +23,9 @@ export function formatDuration(duration) {
  * @param time Date object to format 
  */
 export function formatTime(time) {
+    // Parse time if it is in string format
+    if (!(time instanceof Date)) {
+        time = new Date(time);
+    }
     return `${time.getHours()}:${time.getMinutes()}`;
 }
