@@ -15,7 +15,7 @@ const PROTOCOL = {
 	JOIN_ROOM: "join_room",
 	JOIN_SUCCESSFUL: "join_successful",
 	INVALID_ROOMCODE: "invalid_roomcode",
-    INVALID_PASSWORD: "invalid_password",
+	INVALID_PASSWORD: "invalid_password",
 	USER_JOINED: "user_joined",
 	USER_LEFT: "user_left",
 	ADDED_SONG: "song_added",
@@ -23,9 +23,21 @@ const PROTOCOL = {
 	PAUSE_PLAYER: "pause_player",
 	PLAY_PLAYER: "play_player",
 	SET_PLAYING: "set_playing",
+	PLAY_NEXT: "play_next",
+	PLAY_PREVIOUS: "play_previous",
+	PROGRESS_CHECK: "progress_check",
+	CORRECT_PROGRESS: "correct_progress",
+	SYNC_PLAYER: "sync_player",
+	SYNC_PLAYER_ACK: "sync_player_ack",
+	SONG_ENDED: "song_ended",
 	SEND_MESSAGE: "send_message",
 	RECEIVE_MESSAGE: "receive_message",
 };
+
+const PLAYER_STATUS = {
+	READY: "READY",
+	ENDED: "ENDED",
+}
 
 let rooms = {};
 
@@ -55,6 +67,8 @@ io.on("connection", function (client) {
 			password: roomPassword,
 			participants: {},
 			messages: [],
+			currProgress: 0,
+			playingStatus: false,
 			queue: [],
 			curSong: 0,
 		}
@@ -64,9 +78,9 @@ io.on("connection", function (client) {
 			id: client.id,
 			userName: userName,
 			profilePicture: `https://avatars.dicebear.com/api/bottts/${userName}.svg`,
+			status: PLAYER_STATUS.READY,
 		}
 		rooms[roomCode].participants[client.id] = newParticipant;
-		console.log(rooms);
 		client.emit(PROTOCOL.CREATE_SUCCESSFUL, room);
 		client.to(roomCode).emit(PROTOCOL.USER_JOINED, newParticipant);
 	})
@@ -78,7 +92,7 @@ io.on("connection", function (client) {
 			client.emit(PROTOCOL.INVALID_ROOMCODE);
 		}
 		// check if the password is correct
-		if (rooms[roomCode].password !== roomPassword){
+		else if (rooms[roomCode].password !== roomPassword){
 			client.emit(PROTOCOL.INVALID_PASSWORD);
 		} 
 		else {
@@ -89,6 +103,7 @@ io.on("connection", function (client) {
 				userName: userName,
 				roomCode: roomCode,
 				profilePicture: `https://avatars.dicebear.com/api/bottts/${userName}.svg`,
+				status: PLAYER_STATUS.READY,
 			}
 			rooms[roomCode].participants[client.id] = newParticipant;
 			client.emit(PROTOCOL.JOIN_SUCCESSFUL, rooms[roomCode]);
@@ -97,18 +112,63 @@ io.on("connection", function (client) {
 	})
 
 	client.on(PROTOCOL.ADDED_SONG, (songInfo) => {
-		console.log(songInfo);
 		rooms[roomCode].queue.push(songInfo);
 		io.to(roomCode).emit(PROTOCOL.QUEUE_SONG, songInfo);
 	})
 
-	client.on(PROTOCOL.SET_PLAYING, ({playing, timestamp}) => {
+	client.on(PROTOCOL.SET_PLAYING, ({playing, progress}) => {
 		if (playing){
 			io.in(roomCode).emit(PROTOCOL.SET_PLAYING, playing);
 		} else {
-			client.to(roomCode).emit(PROTOCOL.SET_PLAYING, playing, timestamp);
+			client.to(roomCode).emit(PROTOCOL.SET_PLAYING, playing, progress);
+		}
+		rooms[roomCode].playingStatus = playing;
+	})
+
+	client.on(PROTOCOL.PLAY_NEXT, () => {
+		if (rooms[roomCode].queue.length > rooms[roomCode].curSong) {
+			rooms[roomCode].curSong++;
+			rooms[roomCode].currProgress = 0;
+			io.in(roomCode).emit(PROTOCOL.PLAY_NEXT);
+		}
+	});
+
+	client.on(PROTOCOL.PLAY_PREVIOUS, () => {
+		if (0 < rooms[roomCode].curSong) {
+			rooms[roomCode].curSong--;
+			rooms[roomCode].currProgress = 0;
+			io.in(roomCode).emit(PROTOCOL.PLAY_PREVIOUS);
+		}
+	});
+
+	client.on(PROTOCOL.PROGRESS_CHECK, (clientProgress) => {
+		let progressInServer = rooms[roomCode].currProgress;
+		if (progressInServer < clientProgress){
+			rooms[roomCode].currProgress = clientProgress;
+		} else if (progressInServer - clientProgress > 1) { // Progress is measured as a percentage, not a time, so unless there is a 100.1% difference, then this will never trigger.
+			console.log('Progress is too far apart.')
+			client.emit(PROTOCOL.CORRECT_PROGRESS, progressInServer);
 		}
 	})
+
+	client.on(PROTOCOL.SYNC_PLAYER, () => {
+		client.emit(PROTOCOL.SYNC_PLAYER_ACK, rooms[roomCode]);
+	})
+
+	client.on(PROTOCOL.SONG_ENDED, () => {
+		rooms[roomCode].participants[client.id].status = PLAYER_STATUS.ENDED;
+		if (rooms[roomCode].curSong === rooms[roomCode].queue.length - 1) {
+			return;
+		}
+		// If anyone is not ended, we are still waiting
+		if (Object.values(rooms[roomCode].participants).filter((participant) => participant.status !== PLAYER_STATUS.ENDED).length) {
+			return;
+		}
+		rooms[roomCode].curSong++;
+		rooms[roomCode].currProgress = 0;
+		Object.values(rooms[roomCode].participants).forEach(participant => participant.status = PLAYER_STATUS.READY);
+		io.in(roomCode).emit(PROTOCOL.PLAY_NEXT);
+	});
 
 	client.on(PROTOCOL.SEND_MESSAGE, (message) => {
 		io.in(roomCode).emit(PROTOCOL.RECEIVE_MESSAGE, message);

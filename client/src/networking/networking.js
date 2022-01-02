@@ -2,7 +2,7 @@ import React, { createContext } from 'react';
 import socket from 'socket.io-client';
 import { useDispatch } from 'react-redux';
 import { addMessage, addParticipant, removeParticipant, setRoom } from '../redux/lobby/lobbyActions';
-import { setPlayingState, setProgress, addSong, setPlayer} from '../redux/player/playerActions';
+import { setPlayingState, setProgress, addSong, setPlayer, setSong } from '../redux/player/playerActions';
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -16,17 +16,24 @@ const PROTOCOL = {
     NEW_USER: "new_user",
     CREATE_ROOM: "create_room",
     CREATE_SUCCESSFUL: "create_successful",
-	JOIN_ROOM: "join_room",
+    JOIN_ROOM: "join_room",
     JOIN_SUCCESSFUL: "join_successful",
     INVALID_ROOMCODE: "invalid_roomcode",
     INVALID_PASSWORD: "invalid_password",
-	USER_JOINED: "user_joined",
+    USER_JOINED: "user_joined",
     USER_LEFT: "user_left",
     ADDED_SONG: "song_added",
     QUEUE_SONG: "song_queued",
     PAUSE_PLAYER: "pause_player",
     PLAY_PLAYER: "play_player",
     SET_PLAYING: "set_playing",
+    PLAY_NEXT: "play_next",
+    PLAY_PREVIOUS: "play_previous",
+    PROGRESS_CHECK: "progress_check",
+    CORRECT_PROGRESS: "correct_progress",
+    SYNC_PLAYER: "sync_player",
+    SYNC_PLAYER_ACK: "sync_player_ack",
+    SONG_ENDED: "song_ended",
     SEND_MESSAGE: "send_message",
     RECEIVE_MESSAGE: "receive_message",
 };
@@ -58,11 +65,31 @@ const Networking = ({ children }) => {
         initializeEventHandlers(io);
     }
     
-    const setPlaying = (playing, timestamp) => {
+    const setPlaying = (playing, progress) => {
         io.emit(PROTOCOL.SET_PLAYING, {
             playing: playing,
-            timestamp: timestamp,
+            progress: progress,
         });
+    }
+
+    const playNext = () => {
+        io.emit(PROTOCOL.PLAY_NEXT);
+    }
+
+    const playPrevious = () => {
+        io.emit(PROTOCOL.PLAY_PREVIOUS);
+    }
+
+    const progressCheck = (currProgress) => {
+        io.emit(PROTOCOL.PROGRESS_CHECK, currProgress)
+    }
+
+    const syncPlayer = () => {
+        io.emit(PROTOCOL.SYNC_PLAYER);
+    }
+
+    const songEnded = () => {
+        io.emit(PROTOCOL.SONG_ENDED);
     }
 
     const sendMessage = (message) => {
@@ -106,11 +133,28 @@ const Networking = ({ children }) => {
             dispatch(removeParticipant(userId))
         );
 
-        io.on(PROTOCOL.SET_PLAYING, (playing, timestamp) => {
+        io.on(PROTOCOL.SET_PLAYING, (playing, progress) => {
             dispatch(setPlayingState(playing));
             if (!playing) {
-                dispatch(setProgress(timestamp));
+                dispatch(setProgress(progress));
             }
+        });
+
+        io.on(PROTOCOL.PLAY_NEXT, () => {
+            dispatch(setSong(1));
+        });
+
+        io.on(PROTOCOL.PLAY_PREVIOUS, () => {
+            dispatch(setSong(-1));
+        });
+
+        io.on(PROTOCOL.CORRECT_PROGRESS, (progress) => {
+            dispatch(setProgress(progress));
+            console.log("progress updated to: " + progress);
+        });
+
+        io.on(PROTOCOL.SYNC_PLAYER_ACK, (room) => {
+            dispatch(setPlayer(room));
         })
 
         io.on(PROTOCOL.RECEIVE_MESSAGE, (message) => {
@@ -158,6 +202,11 @@ const Networking = ({ children }) => {
             resetConnection,
             sendSong,
             setPlaying,
+            playNext,
+            playPrevious,
+            progressCheck,
+            syncPlayer,
+            songEnded,
             sendMessage,
         }
     }

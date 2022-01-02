@@ -1,6 +1,6 @@
 import TYPES from "./playerTypes";
 
-const initalState = {
+const initialState = {
     ready: false,
     playing: false,
     controls: true,
@@ -18,7 +18,7 @@ const initalState = {
     songIndex: 0,
 }
 
-const reducer = (state = initalState, action) => {
+const reducer = (state = initialState, action) => {
     switch (action.type) {
         
         case TYPES.SET_PROGRESS:
@@ -45,10 +45,14 @@ const reducer = (state = initalState, action) => {
                 duration: action.data.duration,
             };
         case TYPES.SET_SONG:
-            console.log("SET_SONG RECIEVED", action.data.url)
+            if (!(state.songIndex + action.data.delta >= 0) || !(state.songIndex + action.data.delta < state.songs.length)) {
+                console.warn("Tried to play song that is out of bounds", state.songIndex + action.data.delta);
+                return state;
+            }
+
             return {
                 ...state,
-                url: action.data.url
+                songIndex: state.songIndex + action.data.delta
             };
         case TYPES.SET_AUDIO_LEVEL:
             console.log("SET AUDIO LEVEL RECIEVED", action)
@@ -68,9 +72,19 @@ const reducer = (state = initalState, action) => {
                 songs: [...state.songs, action.data.newSong]
             };
         case TYPES.SET_PLAYER:
+            state.playerRef.current?.seekTo(action.data.room?.currProgress, 'fraction');
+
             return {
                 ...state,
-                songs: action.data.room?.queue || []
+                songs: action.data.room?.queue || [],
+                songIndex: action.data.room?.curSong || 0,
+                progress: action.data.room?.currProgress,
+                playing: action.data.room?.playingStatus,
+            }
+        case TYPES.SET_PLAYER_REF:
+            return {
+                ...state,
+                playerRef: action.data.playerRef
             }
         default:
             return state

@@ -1,7 +1,7 @@
 import React from "react";
 import "./Lobby.css";
 import Controls from "./Controls/Controls";
-import AudioSources from "../players/AudioSources";
+import AudioSourcesWrapper from "../players/AudioSourcesWrapper";
 import SongQueueContainer from "./SongQueue/SongQueueContainer";
 import Chat from "./Chat/Chat";
 import CenterNav from "./CenterNav";
@@ -28,7 +28,7 @@ function Lobby() {
             <div className="controls-section">
                 <Controls />
             </div>
-            <AudioSources />
+            <AudioSourcesWrapper />
         </div>
     );
 }
