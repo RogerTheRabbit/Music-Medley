@@ -4,5 +4,5 @@ import AudioSources from './AudioSources'
 
 export default function AudioSourcesWrapper() {
     const networking = useContext(WebSocketContext);
-    return <AudioSources onReady={networking.syncPlayer} />
+    return <AudioSources onReady={networking.syncPlayer} onEnded={networking.songEnded} />
 }

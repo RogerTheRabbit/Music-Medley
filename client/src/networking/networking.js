@@ -16,11 +16,11 @@ const PROTOCOL = {
     NEW_USER: "new_user",
     CREATE_ROOM: "create_room",
     CREATE_SUCCESSFUL: "create_successful",
-	JOIN_ROOM: "join_room",
+    JOIN_ROOM: "join_room",
     JOIN_SUCCESSFUL: "join_successful",
     INVALID_ROOMCODE: "invalid_roomcode",
     INVALID_PASSWORD: "invalid_password",
-	USER_JOINED: "user_joined",
+    USER_JOINED: "user_joined",
     USER_LEFT: "user_left",
     ADDED_SONG: "song_added",
     QUEUE_SONG: "song_queued",
@@ -33,6 +33,7 @@ const PROTOCOL = {
     CORRECT_PROGRESS: "correct_progress",
     SYNC_PLAYER: "sync_player",
     SYNC_PLAYER_ACK: "sync_player_ack",
+    SONG_ENDED: "song_ended",
     SEND_MESSAGE: "send_message",
     RECEIVE_MESSAGE: "receive_message",
 };
@@ -85,6 +86,10 @@ const Networking = ({ children }) => {
 
     const syncPlayer = () => {
         io.emit(PROTOCOL.SYNC_PLAYER);
+    }
+
+    const songEnded = () => {
+        io.emit(PROTOCOL.SONG_ENDED);
     }
 
     const sendMessage = (message) => {
@@ -201,6 +206,7 @@ const Networking = ({ children }) => {
             playPrevious,
             progressCheck,
             syncPlayer,
+            songEnded,
             sendMessage,
         }
     }

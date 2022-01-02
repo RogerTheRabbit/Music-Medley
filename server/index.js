@@ -15,7 +15,7 @@ const PROTOCOL = {
 	JOIN_ROOM: "join_room",
 	JOIN_SUCCESSFUL: "join_successful",
 	INVALID_ROOMCODE: "invalid_roomcode",
-    INVALID_PASSWORD: "invalid_password",
+	INVALID_PASSWORD: "invalid_password",
 	USER_JOINED: "user_joined",
 	USER_LEFT: "user_left",
 	ADDED_SONG: "song_added",
@@ -26,12 +26,18 @@ const PROTOCOL = {
 	PLAY_NEXT: "play_next",
 	PLAY_PREVIOUS: "play_previous",
 	PROGRESS_CHECK: "progress_check",
+	CORRECT_PROGRESS: "correct_progress",
 	SYNC_PLAYER: "sync_player",
 	SYNC_PLAYER_ACK: "sync_player_ack",
-    CORRECT_PROGRESS: "correct_progress",
+	SONG_ENDED: "song_ended",
 	SEND_MESSAGE: "send_message",
 	RECEIVE_MESSAGE: "receive_message",
 };
+
+const PLAYER_STATUS = {
+	READY: "READY",
+	ENDED: "ENDED",
+}
 
 let rooms = {};
 
@@ -72,6 +78,7 @@ io.on("connection", function (client) {
 			id: client.id,
 			userName: userName,
 			profilePicture: `https://picsum.photos/id/${Math.trunc(Math.random() * 300)}/50/50`,
+			status: PLAYER_STATUS.READY,
 		}
 		rooms[roomCode].participants[client.id] = newParticipant;
 		client.emit(PROTOCOL.CREATE_SUCCESSFUL, room);
@@ -96,6 +103,7 @@ io.on("connection", function (client) {
 				userName: userName,
 				roomCode: roomCode,
 				profilePicture: `https://picsum.photos/id/${Math.trunc(Math.random() * 300)}/50/50`,
+				status: PLAYER_STATUS.READY,
 			}
 			rooms[roomCode].participants[client.id] = newParticipant;
 			client.emit(PROTOCOL.JOIN_SUCCESSFUL, rooms[roomCode]);
@@ -146,6 +154,21 @@ io.on("connection", function (client) {
 	client.on(PROTOCOL.SYNC_PLAYER, () => {
 		client.emit(PROTOCOL.SYNC_PLAYER_ACK, rooms[roomCode]);
 	})
+
+	client.on(PROTOCOL.SONG_ENDED, () => {
+		rooms[roomCode].participants[client.id].status = PLAYER_STATUS.ENDED;
+		if (rooms[roomCode].curSong === rooms[roomCode].queue.length - 1) {
+			return;
+		}
+		// If anyone is not ended, we are still waiting
+		if (Object.values(rooms[roomCode].participants).filter((participant) => participant.status !== PLAYER_STATUS.ENDED).length) {
+			return;
+		}
+		rooms[roomCode].curSong++;
+		rooms[roomCode].currProgress = 0;
+		Object.values(rooms[roomCode].participants).forEach(participant => participant.status = PLAYER_STATUS.READY);
+		io.in(roomCode).emit(PROTOCOL.PLAY_NEXT);
+	});
 
 	client.on(PROTOCOL.SEND_MESSAGE, (message) => {
 		io.in(roomCode).emit(PROTOCOL.RECEIVE_MESSAGE, message);
