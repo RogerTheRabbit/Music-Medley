@@ -77,7 +77,7 @@ io.on("connection", function (client) {
 		const newParticipant = { 
 			id: client.id,
 			userName: userName,
-			profilePicture: `https://picsum.photos/id/${Math.trunc(Math.random() * 300)}/50/50`,
+			profilePicture: `https://avatars.dicebear.com/api/bottts/${userName}.svg`,
 			status: PLAYER_STATUS.READY,
 		}
 		rooms[roomCode].participants[client.id] = newParticipant;
@@ -102,8 +102,8 @@ io.on("connection", function (client) {
 				id: client.id,
 				userName: userName,
 				roomCode: roomCode,
-				profilePicture: `https://picsum.photos/id/${Math.trunc(Math.random() * 300)}/50/50`,
-				status: PLAYER_STATUS.READY,
+				profilePicture: `https://avatars.dicebear.com/api/bottts/${userName}.svg`,
+        status: PLAYER_STATUS.READY,
 			}
 			rooms[roomCode].participants[client.id] = newParticipant;
 			client.emit(PROTOCOL.JOIN_SUCCESSFUL, rooms[roomCode]);

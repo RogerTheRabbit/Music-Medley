@@ -22,7 +22,7 @@ function ChatContainer( props ) {
             networking.sendMessage({
                 from: {
                     name: props.lobby?.userName,
-                    profilePicture: "https://picsum.photos/50",
+                    profilePicture: `https://avatars.dicebear.com/api/bottts/${props.lobby?.userName}.svg`,
                 },
                 timeStamp: new Date(),
                 message: e.target.value,
