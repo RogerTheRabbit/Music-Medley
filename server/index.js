@@ -23,6 +23,8 @@ const PROTOCOL = {
 	PAUSE_PLAYER: "pause_player",
 	PLAY_PLAYER: "play_player",
 	SET_PLAYING: "set_playing",
+	PLAY_NEXT: "play_next",
+	PLAY_PREVIOUS: "play_previous",
 	PROGRESS_CHECK: "progress_check",
 	SYNC_PLAYER: "sync_player",
 	SYNC_PLAYER_ACK: "sync_player_ack",
@@ -115,9 +117,23 @@ io.on("connection", function (client) {
 		rooms[roomCode].playingStatus = playing;
 	})
 
+	client.on(PROTOCOL.PLAY_NEXT, () => {
+		if (rooms[roomCode].queue.length > rooms[roomCode].curSong) {
+			rooms[roomCode].curSong++;
+			rooms[roomCode].currProgress = 0;
+			io.in(roomCode).emit(PROTOCOL.PLAY_NEXT);
+		}
+	});
+
+	client.on(PROTOCOL.PLAY_PREVIOUS, () => {
+		if (0 < rooms[roomCode].curSong) {
+			rooms[roomCode].curSong--;
+			rooms[roomCode].currProgress = 0;
+			io.in(roomCode).emit(PROTOCOL.PLAY_PREVIOUS);
+		}
+	});
+
 	client.on(PROTOCOL.PROGRESS_CHECK, (clientProgress) => {
-		console.log("server progress: ", rooms[roomCode].currProgress);
-		console.log("client progress: ", clientProgress);
 		let progressInServer = rooms[roomCode].currProgress;
 		if (progressInServer < clientProgress){
 			rooms[roomCode].currProgress = clientProgress;

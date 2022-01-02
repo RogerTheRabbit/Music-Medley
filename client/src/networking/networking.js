@@ -2,7 +2,7 @@ import React, { createContext } from 'react';
 import socket from 'socket.io-client';
 import { useDispatch } from 'react-redux';
 import { addMessage, addParticipant, removeParticipant, setRoom } from '../redux/lobby/lobbyActions';
-import { setPlayingState, setProgress, addSong, setPlayer} from '../redux/player/playerActions';
+import { setPlayingState, setProgress, addSong, setPlayer, setSong } from '../redux/player/playerActions';
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -27,6 +27,8 @@ const PROTOCOL = {
     PAUSE_PLAYER: "pause_player",
     PLAY_PLAYER: "play_player",
     SET_PLAYING: "set_playing",
+    PLAY_NEXT: "play_next",
+    PLAY_PREVIOUS: "play_previous",
     PROGRESS_CHECK: "progress_check",
     CORRECT_PROGRESS: "correct_progress",
     SYNC_PLAYER: "sync_player",
@@ -67,6 +69,14 @@ const Networking = ({ children }) => {
             playing: playing,
             progress: progress,
         });
+    }
+
+    const playNext = () => {
+        io.emit(PROTOCOL.PLAY_NEXT);
+    }
+
+    const playPrevious = () => {
+        io.emit(PROTOCOL.PLAY_PREVIOUS);
     }
 
     const progressCheck = (currProgress) => {
@@ -125,6 +135,14 @@ const Networking = ({ children }) => {
             }
         });
 
+        io.on(PROTOCOL.PLAY_NEXT, () => {
+            dispatch(setSong(1));
+        });
+
+        io.on(PROTOCOL.PLAY_PREVIOUS, () => {
+            dispatch(setSong(-1));
+        });
+
         io.on(PROTOCOL.CORRECT_PROGRESS, (progress) => {
             dispatch(setProgress(progress));
             console.log("progress updated to: " + progress);
@@ -179,6 +197,8 @@ const Networking = ({ children }) => {
             resetConnection,
             sendSong,
             setPlaying,
+            playNext,
+            playPrevious,
             progressCheck,
             syncPlayer,
             sendMessage,

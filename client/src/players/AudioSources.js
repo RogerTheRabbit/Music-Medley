@@ -1,7 +1,7 @@
 import React, { useContext, useRef } from 'react';
 import ReactPlayer from "react-player";
 import { connect } from "react-redux";
-import { togglePlaying, setAudioLevel, setProgress, setDuration, setSong, setReady, setPlayerRef } from '../redux/player/playerActions';
+import { togglePlaying, setAudioLevel, setProgress, setDuration, setReady, setPlayerRef } from '../redux/player/playerActions';
 import { WebSocketContext } from '../networking/networking';
 
 const dotenv = require("dotenv");
@@ -66,18 +66,18 @@ function Player(props) {
 				ref={playerRef}
 			/>
 			{DEBUG && (
-				<>
+				<div style={{ color: 'black' }}>
 					<h1>TESTING STATS:</h1>
 					<p>PROGRESS: {props.progress}</p>
 					<p>READY: {props.ready ? "Ready" : "Not ready"}</p>
 					<p>VOLUME: {props.volume}</p>
-					<p>Current song: {props.songs[props.songIndex]?.url}</p>
+					<p>Current song:({props.songIndex}) {props.songs[props.songIndex]?.url}</p>
 					<input id="newSong" defaultValue={'https://www.youtube.com/watch?v=dQw4w9WgXcQ'} />
 					<button onClick={props.addSong}>Add Song</button>
 					<br />
 					<button onClick={props.togglePlaying}>{props.playing ? "PAUSE" : "PLAY"}</button>
 					Volume: <input max={1} min={0} type="range" step=".01" onChange={e => props.setAudioLevel(e.target.value)} defaultValue={props.volume} />
-				</>
+				</div>
 			)}
 		</>
 	);
@@ -93,7 +93,6 @@ const mapDispatchToProps = dispatch => {
 		togglePlaying: () => dispatch(togglePlaying()),
 		setAudioLevel: (newLevel) => dispatch(setAudioLevel(newLevel)),
 		setProgress: (progress) => dispatch(setProgress(progress)),
-		setSong: (url) => dispatch(setSong(url)),
 		setReady: (ready) => dispatch(setReady(ready)),
 		setDuration: (ready) => dispatch(setDuration(ready)),
 		setPlayerRef: (playerRef) => dispatch(setPlayerRef(playerRef)),

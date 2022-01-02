@@ -33,11 +33,11 @@ export const setProgress = (progress) => {
     }
 }
 
-export const setSong = (url) => {
+export const setSong = (delta) => {
     return {
         type: TYPES.SET_SONG,
         data: {
-            url
+            delta
         }
     }
 }

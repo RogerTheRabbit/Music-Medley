@@ -45,10 +45,14 @@ const reducer = (state = initialState, action) => {
                 duration: action.data.duration,
             };
         case TYPES.SET_SONG:
-            console.log("SET_SONG RECIEVED", action.data.url)
+            if (!(state.songIndex + action.data.delta >= 0) || !(state.songIndex + action.data.delta < state.songs.length)) {
+                console.warn("Tried to play song that is out of bounds", state.songIndex + action.data.delta);
+                return state;
+            }
+
             return {
                 ...state,
-                url: action.data.url
+                songIndex: state.songIndex + action.data.delta
             };
         case TYPES.SET_AUDIO_LEVEL:
             console.log("SET AUDIO LEVEL RECIEVED", action)

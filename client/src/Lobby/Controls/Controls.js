@@ -45,22 +45,24 @@ function Controls(props) {
     }
 
     const mediaButtons = (<div className="media-buttons">
-        <button className="outlined-button btn-fill-horz-open btn-rounded icon-button md">
+        {/* <button className="outlined-button btn-fill-horz-open btn-rounded icon-button md">
             <MDBIcon icon="random" />
-        </button>
-        <button className="outlined-button btn-fill-horz-open btn-rounded icon-button md">
+        </button> */}
+        <button className="outlined-button btn-fill-horz-open btn-rounded icon-button md"
+            onClick={() => networking.playPrevious()}>
             <MDBIcon icon="step-backward" />
         </button>
         <button className="primary outlined-button btn-fill-horz-open btn-rounded icon-button lg"
             onClick={() => togglePlaying()}>
             <MDBIcon icon={props.player.playing ? "pause" : "play"} />
         </button>
-        <button className="outlined-button btn-fill-horz-open btn-rounded icon-button md">
+        <button className="outlined-button btn-fill-horz-open btn-rounded icon-button md"
+            onClick={() => networking.playNext()}>
             <MDBIcon icon="step-forward" />
         </button>
-        <button className="outlined-button btn-fill-horz-open btn-rounded icon-button md">
+        {/* <button className="outlined-button btn-fill-horz-open btn-rounded icon-button md">
             <MDBIcon icon="redo-alt" />
-        </button>
+        </button> */}
     </div>)
 
     return (
