@@ -103,7 +103,7 @@ io.on("connection", function (client) {
 				userName: userName,
 				roomCode: roomCode,
 				profilePicture: `https://avatars.dicebear.com/api/bottts/${userName}.svg`,
-        status: PLAYER_STATUS.READY,
+				status: PLAYER_STATUS.READY,
 			}
 			rooms[roomCode].participants[client.id] = newParticipant;
 			client.emit(PROTOCOL.JOIN_SUCCESSFUL, rooms[roomCode]);
