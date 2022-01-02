@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import "./currently-playing.css";
 
 function CurrentlyPlaying({ className, player, ...rest }) {
-    console.log(player);
     const curSong = player.songs[player.songIndex] || {};
     return (
         <div className={`currently-playing ${className}`} {...rest}>
